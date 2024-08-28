@@ -152,7 +152,7 @@ const SORU_LIST = [
     SORU_DEGER_LIST: null,
     SORU_ID: 14,
     SORU_TIP_ID: 1,
-    SORU_KOD: "TCK",
+    SORU_KOD: "IMEI",
     SORU_AD: "IMEI",
     MASKE_TIP_ID: 8,
     Success: false,
@@ -230,13 +230,13 @@ interface LoginFormElement extends HTMLFormElement {
 function ProductForm({ params }: ProductPageProps) {
   function getFormElements(event: React.FormEvent<LoginFormElement>) {
     event.preventDefault();
-    console.log("test");
+    console.log({ test: event.currentTarget });
 
     const { PBASTAR, PBITTAR, TCK, PLK_IL_KOD } = (
       event.currentTarget as LoginFormElement
     ).elements;
 
-    console.log(PBASTAR.value, PBITTAR.value, TCK.value, PLK_IL_KOD.value);
+    console.log(PBASTAR.value, PBITTAR.value, TCK.value);
   }
   const { product } = params;
   return (
@@ -258,7 +258,7 @@ function ProductForm({ params }: ProductPageProps) {
             <div className="flex flex-col gap-6 mb-6">
               {SORU_LIST.map((product) => (
                 <FormElement
-                  key={product.SIRA_NO}
+                  key={product.SORU_KOD}
                   questionID={product.SORU_TIP_ID + ""}
                   maskID={product.MASKE_TIP_ID + ""}
                   questionName={product.SORU_AD}

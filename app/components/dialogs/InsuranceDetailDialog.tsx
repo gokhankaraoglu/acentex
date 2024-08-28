@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
-import CustomButton from "./elements/CustomButton";
-import { Icon, Icons } from "./elements/Icon";
+import CustomButton from "../elements/CustomButton";
+import { Icon, Icons } from "../elements/Icon";
+import Link from "next/link";
 
 const contractText = [
   {
@@ -8,7 +9,7 @@ const contractText = [
     icon: Icons.CRASH_ICON,
     description: `Telefonun bir cisim ile şiddetli teması veya belirli
     yükseklikten düşmesi sonrasında ekranının çatlaması, iç
-    ekranının kırılması veya dış camının kırılması / çatlaması
+    ekranının kırılması veya dış camının kırılması false);ması
     durumlarıdır.`,
   },
   {
@@ -39,29 +40,32 @@ const contractText = [
   },
 ];
 
-function ContractDialog() {
-  function close() {
-    console.log("close");
-  }
-  const isOpen = true;
-
+function InsuranceDetailDialog({
+  isOpen,
+  close,
+}: {
+  isOpen: boolean;
+  close: () => void;
+}) {
   return (
     <Dialog open={isOpen} onClose={() => close()}>
       <div className="z-1 fixed inset-0 flex justify-center items-end">
-        <div className="w-full h-full z-0 absolute inset-0 opacity-50" />
-        <div className="container relative w-full sm:px-8 lg:px-10">
-          <div className="bg-white rounded-3xl shadow w-full sm:w-full">
-            <div className="rounded-tl-md p-4 flex items-center justify-end border-b-2">
+        <div
+          className="w-full h-full z-0 absolute inset-0 opacity-50"
+          onClick={close}
+        />
+        <div className="container relative flex items-end">
+          <div className="bg-white rounded-t-3xl shadow w-full">
+            <div className="p-4 flex items-center justify-end border-b-2">
               <button className="focus:outline-none" onClick={close}>
                 <Icon icon={Icons.CLOSE_ICON} />
               </button>
             </div>
-
-            <div className="flex flex-col gap-4 px-8">
+            <div className="flex flex-col gap-4 px-4 py-6 sm:px-6 md:px-8">
               <p className="text-center text-2xl font-bold mb-10">
                 Koruma Kapsamları
               </p>
-              <div className="h-[460px] overflow-y-auto">
+              <div className="h-[410px] overflow-y-auto">
                 {contractText.map(({ title, icon, description }, index) => (
                   <section className="mb-8" key={index}>
                     <div className="flex items-center text-[#667085] mb-2.5">
@@ -75,11 +79,13 @@ function ContractDialog() {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center p-4">
-              <CustomButton form="form1" type="submit">
-                Onayla
-              </CustomButton>
-              <p className="text-[#667085] font-extralight text-xs mt-2">
+            <div className="flex flex-col justify-center items-center mb-6">
+              <Link href="/sigorta-teklifi">
+                <CustomButton form="form1" type="submit" className="mb-3.5">
+                  Devam Et
+                </CustomButton>
+              </Link>
+              <p className="text-[#667085] font-extralight text-xs text-center">
                 Şu anda Insurelab Sigorta ve Reasürans Brokerlığı
                 sayfasındasınız.
               </p>
@@ -91,4 +97,4 @@ function ContractDialog() {
   );
 }
 
-export default ContractDialog;
+export default InsuranceDetailDialog;

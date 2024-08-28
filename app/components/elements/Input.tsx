@@ -62,7 +62,7 @@ function Input({
         {!!information && (
           <div className="relative group">
             <Icon icon={Icons.INFO_ICON} />
-            <div className="absolute -right-6 mt-2 w-[90vw] max-w-[470px] bg-blue-100 text-blue-400 text-sm font-light px-4 py-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 border-4 border-red-500">
+            <div className="absolute -right-6 mt-2 w-[90vw] max-w-[470px] bg-blue-100 text-blue-400 text-sm font-light px-4 py-2 rounded shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100 border-4 border-red-500 hidden group-hover:block">
               {information}
             </div>
           </div>

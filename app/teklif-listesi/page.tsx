@@ -4,9 +4,11 @@ import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import OfferItem from "../components/OfferItem";
-import ContractDialog from "../components/ContractDialog";
+import InsuranceDetailDialog from "../components/dialogs/InsuranceDetailDialog";
+import { useState } from "react";
 
 function OfferList() {
+  const [showContract, setShowContract] = useState(false);
   return (
     <>
       <div className="pt-16 flex flex-col justify-between custom-min-height">
@@ -18,10 +20,10 @@ function OfferList() {
             </span>
           </Link>
           <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold">Sigorta Teklifi</h2>
+            <h2 className="text-2xl font-bold">Samsung Galaxy S Ultra</h2>
             <p className="text-[#667085] font-extralight text-lg">
-              Teklifin detayları aşağıdaki gibidir. Onaylayarak ödeme adımına
-              geçebilirsiniz.
+              Samsung Galaxy S Ultra cihazına ait teklifleri burada
+              görüntüleyebilirsiniz.
             </p>
           </div>
           <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6">
@@ -31,16 +33,16 @@ function OfferList() {
               tenetur alias veritatis quisquam, incidunt autem. In voluptas non
               earum excepturi. Aut, quod quis?
             </OfferItem>
-            <OfferItem>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui quod
-              minus, maiores laudantium explicabo corporis necessitatibus,
-              tenetur alias veritatis quisquam, incidunt autem. In voluptas non
-              earum excepturi. Aut, quod quis?
-            </OfferItem>
           </div>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <CustomButton form="form1" type="submit" className="mb-2.5" saturated>
+          <CustomButton
+            form="form1"
+            type="submit"
+            className="mb-3.5"
+            saturated
+            onClick={() => setShowContract(true)}
+          >
             Koruma Kapsamları
           </CustomButton>
           <p className="text-[#667085] font-extralight text-xs text-center">
@@ -48,7 +50,10 @@ function OfferList() {
           </p>
         </div>
       </div>
-      <ContractDialog />
+      <InsuranceDetailDialog
+        isOpen={showContract}
+        close={() => setShowContract(false)}
+      />
     </>
   );
 }

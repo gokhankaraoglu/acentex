@@ -64,9 +64,9 @@ function InputSections({
         <Input
           id={questionCode}
           type={InputType.NUMBER}
-          pattern="\d{11}"
-          minlength={10}
-          maxlength={11}
+          pattern="\d{15}"
+          minlength={14}
+          maxlength={15}
           name="IMEI Numaranız"
           information="Telefonunuzun cihaz ayarları bölümünde Genel>Hakkında alanında bulabilir ve kopyalayabilirsiniz."
           isRequired={isRequired}

@@ -77,7 +77,7 @@ function CardForm() {
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
-        <Link href="/" className="mb-11 inline-block self-start">
+        <Link href="/sigorta-teklifi" className="mb-11 inline-block self-start">
           <span className="flex items-center">
             <Icon icon={Icons.ARROW_LEFT} />{" "}
             <span className="ml-3 font-semibold text-xl">Teklife Dön</span>
