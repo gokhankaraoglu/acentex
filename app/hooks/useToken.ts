@@ -14,9 +14,8 @@ const useTokenRefresh = () => {
           const response = await post<any, any>({
             path: "/auth/login",
             payload: {
-              username: "emilys",
-              password: "emilyspass", // Replace with actual password
-              expiresInMins: 1,
+              username: process.env.NEXT_PUBLIC_USERNAME,
+              password: process.env.NEXT_PUBLIC_PASSWORD,
             },
           });
 

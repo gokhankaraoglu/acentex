@@ -1,0 +1,26 @@
+@import "tailwindcss/components";
+
+@layer components {
+  .btn {
+    height: 57px;
+    padding: 0 50px;
+    background-color: var(--base-button-background-color);
+    color: var(--base-color-primary);
+    border-radius: 28px;
+    font-size: 18px;
+    border: none;
+    transition: all 0.2s;
+    font-weight: 300;
+    max-width: 345px;
+    width: 100%;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+  .btn.saturated {
+    background-color: var(--base-color-primary);
+    border: 1px solid var(--base-button-background-color);
+    color: var(--base-button-background-color);
+  }
+}

@@ -2,10 +2,8 @@
 
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import useTokenRefresh from "../hooks/useToken";
 
 function ReactQueryProvider({ children }: { children: React.ReactNode }) {
-  useTokenRefresh();
   const [queryClient] = useState(() => new QueryClient());
 
   return (

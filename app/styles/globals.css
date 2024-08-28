@@ -1,0 +1,9 @@
+@import "_reset.css";
+@import "base.css";
+@import "_card.css";
+@import "_button.css";
+@import "_input.css";
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";

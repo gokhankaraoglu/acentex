@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./styles/globals.css";
 import Providers from "./components/Providers";
 import ReactQueryProvider from "./components/ReactQueryProvider";
+import HookProvider from "./components/HookProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,15 +18,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body className={inter.className}>
         <Providers>
           <ReactQueryProvider>
-            <div className="flex h-screen container m-auto flex-col justify-between pl-10 pr-10">
-              {/* <Header /> */}
-              {children}
-              {/* <Footer /> */}
-            </div>
+            <HookProvider>
+              <div className="min-h-screen bg-transparent container mx-auto px-6 sm:px-10 lg:px-12">
+                {/* <Header /> */}
+                <main className="flex-1 ">{children}</main>
+                {/* <Footer /> */}
+              </div>
+            </HookProvider>
           </ReactQueryProvider>
         </Providers>
       </body>

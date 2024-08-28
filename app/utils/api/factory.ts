@@ -1,5 +1,5 @@
-import { QueryKey, useQuery } from "@tanstack/react-query";
-import { get } from ".";
+import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
+import { get, post } from ".";
 export const Paths = {
   token: "/token",
   set_teklif_guid: "/set_teklif_guid",
@@ -32,4 +32,44 @@ export function useGet<T>(path: string, queryKey?: QueryKey) {
 
 export function useGetList<T>(path: string, queryKey?: QueryKey) {
   return useGet<T[]>(path, queryKey) || [];
+}
+
+interface Props {
+  baseQuery: string;
+  queryKey?: QueryKey;
+}
+
+export function useMutationApi<T>({ baseQuery }: Props) {
+  function createRequest(payload: Partial<T>): Promise<T> {
+    return post<Partial<T>, T>({
+      path: baseQuery,
+      payload,
+    });
+  }
+
+  function useCreateItemMutation() {
+    return useMutation({
+      mutationFn: createRequest,
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.message || "An unexpected error occurred";
+        console.log(errorMessage);
+        // setTimeout(() => toast.error(t(errorMessage)), 200);
+      },
+    });
+  }
+
+  const {
+    mutate: createRequestMutation,
+    isPending,
+    isError,
+    isSuccess,
+  } = useCreateItemMutation();
+
+  return {
+    createRequestMutation,
+    isError,
+    isPending,
+    isSuccess,
+  };
 }

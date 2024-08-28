@@ -1,0 +1,43 @@
+@import "tailwindcss/components";
+
+@layer components {
+  .select-wrapper {
+    position: relative;
+  }
+
+  .select-area {
+    height: var(--base-input-height);
+    border-radius: 12px;
+    border: 1px solid var(--base-input-border-color);
+    transition: all 0.3s;
+    padding: 0 10px 0 10px;
+    font-weight: var(--base-font-weigh);
+    width: 100%;
+
+    &:focus {
+      border: 1px solid var(--base-input-border-focus-color);
+    }
+    &:valid {
+      border: 1px solid var(--base-input-border-focus-color);
+    }
+  }
+
+  .select-label {
+    position: absolute;
+    top: 30%;
+    left: 10px;
+    font-weight: var(--base-placeholder-font-weight);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .select-area:focus + .select-label {
+    top: 0;
+    font-size: 12px;
+  }
+
+  .select-area:valid + .select-label {
+    top: 0;
+    font-size: 12px;
+  }
+}
