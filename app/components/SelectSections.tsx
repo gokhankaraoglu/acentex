@@ -2,7 +2,7 @@ import React from "react";
 import Select from "./elements/Select";
 
 interface SelectSectionsProps {
-  maskID: string;
+  questionID: number;
   questionName: string;
   questionCode: string;
   options: { value: string; label: string }[];
@@ -10,14 +10,16 @@ interface SelectSectionsProps {
 }
 
 function SelectSections({
-  maskID,
+  questionID,
   questionName,
   questionCode,
   options,
   isRequired,
 }: SelectSectionsProps) {
-  switch (maskID) {
-    case "2":
+  switch (questionID) {
+    case 43:
+    case 49:
+    case 50:
       return (
         <Select
           id={questionCode}
@@ -26,6 +28,8 @@ function SelectSections({
           options={options}
         />
       );
+    default:
+      return null;
   }
 }
 

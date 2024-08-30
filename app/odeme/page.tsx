@@ -6,6 +6,7 @@ import Input, { InputType } from "../components/elements/Input";
 
 import { useState } from "react";
 import CustomButton from "../components/elements/CustomButton";
+import { normalizeCardDate, normalizeCardNumber } from "../utils/mask";
 
 interface FormElements extends HTMLFormControlsCollection {
   cardOwner: HTMLInputElement;
@@ -63,17 +64,6 @@ function CardForm() {
     console.log(cardOwner.value, cardNumber.value, exp.value, cvt.value);
   }
 
-  const normalizeCardNumber = (value: string) => {
-    const newValue =
-      value
-        .replace(/\s/g, "")
-        .match(/.{1,4}/g)
-        ?.join(" ")
-        .substr(0, 19) || "";
-    console.log(newValue);
-    setPaymentElements((prev) => ({ ...prev, cardNumber: newValue }));
-  };
-
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
@@ -103,24 +93,18 @@ function CardForm() {
                 type={InputType.TEXT}
                 isRequired={true}
                 name="Kart Sahibi"
-                onChange={(e) => {
-                  normalizeCardNumber(e.target.value);
-                }}
-                value={paymentElements.cardOwner}
               />
               <Input
                 id="cardNumber"
                 type={InputType.TEL}
-                placeholder="____ ____ ____ ____"
+                placeholder="____-____-____-____"
                 isRequired={true}
                 name="Kart Numarası"
-                pattern="[0-9\s]{13,19}"
                 autoComplete="cc-number"
                 maxlength={19}
-                onChange={(e) => {
-                  normalizeCardNumber(e.target.value);
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.value = normalizeCardNumber(e.target.value);
                 }}
-                value={paymentElements.cardNumber}
               />
               <div className="flex gap-x-12 sm:gap-x-16">
                 <Input
@@ -128,11 +112,11 @@ function CardForm() {
                   type={InputType.TEL}
                   isRequired={true}
                   name="SKT"
+                  placeholder="__ /__"
                   maxlength={5}
-                  onChange={(e) => {
-                    normalizeCardNumber(e.target.value);
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = normalizeCardDate(e.target.value);
                   }}
-                  value={paymentElements.exp}
                 />
                 <Input
                   id="cvt"
@@ -140,10 +124,6 @@ function CardForm() {
                   isRequired={true}
                   name="CVT"
                   maxlength={3}
-                  onChange={(e) => {
-                    normalizeCardNumber(e.target.value);
-                  }}
-                  value={paymentElements.cvt}
                 />
               </div>
             </div>

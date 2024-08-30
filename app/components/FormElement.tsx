@@ -5,35 +5,38 @@ import Title from "./elements/Title";
 
 interface FormElementProps {
   questionID: string;
-  maskID: string;
+  questionTypeID: string;
   questionName: string;
   questionCode: string;
   isRequired: boolean;
   options?: { value: string; label: string }[];
+  onChange: (event: any) => void;
 }
 
 function FormElement({
   questionID,
-  maskID,
+  questionTypeID,
   questionName,
   questionCode,
   isRequired,
   options,
+  onChange,
 }: FormElementProps) {
-  switch (questionID) {
+  switch (questionTypeID) {
     case "1":
       return (
         <InputSections
-          maskID={maskID}
+          questionID={Number(questionID)}
           questionName={questionName}
           questionCode={questionCode}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case "2":
       return (
         <SelectSections
-          maskID={maskID}
+          questionID={Number(questionID)}
           questionName={questionName}
           questionCode={questionCode}
           options={options || []}

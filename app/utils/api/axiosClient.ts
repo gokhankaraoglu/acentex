@@ -7,7 +7,6 @@ export const axiosClient = axios.create({
 });
 
 export const ACCESS_TOKEN = "jwt";
-export const REFRESH_TOKEN = "refresh";
 
 axiosClient.interceptors.request.use(
   async (req) => {

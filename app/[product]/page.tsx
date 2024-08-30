@@ -4,241 +4,79 @@ import FormElement from "../components/FormElement";
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
+import { useEffect, useState } from "react";
+import { post } from "../utils/api";
+import { getSessionStorage } from "../utils";
+import useGuid from "../hooks/useSetGuid";
+import {
+  AnswerQuestionPayload,
+  RootObject,
+  SoruListItem,
+} from "../types/question";
+import { ProductDetail, ProductQuestionPayload } from "../types/product";
 
 // import { usePathname, useSearchParams } from "next/navigation";
 
-interface ProductPageProps {
-  params: {
-    product: string;
-  };
-}
+function ProductForm() {
+  useGuid();
+  const [questions, setQuestions] = useState<SoruListItem[]>([]);
+  const guid = getSessionStorage<string>("guid");
+  const productDetail = getSessionStorage<ProductDetail>("product");
 
-const SORU_LIST = [
-  {
-    DEGISIM_SAYISI: 1,
-    DEGER_KOD: null,
-    DEGER_AD: null,
-    TABLOSU_VAR: 0,
-    SIRA_NO: 1,
-    ZORUNLU: "H",
-    GIZLI: "H",
-    URUN_SORU_EVENT: null,
-    KONTROL_GRUP_ID: null,
-    KONTROL_GRUP_AD: null,
-    KONTROL_GRUP_MESAJ: null,
-    ENTEGRASYON_URUN_ID_LIST: "",
-    SORU_DEGER_LIST: null,
-    SORU_ID: 20,
-    SORU_TIP_ID: 5,
-    SORU_KOD: "GPOL",
-    SORU_AD: "GENEL BİLGİLER",
-    MASKE_TIP_ID: null,
-    Success: false,
-    ErrorList: [],
-    WarningList: [],
-    MessageList: [],
-  },
-  {
-    DEGISIM_SAYISI: 1,
-    DEGER_KOD: null,
-    DEGER_AD: null,
-    TABLOSU_VAR: 0,
-    SIRA_NO: 2,
-    ZORUNLU: "E",
-    GIZLI: "H",
-    URUN_SORU_EVENT: null,
-    KONTROL_GRUP_ID: null,
-    KONTROL_GRUP_AD: null,
-    KONTROL_GRUP_MESAJ: null,
-    ENTEGRASYON_URUN_ID_LIST:
-      "2;8;9;11;17;18;19;20;22;23;24;25;26;28;29;30;32;33;34;37;38;39;40;",
-    SORU_DEGER_LIST: null,
-    SORU_ID: 21,
-    SORU_TIP_ID: 1,
-    SORU_KOD: "PBASTAR",
-    SORU_AD: "Başlama Tarihi",
-    MASKE_TIP_ID: 3,
-    Success: false,
-    ErrorList: [],
-    WarningList: [],
-    MessageList: [],
-  },
-  {
-    DEGISIM_SAYISI: 3,
-    DEGER_KOD: null,
-    DEGER_AD: null,
-    TABLOSU_VAR: 0,
-    SIRA_NO: 3,
-    ZORUNLU: "E",
-    GIZLI: "H",
-    URUN_SORU_EVENT: null,
-    KONTROL_GRUP_ID: null,
-    KONTROL_GRUP_AD: null,
-    KONTROL_GRUP_MESAJ: null,
-    ENTEGRASYON_URUN_ID_LIST:
-      "2;8;9;11;17;18;19;20;22;23;24;25;26;28;29;30;32;33;34;38;39;",
-    SORU_DEGER_LIST: null,
-    SORU_ID: 22,
-    SORU_TIP_ID: 1,
-    SORU_KOD: "PBITTAR",
-    SORU_AD: "Bitiş Tarihi",
-    MASKE_TIP_ID: 3,
-    Success: false,
-    ErrorList: [],
-    WarningList: [],
-    MessageList: [],
-  },
-  {
-    DEGISIM_SAYISI: 1,
-    DEGER_KOD: null,
-    DEGER_AD: null,
-    TABLOSU_VAR: 0,
-    SIRA_NO: 4,
-    ZORUNLU: "H",
-    GIZLI: "H",
-    URUN_SORU_EVENT: null,
-    KONTROL_GRUP_ID: null,
-    KONTROL_GRUP_AD: null,
-    KONTROL_GRUP_MESAJ: null,
-    ENTEGRASYON_URUN_ID_LIST: "",
-    SORU_DEGER_LIST: null,
-    SORU_ID: 17,
-    SORU_TIP_ID: 5,
-    SORU_KOD: "MUST",
-    SORU_AD: "MÜŞTERİ BİLGİLERİ",
-    MASKE_TIP_ID: null,
-    Success: false,
-    ErrorList: [],
-    WarningList: [],
-    MessageList: [],
-  },
-  {
-    DEGISIM_SAYISI: 1,
-    DEGER_KOD: null,
-    DEGER_AD: null,
-    TABLOSU_VAR: 0,
-    SIRA_NO: 5,
-    ZORUNLU: "E",
-    GIZLI: "H",
-    URUN_SORU_EVENT: null,
-    KONTROL_GRUP_ID: null,
-    KONTROL_GRUP_AD: null,
-    KONTROL_GRUP_MESAJ: null,
-    ENTEGRASYON_URUN_ID_LIST: null,
-    SORU_DEGER_LIST: null,
-    SORU_ID: 14,
-    SORU_TIP_ID: 1,
-    SORU_KOD: "TCK",
-    SORU_AD: "T.C. KİMLİK NUMARASI",
-    MASKE_TIP_ID: 9,
-    Success: false,
-    ErrorList: [],
-    WarningList: [],
-    MessageList: [],
-  },
-  {
-    DEGISIM_SAYISI: 1,
-    DEGER_KOD: null,
-    DEGER_AD: null,
-    TABLOSU_VAR: 0,
-    SIRA_NO: 5,
-    ZORUNLU: "E",
-    GIZLI: "H",
-    URUN_SORU_EVENT: null,
-    KONTROL_GRUP_ID: null,
-    KONTROL_GRUP_AD: null,
-    KONTROL_GRUP_MESAJ: null,
-    ENTEGRASYON_URUN_ID_LIST: null,
-    SORU_DEGER_LIST: null,
-    SORU_ID: 14,
-    SORU_TIP_ID: 1,
-    SORU_KOD: "IMEI",
-    SORU_AD: "IMEI",
-    MASKE_TIP_ID: 8,
-    Success: false,
-    ErrorList: [],
-    WarningList: [],
-    MessageList: [],
-  },
-  // {
-  //   DEGISIM_SAYISI: 1,
-  //   DEGER_KOD: null,
-  //   DEGER_AD: null,
-  //   TABLOSU_VAR: 0,
-  //   SIRA_NO: 6,
-  //   ZORUNLU: "E",
-  //   GIZLI: "E",
-  //   URUN_SORU_EVENT: null,
-  //   KONTROL_GRUP_ID: null,
-  //   KONTROL_GRUP_AD: null,
-  //   KONTROL_GRUP_MESAJ: null,
-  //   ENTEGRASYON_URUN_ID_LIST: "2;8;9;18;22;23;24;25;26;28;33;35;37;39;40;",
-  //   SORU_DEGER_LIST: [
-  //     {
-  //       SORU_DEGER_ID: 474,
-  //       SORU_ID: 26,
-  //       DEGER_KOD: "001",
-  //       DEGER_AD: "ADANA",
-  //       MIN_DEGER: null,
-  //       MAX_DEGER: null,
-  //       DEFAULT_DEGER: null,
-  //       REF_SORU_ID: null,
-  //       REF_SORU_DEGER_ID: null,
-  //       Success: false,
-  //       ErrorList: [],
-  //       WarningList: [],
-  //       MessageList: [],
-  //     },
-  //     {
-  //       SORU_DEGER_ID: 475,
-  //       SORU_ID: 26,
-  //       DEGER_KOD: "002",
-  //       DEGER_AD: "ADIYAMAN",
-  //       MIN_DEGER: null,
-  //       MAX_DEGER: null,
-  //       DEFAULT_DEGER: null,
-  //       REF_SORU_ID: null,
-  //       REF_SORU_DEGER_ID: null,
-  //       Success: false,
-  //       ErrorList: [],
-  //       WarningList: [],
-  //       MessageList: [],
-  //     },
-  //   ],
-  //   SORU_ID: 26,
-  //   SORU_TIP_ID: 2,
-  //   SORU_KOD: "PLK_IL_KOD",
-  //   SORU_AD: "PLAKA İL KODU",
-  //   MASKE_TIP_ID: 2,
-  //   Success: false,
-  //   ErrorList: [],
-  //   WarningList: [],
-  //   MessageList: [],
-  // },
-];
-interface FormElements extends HTMLFormControlsCollection {
-  PBASTAR: HTMLInputElement;
-  PBITTAR: HTMLInputElement;
-  TCK: HTMLInputElement;
-  PLK_IL_KOD: HTMLInputElement;
-}
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await getQuestions();
+    };
 
-interface LoginFormElement extends HTMLFormElement {
-  readonly elements: FormElements;
-}
+    fetchProducts();
+  }, []);
 
-function ProductForm({ params }: ProductPageProps) {
-  function getFormElements(event: React.FormEvent<LoginFormElement>) {
-    event.preventDefault();
-    console.log({ test: event.currentTarget });
-
-    const { PBASTAR, PBITTAR, TCK, PLK_IL_KOD } = (
-      event.currentTarget as LoginFormElement
-    ).elements;
-
-    console.log(PBASTAR.value, PBITTAR.value, TCK.value);
+  async function getQuestions() {
+    try {
+      if (guid && productDetail) {
+        const { SORU_LIST } = await post<ProductQuestionPayload, RootObject>({
+          path: "/ExternalProduction/SET_TEKLIF_URUN",
+          payload: {
+            POLICE_GUID: guid,
+            URUN_LIST: [
+              {
+                VISIBLE: 1,
+                URUN_ID: productDetail?.URUN_ID,
+                URUN_AD: productDetail?.URUN_AD,
+                URUN_KOD: productDetail?.URUN_KOD,
+              },
+            ],
+          },
+        });
+        const filteredList = SORU_LIST.filter((item) => item.GIZLI !== "E");
+        setQuestions(filteredList);
+      }
+    } catch (error) {
+      console.error("Failed to fetch initial token", error);
+    }
   }
-  const { product } = params;
+
+  async function handleAnswerChange(question: SoruListItem, value: string) {
+    try {
+      if (guid) {
+        const updatedQuestions = await post<AnswerQuestionPayload, RootObject>({
+          path: "/ExternalProduction/POST_POLICY_QUESTION_ANSWER",
+          payload: {
+            POLICE_GUID: guid,
+            SORU_LIST: [{ ...question, DEGER_KOD: value }],
+          },
+        });
+
+        const filteredList = updatedQuestions.SORU_LIST.filter(
+          (item) => item.GIZLI !== "E"
+        );
+        setQuestions(filteredList);
+      }
+    } catch (error) {
+      console.error("Failed to update question answers", error);
+    }
+  }
+
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
@@ -248,26 +86,27 @@ function ProductForm({ params }: ProductPageProps) {
             <span className="ml-3 font-semibold text-xl">Teklifinizi Alın</span>
           </span>
         </Link>
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md px-3 overflow-y-auto">
           <form
             autoComplete="off"
             noValidate={true}
             id="form1"
-            onSubmit={getFormElements}
+            onSubmit={() => console.log("deneme")}
           >
             <div className="flex flex-col gap-6 mb-6">
-              {SORU_LIST.map((product) => (
+              {questions.map((question) => (
                 <FormElement
-                  key={product.SORU_KOD}
-                  questionID={product.SORU_TIP_ID + ""}
-                  maskID={product.MASKE_TIP_ID + ""}
-                  questionName={product.SORU_AD}
-                  questionCode={product.SORU_KOD}
-                  isRequired={product.ZORUNLU === "E"}
-                  // options={product?.SORU_DEGER_LIST?.map((option) => ({
-                  //   value: option.DEGER_KOD,
-                  //   label: option.DEGER_AD,
-                  // }))}
+                  key={question.SIRA_NO}
+                  questionID={question.SORU_ID + ""}
+                  questionTypeID={question.SORU_TIP_ID + ""}
+                  questionName={question.SORU_AD}
+                  questionCode={question.SORU_KOD}
+                  isRequired={question.ZORUNLU === "E"}
+                  options={question?.SORU_DEGER_LIST?.map((option) => ({
+                    value: option.DEGER_KOD,
+                    label: option.DEGER_AD,
+                  }))}
+                  onChange={(e) => handleAnswerChange(question, e.target.value)}
                 />
               ))}
             </div>

@@ -11,16 +11,16 @@ interface SelectProps {
 function Select({ id, name, isRequired = true, options }: SelectProps) {
   return (
     <div className="select-wrapper">
+      <label htmlFor={id} className="select-label">
+        {capitalize(name)}
+      </label>
       <select className="select-area" id={id} name={id} required={isRequired}>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}
       </select>
-      <label htmlFor={id} className="select-label">
-        {capitalize(name)}
-      </label>
     </div>
   );
 }

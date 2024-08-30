@@ -7,6 +7,7 @@ export enum InputType {
   EMAIL = "email",
   TEXT = "text",
   NUMBER = "number",
+  SELECT = "select",
 }
 
 interface InputProps {
@@ -20,7 +21,7 @@ interface InputProps {
   maxlength?: number;
   minlength?: number;
   information?: string;
-  onChange?: (e: any) => void;
+  onInput?: (e: any) => void;
   value?: string;
   className?: string;
 }
@@ -35,8 +36,8 @@ function Input({
   placeholder,
   maxlength,
   minlength,
-  information = "",
-  onChange,
+  information = undefined,
+  onInput,
   className = "",
 }: InputProps) {
   return (
@@ -52,7 +53,7 @@ function Input({
         maxLength={maxlength}
         minLength={minlength}
         className={`input-area ${className}`}
-        onChange={onChange}
+        onInput={onInput}
       />
       <label htmlFor={id} className="input-label">
         <span>{name}</span>

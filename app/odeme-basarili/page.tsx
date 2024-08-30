@@ -12,9 +12,7 @@ function Success() {
   const [policeId, setPoliceId] = useState<string | null>(null);
   useEffect(() => {
     const police = getSessionStorage<string>("policeId");
-    console.log({ police });
     setPoliceId(police);
-    console.log({ policeId });
     if (!police) {
       router.push("/");
     }

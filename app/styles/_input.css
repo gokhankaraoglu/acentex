@@ -25,10 +25,13 @@
     }
 
     &:focus {
-      border: 1px solid var(--base-input-border-focus-color);
+      border: 2px solid var(--base-input-border-focus-color);
     }
     &:valid {
-      border: 1px solid var(--base-input-border-focus-color);
+      border: 2px solid rgb(42, 197, 44);
+    }
+    &:invalid {
+      border: 2px solid rgb(243, 62, 119);
     }
     &:hover {
       cursor: pointer;

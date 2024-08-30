@@ -39,9 +39,9 @@ interface Props {
   queryKey?: QueryKey;
 }
 
-export function useMutationApi<T>({ baseQuery }: Props) {
-  function createRequest(payload: Partial<T>): Promise<T> {
-    return post<Partial<T>, T>({
+export function useMutationApi<P, T>({ baseQuery }: Props) {
+  function createRequest(payload: P): Promise<T> {
+    return post<P, T>({
       path: baseQuery,
       payload,
     });
