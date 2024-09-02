@@ -5,17 +5,17 @@ import { Fragment, useEffect, useState } from "react";
 import useToken from "../hooks/useToken";
 
 function HookProvider({ children }: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useToken();
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return <Fragment>{children}</Fragment>;
 }

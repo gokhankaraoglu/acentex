@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
-import OfferItem from "../components/OfferItem";
 import { useState } from "react";
 import InformationFormDialog from "../components/dialogs/InformationFormDialog";
+import Offer from "../components/Offer";
 
 function OfferList() {
   const [showInformationForm, setShowInformationForm] = useState(false);
@@ -30,12 +30,7 @@ function OfferList() {
             </p>
           </div>
           <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6">
-            <OfferItem>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui quod
-              minus, maiores laudantium explicabo corporis necessitatibus,
-              tenetur alias veritatis quisquam, incidunt autem. In voluptas non
-              earum excepturi. Aut, quod quis?
-            </OfferItem>
+            <Offer />
           </div>
         </div>
         <div className="flex flex-col justify-center items-center">

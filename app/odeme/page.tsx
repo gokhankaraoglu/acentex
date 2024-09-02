@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
-import Input, { InputType } from "../components/elements/Input";
+import CustomInput, { InputType } from "../components/elements/CustomInput";
 
 import { useState } from "react";
 import CustomButton from "../components/elements/CustomButton";
@@ -88,13 +88,13 @@ function CardForm() {
             onSubmit={getFormElements}
           >
             <div className="flex flex-col gap-6 mb-6">
-              <Input
+              <CustomInput
                 id="cardOwner"
                 type={InputType.TEXT}
                 isRequired={true}
                 name="Kart Sahibi"
               />
-              <Input
+              <CustomInput
                 id="cardNumber"
                 type={InputType.TEL}
                 placeholder="____-____-____-____"
@@ -102,23 +102,23 @@ function CardForm() {
                 name="Kart Numarası"
                 autoComplete="cc-number"
                 maxlength={19}
-                onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   e.target.value = normalizeCardNumber(e.target.value);
                 }}
               />
               <div className="flex gap-x-12 sm:gap-x-16">
-                <Input
+                <CustomInput
                   id="exp"
                   type={InputType.TEL}
                   isRequired={true}
                   name="SKT"
                   placeholder="__ /__"
                   maxlength={5}
-                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     e.target.value = normalizeCardDate(e.target.value);
                   }}
                 />
-                <Input
+                <CustomInput
                   id="cvt"
                   type={InputType.TEL}
                   isRequired={true}

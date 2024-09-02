@@ -50,7 +50,7 @@ function ProductList() {
     <div className="flex flex-col w-full justify-between gap-4">
       {products.map((product) => (
         <Fragment key={product?.URUN_ID}>
-          <Link href={`/${product?.URUN_KOD.toLowerCase()}`}>
+          <Link href={`/teklif-form`}>
             <CustomButton onClick={() => selectProduct(product)}>
               {product?.URUN_AD}
             </CustomButton>

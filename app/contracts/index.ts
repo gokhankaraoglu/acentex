@@ -209,3 +209,40 @@ export const informationForm = [
     description: `İşbu sözleşme Türk Hukuku dahilinde yorumlanır. Doğabilecek tüm anlaşmazlıklarda, Türkiye Cumhuriyeti Mahkemeleri, İcra Daireleri ve Sigorta Tahkim Komisyonu yetkili olacaktır.`,
   },
 ];
+
+export const contractText = [
+  {
+    title: "Ekran Kırılması",
+    icon: Icons.CRASH_ICON,
+    description: `Telefonun bir cisim ile şiddetli teması veya belirli
+    yükseklikten düşmesi sonrasında ekranının çatlaması, iç
+    ekranının kırılması veya dış camının kırılması false);ması
+    durumlarıdır.`,
+  },
+  {
+    title: "Hırsızlık",
+    icon: Icons.ROBBER_ICON,
+    description: `Güvenlik önlemleri alınarak kapıları kilitli ve camları kapalı olan otomobilden veya konut içerisinden kapıların veya camların kırılmış olması suretiyle (zor kullanarak) ve güvenlik güçleri tarafından kayıt altına alınmış hırsızlık durumlarıdır.`,
+  },
+  {
+    title: "Yüksek Voltaj",
+    icon: Icons.VOLTAGE_ICON,
+    description: `Elektrik şebekelerinin yoğun kullanımı ve özellikle saatsel olarak aşırı yüklenmeler sonucu santral kaynaklı olarak voltaj dalgalanmaları ve bu dalgalanmaların batarya üzerinde oluşturduğu ani akım gerilimleri sonrası yanmalar ve patlamalar ile cihazın zarar görmesidir.`,
+  },
+  {
+    title: "Sıvı Teması",
+    icon: Icons.AQUA_ICON,
+    description: `Cihazın düşme sonucu veya sıvılı bir yüzeye bırakılması ile iç ünite ve devrelerinin sıvı ile teması sonrasında oluşan hasarlardır.`,
+  },
+  {
+    title: "Kaza Sonucu Hasar",
+    icon: Icons.CRASH_ICON,
+    description: `Ani ve beklenmedik bir olay sonucunda telefonun kazayla zarara uğramasıdır.`,
+  },
+  {
+    title: "Hatalı Aksesuar Kullanımı",
+    icon: Icons.FAULTY_ICON,
+    description: `Cihaz üreticilerinin önerdiği aksesuar ve araçlar dışında kullanıcı inisiyatifi ile cihaza takılmak istenen her türlü aksesuar ve cihazın vermiş olduğu zararlardır.
+    `,
+  },
+];

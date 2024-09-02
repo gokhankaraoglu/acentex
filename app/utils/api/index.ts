@@ -38,34 +38,3 @@ export async function post<P, R>({
   const { data } = await axiosClient.post<R>(`${path}`, payload);
   return data;
 }
-
-// P = payload, R = ResponseType
-export async function postWithHeader<P, R>({
-  path,
-  payload,
-  headers,
-}: RequestWithPayloadAndHeader<P>): Promise<R> {
-  const { data } = await axiosClient.post<R>(`${path}`, payload, { headers });
-  return data;
-}
-
-// P = payload, R = ResponseType
-export async function put<P, R>({
-  path,
-  payload,
-}: RequestWithPayload<P>): Promise<R> {
-  return axiosClient.put(`${path}`, payload);
-}
-
-// P = payload, R = ResponseType
-export async function patch<P, R>({
-  path,
-  payload,
-}: RequestWithPayload<P>): Promise<R> {
-  return axiosClient.patch(`${path}`, payload);
-}
-
-// R = ResponseType
-export async function remove<R>({ path }: BaseRequest): Promise<R> {
-  return axiosClient.delete(`${path}`);
-}

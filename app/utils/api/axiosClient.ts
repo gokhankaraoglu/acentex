@@ -30,7 +30,8 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.response?.data?.statusCode === 401) {
+    console.log({ error });
+    if (error?.response?.status === 401) {
       Cookies.remove(ACCESS_TOKEN);
     }
     return Promise.reject(error);

@@ -41,6 +41,7 @@ function FormElement({
           questionCode={questionCode}
           options={options || []}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case "5":

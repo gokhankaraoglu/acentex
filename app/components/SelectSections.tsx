@@ -1,5 +1,5 @@
 import React from "react";
-import Select from "./elements/Select";
+import CustomSelect from "./elements/CustomSelect";
 
 interface SelectSectionsProps {
   questionID: number;
@@ -7,6 +7,7 @@ interface SelectSectionsProps {
   questionCode: string;
   options: { value: string; label: string }[];
   isRequired: boolean;
+  onChange: (event: any) => void;
 }
 
 function SelectSections({
@@ -15,17 +16,19 @@ function SelectSections({
   questionCode,
   options,
   isRequired,
+  onChange,
 }: SelectSectionsProps) {
   switch (questionID) {
     case 43:
     case 49:
     case 50:
       return (
-        <Select
+        <CustomSelect
           id={questionCode}
           name={questionName}
           isRequired={isRequired}
           options={options}
+          onChange={onChange}
         />
       );
     default:

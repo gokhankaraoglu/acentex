@@ -20,20 +20,6 @@ export const Paths = {
   get_entegrasyon_police_teminat: "/get_entegrasyon_police_teminat",
 };
 
-export function useGet<T>(path: string, queryKey?: QueryKey) {
-  // We are using path as a query key if queryKey is not provided
-  const fetchQueryKey: QueryKey = queryKey || [{ path }];
-  const { data } = useQuery({
-    queryKey: fetchQueryKey,
-    queryFn: () => get<T>({ path }),
-  });
-  return data;
-}
-
-export function useGetList<T>(path: string, queryKey?: QueryKey) {
-  return useGet<T[]>(path, queryKey) || [];
-}
-
 interface Props {
   baseQuery: string;
   queryKey?: QueryKey;

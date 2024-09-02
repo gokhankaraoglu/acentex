@@ -12,15 +12,16 @@ export const setGuid = async () => {
     });
 
     setSessionStorage(GUID, POLICE_GUID);
+    return POLICE_GUID;
   } catch (error) {
     console.error("Failed to fetch initial token", error);
   }
 };
 
-const useGuid = () => {
-  useEffect(() => {
-    setGuid();
-  }, []);
-};
+// const useGuid = () => {
+//   useEffect(() => {
+//     setGuid();
+//   }, []);
+// };
 
-export default useGuid;
+// export default useGuid;

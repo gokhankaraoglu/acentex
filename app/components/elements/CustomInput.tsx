@@ -7,7 +7,6 @@ export enum InputType {
   EMAIL = "email",
   TEXT = "text",
   NUMBER = "number",
-  SELECT = "select",
 }
 
 interface InputProps {
@@ -21,12 +20,12 @@ interface InputProps {
   maxlength?: number;
   minlength?: number;
   information?: string;
-  onInput?: (e: any) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value?: string;
   className?: string;
 }
 
-function Input({
+function CustomInput({
   id,
   type,
   name,
@@ -37,7 +36,7 @@ function Input({
   maxlength,
   minlength,
   information = undefined,
-  onInput,
+  onChange,
   className = "",
 }: InputProps) {
   return (
@@ -53,7 +52,7 @@ function Input({
         maxLength={maxlength}
         minLength={minlength}
         className={`input-area ${className}`}
-        onInput={onInput}
+        onInput={onChange}
       />
       <label htmlFor={id} className="input-label">
         <span>{name}</span>
@@ -73,4 +72,4 @@ function Input({
   );
 }
 
-export default Input;
+export default CustomInput;

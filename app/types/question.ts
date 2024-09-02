@@ -16,7 +16,7 @@ export interface SoruDeger {
 export interface SoruListItem {
   DEGISIM_SAYISI: number;
   DEGER_KOD: string;
-  DEGER_AD: string;
+  DEGER_AD: string | null;
   TABLOSU_VAR: number;
   SIRA_NO: number;
   ZORUNLU: string;
@@ -57,9 +57,61 @@ export interface RootObject {
   KIMLIK_BILGI: any;
   URUN_LIST: any[];
   SORU_LIST: SoruListItem[];
+  SORU_MASKE_LIST: MaskType[];
 }
 
-export interface AnswerQuestionPayload {
+export interface MaskType {
+  MASKE_TIP_ID: number;
+  OPTIONS: string;
+  MASKE_TIP_AD: string;
+  PLACEHOLDER: string | null;
+  MASKE_EVENT_ID: number | null;
+  MASKE_EVENT_AD: string | null;
+  EVENT_NAME: string | null;
+  PARAMETERS: string | null;
+  SCRIPT_CODE: string | null;
+}
+
+export interface PolicePayload {
   POLICE_GUID: string;
+}
+
+export interface AnswerQuestionPayload extends PolicePayload {
   SORU_LIST: SoruListItem[];
+}
+
+export interface PostPolicyQuestionResponse {
+  POLICE_ID: number;
+  POLICE_KEY: string;
+  POLICE_GUID: string;
+  POLICE_PARTAJ_GUID: string;
+  SGR_MUSTERI_ROL_ID: number | null;
+  SGR_MUSTERI_ROL_AD: string | null;
+  SGE_MUSTERI_ROL_ID: number | null;
+  SGE_MUSTERI_ROL_AD: string | null;
+  MT_MUSTERI_ROL_ID: number | null;
+  MT_MUSTERI_ROL_AD: string | null;
+  TP_MUSTERI_ROL_ID: number | null;
+  TP_MUSTERI_ROL_AD: string | null;
+  IS_ATAMA: any;
+  KIMLIK_BILGI: any;
+  URUN_LIST: any[];
+  SORU_LIST: any[];
+  URUN_SORU_EVENT_LIST: any[];
+  SORU_MASKE_LIST: any[];
+  SORU_TABLO_LIST: any[];
+  ENTEGRASYON_POLICE: any[];
+  ENTEGRASYON_PARTAJ: any[];
+  BAGLI_MUSTERI: any[];
+  MASKED_SORU_LIST: MaskType[];
+  is_mobile: boolean;
+  IS_OTO_TEKLIF: boolean;
+  Success: boolean;
+  ErrorList: any[];
+  WarningList: any[];
+  MessageList: any[];
+}
+
+export interface GetEntegrasyonPolicePayload {
+  POLICE_ID: number;
 }

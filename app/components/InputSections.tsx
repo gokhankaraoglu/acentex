@@ -1,5 +1,5 @@
 import React from "react";
-import Input, { InputType } from "./elements/Input";
+import CustomInput, { InputType } from "./elements/CustomInput";
 
 interface InputSectionsProps {
   questionID: number;
@@ -21,70 +21,63 @@ function InputSections({
     case 22: // BİTİŞ TARİHİ
     case 44: // DOĞUM TARİHİ
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.DATE}
           name={questionName}
           isRequired={isRequired}
-          autoComplete="off"
-          onInput={onChange}
+          onChange={onChange}
         />
       );
     case 14: // T.C. KİMLİK NUMARASI
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.NUMBER}
-          pattern="\d{11}"
-          minlength={10}
-          maxlength={11}
           name={questionName}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case 15: // VERGİ KİMLİK NUMARASI
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.NUMBER}
-          pattern="\d{10}"
-          minlength={10}
-          maxlength={10}
           name={questionName}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case 42: // CEP TELEFONU
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.TEL}
           name={questionName}
           isRequired={isRequired}
-          autoComplete="tel"
-          placeholder="0 (___) ___ __"
+          onChange={onChange}
         />
       );
     case 77: // E-MAIL ADRESİ
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.EMAIL}
           name={questionName}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case 207: // IMEI NO
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.NUMBER}
-          pattern="\d{15}"
-          minlength={15}
-          maxlength={15}
           name={questionName}
           information="Telefonunuzun cihaz ayarları bölümünde Genel>Hakkında alanında bulabilir ve kopyalayabilirsiniz."
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case 197: // CİHAZ MARKA
@@ -93,11 +86,12 @@ function InputSections({
     case 201: // PLATFORM
     case 202: // SİPARİŞ NO
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.TEXT}
           name={questionName}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     case 203: // EKRAN KIRILMASI
@@ -105,11 +99,12 @@ function InputSections({
     case 205: // UZATILMIŞ GARANTİ
     case 206: // CİHAZ BEDELİ
       return (
-        <Input
+        <CustomInput
           id={questionCode}
           type={InputType.NUMBER}
           name={questionName}
           isRequired={isRequired}
+          onChange={onChange}
         />
       );
     default:

@@ -6,63 +6,77 @@ import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import { useEffect, useState } from "react";
 import { post } from "../utils/api";
-import { getSessionStorage } from "../utils";
-import useGuid from "../hooks/useSetGuid";
+import { getSessionStorage, setSessionStorage } from "../utils";
+import { setGuid } from "../hooks/useSetGuid";
 import {
   AnswerQuestionPayload,
+  PolicePayload,
+  PostPolicyQuestionResponse,
   RootObject,
   SoruListItem,
 } from "../types/question";
 import { ProductDetail, ProductQuestionPayload } from "../types/product";
+import { useRouter } from "next/navigation";
 
 // import { usePathname, useSearchParams } from "next/navigation";
 
 function ProductForm() {
-  useGuid();
+  const router = useRouter();
   const [questions, setQuestions] = useState<SoruListItem[]>([]);
-  const guid = getSessionStorage<string>("guid");
-  const productDetail = getSessionStorage<ProductDetail>("product");
+  const [policeGuid, setPoliceGuid] = useState<string>("");
 
   useEffect(() => {
+    const productDetail = getSessionStorage<ProductDetail>("product");
     const fetchProducts = async () => {
-      await getQuestions();
+      const policeId = await setGuid();
+      setPoliceGuid(policeId);
+      productDetail && (await getQuestions(policeId, productDetail));
     };
 
     fetchProducts();
   }, []);
 
-  async function getQuestions() {
+  async function getQuestions(
+    policeGuid: string,
+    productDetail: ProductDetail
+  ) {
     try {
-      if (guid && productDetail) {
-        const { SORU_LIST } = await post<ProductQuestionPayload, RootObject>({
-          path: "/ExternalProduction/SET_TEKLIF_URUN",
-          payload: {
-            POLICE_GUID: guid,
-            URUN_LIST: [
-              {
-                VISIBLE: 1,
-                URUN_ID: productDetail?.URUN_ID,
-                URUN_AD: productDetail?.URUN_AD,
-                URUN_KOD: productDetail?.URUN_KOD,
-              },
-            ],
-          },
-        });
-        const filteredList = SORU_LIST.filter((item) => item.GIZLI !== "E");
-        setQuestions(filteredList);
-      }
+      const { SORU_LIST, SORU_MASKE_LIST } = await post<
+        ProductQuestionPayload,
+        RootObject
+      >({
+        path: "/ExternalProduction/SET_TEKLIF_URUN",
+        payload: {
+          POLICE_GUID: policeGuid,
+          URUN_LIST: [
+            {
+              VISIBLE: 1,
+              URUN_ID: productDetail?.URUN_ID,
+              URUN_AD: productDetail?.URUN_AD,
+              URUN_KOD: productDetail?.URUN_KOD,
+            },
+          ],
+        },
+      });
+      const filteredList = SORU_LIST.filter((item) => item.GIZLI !== "E");
+      setQuestions(filteredList);
     } catch (error) {
       console.error("Failed to fetch initial token", error);
     }
   }
 
   async function handleAnswerChange(question: SoruListItem, value: string) {
+    if (question.MASKE_TIP_ID === 3) {
+      const [year, month, day] = value.split("-");
+      value = `${day}/${month}/${year}`;
+    }
+
     try {
-      if (guid) {
+      if (!!policeGuid) {
         const updatedQuestions = await post<AnswerQuestionPayload, RootObject>({
           path: "/ExternalProduction/POST_POLICY_QUESTION_ANSWER",
           payload: {
-            POLICE_GUID: guid,
+            POLICE_GUID: policeGuid,
             SORU_LIST: [{ ...question, DEGER_KOD: value }],
           },
         });
@@ -71,6 +85,27 @@ function ProductForm() {
           (item) => item.GIZLI !== "E"
         );
         setQuestions(filteredList);
+      }
+    } catch (error) {
+      console.error("Failed to update question answers", error);
+    }
+  }
+
+  async function handleSendForm(event: React.FormEvent) {
+    event.preventDefault();
+    try {
+      if (policeGuid) {
+        const { POLICE_ID } = await post<
+          PolicePayload,
+          PostPolicyQuestionResponse
+        >({
+          path: "/ExternalProduction/POST_POLICY_QUESTION",
+          payload: {
+            POLICE_GUID: policeGuid,
+          },
+        });
+        setSessionStorage("policeId", POLICE_ID);
+        router.push("/teklif-listesi");
       }
     } catch (error) {
       console.error("Failed to update question answers", error);
@@ -89,9 +124,9 @@ function ProductForm() {
         <div className="w-full max-w-md px-3 overflow-y-auto">
           <form
             autoComplete="off"
-            noValidate={true}
+            // noValidate={true}
             id="form1"
-            onSubmit={() => console.log("deneme")}
+            onSubmit={handleSendForm}
           >
             <div className="flex flex-col gap-6 mb-6">
               {questions.map((question) => (
@@ -99,6 +134,7 @@ function ProductForm() {
                   key={question.SIRA_NO}
                   questionID={question.SORU_ID + ""}
                   questionTypeID={question.SORU_TIP_ID + ""}
+                  // mask={question.MASKE_TIP_ID}
                   questionName={question.SORU_AD}
                   questionCode={question.SORU_KOD}
                   isRequired={question.ZORUNLU === "E"}
