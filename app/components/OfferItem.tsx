@@ -4,7 +4,8 @@ import { contractText } from "../contracts";
 import { setSessionStorage } from "../utils";
 import { useRouter } from "next/navigation";
 import Spinner from "./elements/Spinner";
-import { EntegrasyonPoliceDurumID } from "../teklif-listesi/page";
+import Image from "next/image";
+import { EntegrasyonPoliceDurumID } from "../types/product";
 
 interface OfferItemProps {
   customer?: string;
@@ -49,7 +50,7 @@ function OfferItem({
       onClick={() => handleSelectPolice()}
     >
       <div className="flex items-center mb-3.5">
-        <img src="/axa-logo.png" alt="Axa logo" width="54" height="54" />
+        <Image src="/axa-logo.png" alt="Axa logo" width="54" height="54" />
         <div className="ml-3.5 flex flex-col justify-between">
           <p className="text-xs font-semibold">{title}</p>
           <p className="text-[#667085] text-lg font-extralight">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import InformationFormDialog from "./dialogs/InformationFormDialog";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface OfferProps {
   customer: string;
@@ -33,7 +34,7 @@ function Offer({
     <>
       <div className="rounded-xl max-w-[405px] max-h-[377px] w-full h-full bg-white p-4 border-solid border-[1px] border-[#0F1827] ">
         <div className="mb-2.5 flex">
-          <img src="/axa-logo.png" alt="Axa logo" width="40" height="40" />
+          <Image src="/axa-logo.png" alt="Axa logo" width="40" height="40" />
           <div className="ml-2.5 w-full">
             <div className="flex justify-between text-[#0F1827] text-sm font-medium">
               <p>{title ?? "-"}</p>

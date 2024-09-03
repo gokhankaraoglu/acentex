@@ -9,15 +9,8 @@ import { useEffect, useState } from "react";
 import { getSessionStorage } from "../utils";
 import { post } from "../utils/api";
 import { GetEntegrasyonPolicePayload } from "../types/question";
-import { PoliceApiResponse, PoliceItem, ProductItem } from "../types/product";
+import { EntegrasyonPoliceDurumID, PoliceApiResponse } from "../types/product";
 import Spinner from "../components/elements/Spinner";
-
-export enum EntegrasyonPoliceDurumID {
-  BEKLIYOR = 1,
-  TEKLIF = 2,
-  POLICE = 3,
-  HATA = 4,
-}
 
 function OfferList() {
   const [showContract, setShowContract] = useState(false);
@@ -37,10 +30,11 @@ function OfferList() {
     if (
       offerList.some(
         (item) =>
-          item.ENTEGRASYON_POLICE_DURUM_ID === EntegrasyonPoliceDurumID.BEKLIYOR
+          item.ENTEGRASYON_POLICE_DURUM_ID === EntegrasyonPoliceDurumID.HATA
       )
     ) {
-      intervalId = setInterval(fetchProducts, 15000);
+      console.log("offerList");
+      intervalId = setInterval(fetchProducts, 1000);
     }
 
     return () => {
@@ -61,7 +55,6 @@ function OfferList() {
         },
       });
       setOfferList(Items);
-      console.log({ Items });
     } catch (error) {
       console.error("Failed to update question answers", error);
     }

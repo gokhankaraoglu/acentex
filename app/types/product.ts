@@ -122,3 +122,10 @@ export interface PoliceItem {
   WarningList: any[];
   MessageList: any[];
 }
+
+export enum EntegrasyonPoliceDurumID {
+  BEKLIYOR = 1,
+  TEKLIF = 2,
+  POLICE = 3,
+  HATA = 4,
+}

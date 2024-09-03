@@ -1,14 +1,8 @@
 "use client";
-import Link from "next/link";
 import { setSessionStorage } from "../utils";
-import CustomButton from "./elements/CustomButton";
-import { Fragment, useEffect, useState } from "react";
-import { Item } from "../utils/api/product";
-import { post } from "../utils/api";
-import { ProductApiResponse, DataItem } from "../types";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "../loading";
-import useToken, { getToken } from "../hooks/useToken";
+import { useEffect } from "react";
 
 function ProductList() {
   // useEffect(() => {
