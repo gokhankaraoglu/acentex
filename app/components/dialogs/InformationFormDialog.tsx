@@ -1,7 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import CustomButton from "../elements/CustomButton";
 import { Icon, Icons } from "../elements/Icon";
-import Link from "next/link";
 import { informationForm } from "../../contracts";
 
 function InformationFormDialog({
@@ -45,11 +44,14 @@ function InformationFormDialog({
               </div>
             </div>
             <div className="flex flex-col justify-center items-center mb-6">
-              <Link href="/odeme">
-                <CustomButton form="form1" type="submit" className="mb-3.5">
-                  Okudum, kabul ediyorum.
-                </CustomButton>
-              </Link>
+              <CustomButton
+                form="form1"
+                type="button"
+                className="mb-3.5"
+                onClick={close}
+              >
+                Okudum, kabul ediyorum.
+              </CustomButton>
               <p className="text-[#667085] font-extralight text-xs text-center">
                 Şu anda Insurelab Sigorta ve Reasürans Brokerlığı
                 sayfasındasınız.

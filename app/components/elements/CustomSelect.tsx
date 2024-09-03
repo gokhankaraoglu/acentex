@@ -19,15 +19,16 @@ function CustomSelect({
   return (
     <div className="select-wrapper">
       <label htmlFor={id} className="select-label">
-        {capitalize(name)}
+        {name}
       </label>
       <select
         className="select-area"
         id={id}
         name={id}
         required={isRequired}
-        onInput={onChange}
+        onChange={onChange}
       >
+        <option value="">Lütfen bir {name.toLocaleLowerCase()} seçiniz.</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

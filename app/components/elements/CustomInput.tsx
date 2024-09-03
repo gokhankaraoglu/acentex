@@ -23,6 +23,7 @@ interface InputProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   value?: string;
   className?: string;
+  min?: string;
 }
 
 function CustomInput({
@@ -38,6 +39,7 @@ function CustomInput({
   information = undefined,
   onChange,
   className = "",
+  min,
 }: InputProps) {
   return (
     <div className="input-wrapper">
@@ -52,7 +54,8 @@ function CustomInput({
         maxLength={maxlength}
         minLength={minlength}
         className={`input-area ${className}`}
-        onInput={onChange}
+        onChange={onChange}
+        min={min}
       />
       <label htmlFor={id} className="input-label">
         <span>{name}</span>

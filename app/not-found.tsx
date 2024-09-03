@@ -3,10 +3,12 @@ import React from "react";
 
 function NotFound() {
   return (
-    <div className="h-full flex flex-col justify-between align-middle">
-      <h2>Bulunamadı</h2>
-      <p>Üzgünüz,Aradığın sayfa oluşturulmamış.</p>
-      <Link href="/">Anasayfaya Dön</Link>
+    <div className="h-screen flex flex-col justify-center items-center text-center">
+      <h2 className="text-2xl font-bold mb-4">Bulunamadı</h2>
+      <p className="mb-6">Üzgünüz, aradığın sayfa oluşturulmamış.</p>
+      <Link href="/" className="text-blue-500 hover:underline">
+        Anasayfaya Dön
+      </Link>
     </div>
   );
 }

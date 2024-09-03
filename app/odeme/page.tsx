@@ -3,23 +3,33 @@
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomInput, { InputType } from "../components/elements/CustomInput";
-
-import { useState } from "react";
 import CustomButton from "../components/elements/CustomButton";
-import { normalizeCardDate, normalizeCardNumber } from "../utils/mask";
+import {
+  normalizeCardDate,
+  normalizeCardNumber,
+  normalizeTCKN,
+} from "../utils/mask";
+import { useSessionCheck } from "../hooks/useSessionCheck";
 
 interface FormElements extends HTMLFormControlsCollection {
+  tckn: HTMLInputElement;
   cardOwner: HTMLInputElement;
   cardNumber: HTMLInputElement;
   exp: HTMLInputElement;
   cvt: HTMLInputElement;
 }
 
-interface LoginFormElement extends HTMLFormElement {
+interface PaymentFormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
 const paymentFormElements = [
+  {
+    questionName: "TC Kimlik Numarası",
+    questionCode: "tckn",
+    isRequired: true,
+    options: null,
+  },
   {
     questionName: "Kart Sahibi",
     questionCode: "cardOwner",
@@ -47,20 +57,31 @@ const paymentFormElements = [
 ];
 
 function CardForm() {
-  const [paymentElements, setPaymentElements] = useState({
-    cardOwner: "",
-    cardNumber: "",
-    exp: "",
-    cvt: "",
-  });
-  function getFormElements(event: React.FormEvent<LoginFormElement>) {
+  useSessionCheck({ key: "police-status-id", redirectTo: "/teklif-listesi" });
+  function getFormElements(event: React.FormEvent<PaymentFormElement>) {
     event.preventDefault();
-    console.log("test");
 
-    const { cardOwner, cardNumber, exp, cvt } = (
-      event.currentTarget as LoginFormElement
+    const { cardOwner, cardNumber, exp, cvt, tckn } = (
+      event.currentTarget as PaymentFormElement
     ).elements;
 
+    try {
+      if (false) {
+        // const { POLICE_ID } = await post<
+        //   PolicePayload,
+        //   PostPolicyQuestionResponse
+        // >({
+        //   path: "/ExternalProduction/POST_POLICY_QUESTION",
+        //   payload: {
+        //     POLICE_GUID: policeGuid,
+        //   },
+        // });
+        // setSessionStorage("policeId", POLICE_ID);
+        // router.push("/teklif-listesi");
+      }
+    } catch (error) {
+      console.error("Failed to update question answers", error);
+    }
     console.log(cardOwner.value, cardNumber.value, exp.value, cvt.value);
   }
 
@@ -80,14 +101,19 @@ function CardForm() {
           </p>
         </div>
         <div className="w-full max-w-md">
-          <form
-            autoComplete="off"
-            noValidate={true}
-            id="form1"
-            // onBlur={(event) => getFormElements(event)}
-            onSubmit={getFormElements}
-          >
+          <form autoComplete="off" id="form1" onSubmit={getFormElements}>
             <div className="flex flex-col gap-6 mb-6">
+              <CustomInput
+                id="tckn"
+                type={InputType.NUMBER}
+                isRequired={true}
+                minlength={10}
+                maxlength={11}
+                name="TC Kimlik Numarası"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.value = normalizeTCKN(e.target.value);
+                }}
+              />
               <CustomInput
                 id="cardOwner"
                 type={InputType.TEXT}

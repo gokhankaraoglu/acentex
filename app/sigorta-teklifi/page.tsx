@@ -3,12 +3,18 @@
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
-import { useState } from "react";
-import InformationFormDialog from "../components/dialogs/InformationFormDialog";
 import Offer from "../components/Offer";
+import { getSessionStorage } from "../utils";
+import { useEffect, useState } from "react";
 
-function OfferList() {
-  const [showInformationForm, setShowInformationForm] = useState(false);
+function SelectedOffer() {
+  const [police, setPolice] = useState<any>({});
+  useEffect(() => {
+    const selectedPolice: any = getSessionStorage("selected-police");
+
+    setPolice(selectedPolice);
+  }, []);
+
   return (
     <>
       <div className="pt-16 flex flex-col justify-between custom-min-height">
@@ -30,31 +36,29 @@ function OfferList() {
             </p>
           </div>
           <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6">
-            <Offer />
+            <Offer
+              title={police.title}
+              customer={police.customer}
+              company={police.company}
+              startDate={police.startDate}
+              endDate={police.endDate}
+              price={police.price}
+              deviceName={police.deviceName}
+            />
           </div>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <CustomButton
-            form="form1"
-            type="submit"
-            className="mb-3.5"
-            onClick={() => {
-              setShowInformationForm(true);
-            }}
-          >
+          <CustomButton form="form2" type="submit" className="mb-3.5">
             Devam Et
           </CustomButton>
+
           <p className="text-[#667085] font-extralight text-xs text-center">
             Şu anda Insurelab Sigorta ve Reasürans Brokerlığı sayfasındasınız.
           </p>
         </div>
       </div>
-      <InformationFormDialog
-        isOpen={showInformationForm}
-        close={() => setShowInformationForm(false)}
-      />
     </>
   );
 }
 
-export default OfferList;
+export default SelectedOffer;

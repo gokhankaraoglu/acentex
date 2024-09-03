@@ -10,10 +10,18 @@ import { getSessionStorage } from "../utils";
 import { post } from "../utils/api";
 import { GetEntegrasyonPolicePayload } from "../types/question";
 import { PoliceApiResponse, PoliceItem, ProductItem } from "../types/product";
+import Spinner from "../components/elements/Spinner";
+
+export enum EntegrasyonPoliceDurumID {
+  BEKLIYOR = 1,
+  TEKLIF = 2,
+  POLICE = 3,
+  HATA = 4,
+}
 
 function OfferList() {
   const [showContract, setShowContract] = useState(false);
-  const [offerList, setOfferList] = useState<PoliceItem[]>([]);
+  const [offerList, setOfferList] = useState<any[]>([]);
 
   useEffect(() => {
     const policeId = getSessionStorage<GetEntegrasyonPolicePayload>("policeId");
@@ -23,7 +31,25 @@ function OfferList() {
     };
 
     fetchProducts();
+
+    let intervalId: NodeJS.Timeout | null = null;
+
+    if (
+      offerList.some(
+        (item) =>
+          item.ENTEGRASYON_POLICE_DURUM_ID === EntegrasyonPoliceDurumID.BEKLIYOR
+      )
+    ) {
+      intervalId = setInterval(fetchProducts, 15000);
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
   }, []);
+
   async function handleGePolice(policeId: number) {
     try {
       const {
@@ -35,12 +61,12 @@ function OfferList() {
         },
       });
       setOfferList(Items);
-
       console.log({ Items });
     } catch (error) {
       console.error("Failed to update question answers", error);
     }
   }
+
   return (
     <>
       <div className="pt-16 flex flex-col justify-between custom-min-height">
@@ -59,18 +85,32 @@ function OfferList() {
             </p>
           </div>
           <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6 mb-6">
-            {offerList.map(
-              ({
-                ENTEGRASYON_URUN_AD,
-                SGR_SIRKET_MUSTERI_ROL_AD,
-                TOPLAM_PRIM_TL,
-              }) => (
-                <OfferItem
-                  title={ENTEGRASYON_URUN_AD}
-                  company={SGR_SIRKET_MUSTERI_ROL_AD}
-                  price={TOPLAM_PRIM_TL}
-                />
+            {!!offerList ? (
+              offerList.map(
+                (
+                  {
+                    ENTEGRASYON_URUN_AD,
+                    SGR_SIRKET_MUSTERI_ROL_AD,
+                    TOPLAM_PRIM_TL,
+                    ENTEGRASYON_POLICE_DURUM_ID,
+                    BASLAMA_TARIH,
+                    BITIS_TARIH,
+                  },
+                  index
+                ) => (
+                  <OfferItem
+                    title={ENTEGRASYON_URUN_AD}
+                    company={SGR_SIRKET_MUSTERI_ROL_AD}
+                    price={TOPLAM_PRIM_TL}
+                    policeStatusId={ENTEGRASYON_POLICE_DURUM_ID}
+                    startDate={BASLAMA_TARIH}
+                    endDate={BITIS_TARIH}
+                    key={index}
+                  />
+                )
               )
+            ) : (
+              <Spinner />
             )}
           </div>
         </div>

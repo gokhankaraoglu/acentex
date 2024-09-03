@@ -16,9 +16,20 @@ function InputSections({
   isRequired,
   onChange,
 }: InputSectionsProps) {
+  const today = new Date().toISOString().split("T")[0];
   switch (questionID) {
     case 21: // BAŞLAMA TARİHİ
     case 22: // BİTİŞ TARİHİ
+      return (
+        <CustomInput
+          id={questionCode}
+          type={InputType.DATE}
+          name={questionName}
+          isRequired={isRequired}
+          onChange={onChange}
+          min={today}
+        />
+      );
     case 44: // DOĞUM TARİHİ
       return (
         <CustomInput

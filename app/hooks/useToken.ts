@@ -3,12 +3,11 @@ import { post } from "../utils/api";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN } from "../utils/api/axiosClient";
 
-export const setToken = async () => {
+export const getToken = async () => {
   const accessToken = Cookies.get(ACCESS_TOKEN);
 
   if (!accessToken) {
     try {
-      console.log("Access token");
       const { accessToken } = await post<any, any>({
         path: "/Auth/GetToken",
         payload: {
@@ -26,11 +25,11 @@ export const setToken = async () => {
 
 const useToken = () => {
   useEffect(() => {
-    setToken();
+    const fetchToken = async () => {
+      await getToken();
+    };
 
-    // return () => {
-    //   Cookies.remove(ACCESS_TOKEN);
-    // };
+    fetchToken();
   }, []);
 };
 

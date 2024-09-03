@@ -17,6 +17,7 @@ import {
 } from "../types/question";
 import { ProductDetail, ProductQuestionPayload } from "../types/product";
 import { useRouter } from "next/navigation";
+import Spinner from "../components/elements/Spinner";
 
 // import { usePathname, useSearchParams } from "next/navigation";
 
@@ -128,24 +129,32 @@ function ProductForm() {
             id="form1"
             onSubmit={handleSendForm}
           >
-            <div className="flex flex-col gap-6 mb-6">
-              {questions.map((question) => (
-                <FormElement
-                  key={question.SIRA_NO}
-                  questionID={question.SORU_ID + ""}
-                  questionTypeID={question.SORU_TIP_ID + ""}
-                  // mask={question.MASKE_TIP_ID}
-                  questionName={question.SORU_AD}
-                  questionCode={question.SORU_KOD}
-                  isRequired={question.ZORUNLU === "E"}
-                  options={question?.SORU_DEGER_LIST?.map((option) => ({
-                    value: option.DEGER_KOD,
-                    label: option.DEGER_AD,
-                  }))}
-                  onChange={(e) => handleAnswerChange(question, e.target.value)}
-                />
-              ))}
-            </div>
+            {questions.length > 0 ? (
+              <div className="flex flex-col gap-6 mb-6">
+                {questions.map((question) => (
+                  <FormElement
+                    key={question.SIRA_NO}
+                    questionID={question.SORU_ID + ""}
+                    questionTypeID={question.SORU_TIP_ID + ""}
+                    // mask={question.MASKE_TIP_ID}
+                    questionName={question.SORU_AD}
+                    questionCode={question.SORU_KOD}
+                    isRequired={question.ZORUNLU === "E"}
+                    options={question?.SORU_DEGER_LIST?.map((option) => ({
+                      value: option.DEGER_KOD,
+                      label: option.DEGER_AD,
+                    }))}
+                    onChange={(e) =>
+                      handleAnswerChange(question, e.target.value)
+                    }
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex justify-center items-center h-full">
+                <Spinner />
+              </div>
+            )}
           </form>
         </div>
       </div>
