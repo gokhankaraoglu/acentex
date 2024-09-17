@@ -6,9 +6,11 @@ import { contractText } from "@/app/contracts";
 
 function InsuranceDetailDialog({
   isOpen,
+  confirm,
   close,
 }: {
   isOpen: boolean;
+  confirm: () => void;
   close: () => void;
 }) {
   return (
@@ -45,7 +47,7 @@ function InsuranceDetailDialog({
             </div>
             <div className="flex flex-col justify-center items-center mb-6">
               <Link href="/sigorta-teklifi">
-                <CustomButton form="form1" type="submit" className="mb-3.5">
+                <CustomButton onClick={() => confirm()} className="mb-3.5">
                   Devam Et
                 </CustomButton>
               </Link>

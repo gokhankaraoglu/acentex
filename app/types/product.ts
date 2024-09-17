@@ -13,7 +13,7 @@ export interface ProductItem {
 }
 
 export interface Data {
-  Items: ProductItem[] | PoliceItem[];
+  Items: (ProductItem | PoliceItem)[];
   Success: boolean;
   ErrorList: any[];
   WarningList: any[];

@@ -1,4 +1,3 @@
-import { capitalize } from "@/app/utils";
 import React from "react";
 
 interface SelectProps {

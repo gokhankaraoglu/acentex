@@ -2,10 +2,11 @@ import React from "react";
 import InputSections from "./InputSections";
 import SelectSections from "./SelectSections";
 import Title from "./elements/Title";
+import { formatName } from "../utils";
 
 interface FormElementProps {
-  questionID: string;
-  questionTypeID: string;
+  questionID: number;
+  questionTypeID: number;
   questionName: string;
   questionCode: string;
   isRequired: boolean;
@@ -23,29 +24,29 @@ function FormElement({
   onChange,
 }: FormElementProps) {
   switch (questionTypeID) {
-    case "1":
+    case 1:
       return (
         <InputSections
-          questionID={Number(questionID)}
-          questionName={questionName}
+          questionID={questionID}
+          questionName={formatName(questionName)}
           questionCode={questionCode}
           isRequired={isRequired}
           onChange={onChange}
         />
       );
-    case "2":
+    case 2:
       return (
         <SelectSections
-          questionID={Number(questionID)}
-          questionName={questionName}
+          questionID={questionID}
+          questionName={formatName(questionName)}
           questionCode={questionCode}
           options={options || []}
           isRequired={isRequired}
           onChange={onChange}
         />
       );
-    case "5":
-      return <Title name={questionName} />;
+    case 5:
+      return <Title name={formatName(questionName)} />;
   }
 }
 

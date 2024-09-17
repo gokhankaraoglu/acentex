@@ -5,61 +5,56 @@ import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import OfferItem from "../components/OfferItem";
 import InsuranceDetailDialog from "../components/dialogs/InsuranceDetailDialog";
-import { useEffect, useState } from "react";
-import { getSessionStorage } from "../utils";
-import { post } from "../utils/api";
-import { GetEntegrasyonPolicePayload } from "../types/question";
-import { EntegrasyonPoliceDurumID, PoliceApiResponse } from "../types/product";
+import { useEffect, useState, useCallback } from "react";
+import { getSessionStorage, setSessionStorage } from "../utils";
+import { EntegrasyonPoliceDurumID, PoliceItem } from "../types/product";
 import Spinner from "../components/elements/Spinner";
+import { fetchOfferData } from "../utils/api/offer";
+import { useRouter } from "next/navigation";
 
 function OfferList() {
+  const router = useRouter();
   const [showContract, setShowContract] = useState(false);
-  const [offerList, setOfferList] = useState<any[]>([]);
+  const [offer, setOffer] = useState<PoliceItem>();
+  let intervalId: NodeJS.Timeout | null = null;
 
   useEffect(() => {
-    const policeId = getSessionStorage<GetEntegrasyonPolicePayload>("policeId");
+    const policeId = getSessionStorage<number>("policeId");
 
-    const fetchProducts = async () => {
-      policeId && (await handleGePolice(+policeId));
-    };
+    if (!policeId) {
+      router.push("/");
+      return;
+    }
 
-    fetchProducts();
-
-    let intervalId: NodeJS.Timeout | null = null;
+    fetchOffer(policeId);
 
     if (
-      offerList.some(
-        (item) =>
-          item.ENTEGRASYON_POLICE_DURUM_ID === EntegrasyonPoliceDurumID.HATA
-      )
+      !offer ||
+      offer?.ENTEGRASYON_POLICE_DURUM_ID === EntegrasyonPoliceDurumID.BEKLIYOR
     ) {
-      console.log("offerList");
-      intervalId = setInterval(fetchProducts, 1000);
+      intervalId = setInterval(() => fetchOffer(policeId), 5000);
     }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
   }, []);
 
-  async function handleGePolice(policeId: number) {
+  const fetchOffer = useCallback(async (policeId: number) => {
     try {
-      const {
-        Data: { Items },
-      } = await post<GetEntegrasyonPolicePayload, PoliceApiResponse>({
-        path: "/ExternalProduction/GET_ENTEGRASYON_POLICE",
-        payload: {
-          POLICE_ID: Number(policeId),
-        },
-      });
-      setOfferList(Items);
+      const offerData = await fetchOfferData(policeId);
+      setOffer(offerData);
     } catch (error) {
-      console.error("Failed to update question answers", error);
+      console.error("Failed to fetch police data", error);
     }
-  }
+  }, []);
 
+  const selectOffer = (offer: PoliceItem) => {
+    setSessionStorage("selected-police", {
+      title: offer.URUN_AD,
+      company: offer.SGR_SIRKET_MUSTERI_ROL_AD,
+      entegrationId: offer.ENTEGRASYON_POLICE_HAREKET_ID,
+      startDate: offer.BASLAMA_TARIH,
+      endDate: offer.BITIS_TARIH,
+      price: offer.TOPLAM_PRIM,
+    });
+  };
   return (
     <>
       <div className="pt-16 flex flex-col justify-between custom-min-height">
@@ -67,41 +62,24 @@ function OfferList() {
           <Link href="/" className="mb-11 inline-block self-start">
             <span className="flex items-center">
               <Icon icon={Icons.ARROW_LEFT} />
-              {/* <span className="ml-3 font-semibold text-xl">Teklife Dön</span> */}
             </span>
           </Link>
           <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold">Samsung Galaxy S Ultra</h2>
+            <h2 className="text-2xl font-bold">Cep Telefonu Sigortası</h2>
             <p className="text-[#667085] font-extralight text-lg">
-              Samsung Galaxy S Ultra cihazına ait teklifleri burada
+              Cep telefonunuza ait sigorta tekliflerini burada
               görüntüleyebilirsiniz.
             </p>
           </div>
           <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6 mb-6">
-            {!!offerList ? (
-              offerList.map(
-                (
-                  {
-                    ENTEGRASYON_URUN_AD,
-                    SGR_SIRKET_MUSTERI_ROL_AD,
-                    TOPLAM_PRIM_TL,
-                    ENTEGRASYON_POLICE_DURUM_ID,
-                    BASLAMA_TARIH,
-                    BITIS_TARIH,
-                  },
-                  index
-                ) => (
-                  <OfferItem
-                    title={ENTEGRASYON_URUN_AD}
-                    company={SGR_SIRKET_MUSTERI_ROL_AD}
-                    price={TOPLAM_PRIM_TL}
-                    policeStatusId={ENTEGRASYON_POLICE_DURUM_ID}
-                    startDate={BASLAMA_TARIH}
-                    endDate={BITIS_TARIH}
-                    key={index}
-                  />
-                )
-              )
+            {!!offer ? (
+              <OfferItem
+                title={offer.ENTEGRASYON_URUN_AD}
+                company={offer.SGR_SIRKET_MUSTERI_ROL_AD}
+                price={offer.TOPLAM_PRIM_TL}
+                policeStatusId={offer.ENTEGRASYON_POLICE_DURUM_ID}
+                status={offer.DURUM_ACIKLAMA || ""}
+              />
             ) : (
               <Spinner />
             )}
@@ -109,8 +87,6 @@ function OfferList() {
         </div>
         <div className="flex flex-col justify-center items-center mb-3">
           <CustomButton
-            form="form1"
-            type="submit"
             className="mb-3.5"
             saturated
             onClick={() => setShowContract(true)}
@@ -124,6 +100,7 @@ function OfferList() {
       </div>
       <InsuranceDetailDialog
         isOpen={showContract}
+        confirm={() => offer && selectOffer(offer)}
         close={() => setShowContract(false)}
       />
     </>

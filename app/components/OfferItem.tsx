@@ -1,21 +1,17 @@
 import React from "react";
 import { Icon, Icons } from "./elements/Icon";
 import { contractText } from "../contracts";
-import { setSessionStorage } from "../utils";
-import { useRouter } from "next/navigation";
 import Spinner from "./elements/Spinner";
 import Image from "next/image";
 import { EntegrasyonPoliceDurumID } from "../types/product";
+import { formatName } from "../utils";
 
 interface OfferItemProps {
-  customer?: string;
-  startDate: string;
-  endDate: string;
   company: string;
-  deviceName?: string;
   title: string;
   price: number;
   policeStatusId: number;
+  status?: string;
 }
 
 function OfferItem({
@@ -23,52 +19,30 @@ function OfferItem({
   company,
   price,
   policeStatusId,
-  startDate,
-  endDate,
-  customer = undefined,
-  deviceName = undefined,
+  status,
 }: OfferItemProps) {
-  const router = useRouter();
-
-  function handleSelectPolice() {
-    setSessionStorage("selected-police", {
-      title,
-      company,
-      price,
-      policeStatusId,
-      startDate,
-      endDate,
-      customer,
-      deviceName,
-    });
-    router.push("/sigorta-teklifi");
-  }
-
   return (
-    <div
-      className="rounded-xl max-w-[405px] max-h-[327px] w-full h-full bg-white p-4 border-solid border-[1px] border-[#0F1827] cursor-pointer"
-      onClick={() => handleSelectPolice()}
-    >
+    <div className="rounded-xl max-w-[405px] max-h-[327px] w-full h-full bg-white p-4 border-solid border-[1px] border-[#0F1827]">
       <div className="flex items-center mb-3.5">
         <Image src="/axa-logo.png" alt="Axa logo" width="54" height="54" />
         <div className="ml-3.5 flex flex-col justify-between">
-          <p className="text-xs font-semibold">{title}</p>
+          <p className="text-base font-semibold">{formatName(title)}</p>
           <p className="text-[#667085] text-lg font-extralight">
             {EntegrasyonPoliceDurumID.TEKLIF === policeStatusId ? (
-              price
+              <span>₺{price}</span>
             ) : EntegrasyonPoliceDurumID.BEKLIYOR === policeStatusId ? (
               <Spinner />
             ) : (
-              "Hata Oluştu"
+              <span className="text-sm ">{status}</span>
             )}
           </p>
         </div>
       </div>
-      <p className="flex text-sm font-light text-[#667085] items-center">
+      <p className="flex text-xs font-light text-[#667085] items-center">
         <Icon icon={Icons.INFO_ICON} />
-        <span className="ml-1">{company} güvencesiyle</span>
+        <span className="ml-1">{formatName(company)} güvencesiyle</span>
       </p>
-      <hr className="my-3.5 border-t-1 border-[#0F1827]" />
+      <hr className="mb-3.5 mt-2.5 border-t-1 border-[#0F1827]" />
       <div>
         {contractText.map(({ title, icon }, index) => (
           <section className="mb-3" key={index}>

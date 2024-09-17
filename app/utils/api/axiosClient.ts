@@ -1,6 +1,6 @@
-import { getToken } from "@/app/hooks/useToken";
 import axios, { AxiosHeaders } from "axios";
 import Cookies from "js-cookie";
+import Router from "next/router";
 
 export const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -34,7 +34,7 @@ axiosClient.interceptors.response.use(
     console.log({ error });
     if (error?.response?.status === 401) {
       Cookies.remove(ACCESS_TOKEN);
-      getToken();
+      Router.push("/");
     }
     return Promise.reject(error);
   }

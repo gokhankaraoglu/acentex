@@ -5,21 +5,19 @@ import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import { useEffect, useState } from "react";
-import { post } from "../utils/api";
 import { getSessionStorage, setSessionStorage } from "../utils";
 import { setGuid } from "../hooks/useSetGuid";
-import {
-  AnswerQuestionPayload,
-  PolicePayload,
-  PostPolicyQuestionResponse,
-  RootObject,
-  SoruListItem,
-} from "../types/question";
-import { ProductDetail, ProductQuestionPayload } from "../types/product";
+import { SoruListItem } from "../types/question";
 import { useRouter } from "next/navigation";
 import Spinner from "../components/elements/Spinner";
 
-// import { usePathname, useSearchParams } from "next/navigation";
+import { ProductDetail } from "../types/product";
+import {
+  fetchProductQuestions,
+  submitForm,
+  submitQuestionAnswer,
+} from "../utils/api/product";
+import { normalizePhoneNumber, normalizeTCKN } from "../utils/mask";
 
 function ProductForm() {
   const router = useRouter();
@@ -30,86 +28,64 @@ function ProductForm() {
     const productDetail = getSessionStorage<ProductDetail>("product");
     const fetchProducts = async () => {
       const policeId = await setGuid();
+      if (!productDetail) {
+        router.push("/");
+        return;
+      }
       setPoliceGuid(policeId);
-      productDetail && (await getQuestions(policeId, productDetail));
+      const fetchedQuestions = await fetchProductQuestions(
+        policeId,
+        productDetail
+      );
+      setQuestions(fetchedQuestions);
     };
 
     fetchProducts();
   }, []);
 
-  async function getQuestions(
-    policeGuid: string,
-    productDetail: ProductDetail
+  async function handleAnswerChange(
+    question: SoruListItem,
+    e: React.ChangeEvent<HTMLInputElement>
   ) {
-    try {
-      const { SORU_LIST, SORU_MASKE_LIST } = await post<
-        ProductQuestionPayload,
-        RootObject
-      >({
-        path: "/ExternalProduction/SET_TEKLIF_URUN",
-        payload: {
-          POLICE_GUID: policeGuid,
-          URUN_LIST: [
-            {
-              VISIBLE: 1,
-              URUN_ID: productDetail?.URUN_ID,
-              URUN_AD: productDetail?.URUN_AD,
-              URUN_KOD: productDetail?.URUN_KOD,
-            },
-          ],
-        },
-      });
-      const filteredList = SORU_LIST.filter((item) => item.GIZLI !== "E");
-      setQuestions(filteredList);
-    } catch (error) {
-      console.error("Failed to fetch initial token", error);
-    }
-  }
+    let value = e.target.value;
 
-  async function handleAnswerChange(question: SoruListItem, value: string) {
     if (question.MASKE_TIP_ID === 3) {
       const [year, month, day] = value.split("-");
       value = `${day}/${month}/${year}`;
     }
 
-    try {
-      if (!!policeGuid) {
-        const updatedQuestions = await post<AnswerQuestionPayload, RootObject>({
-          path: "/ExternalProduction/POST_POLICY_QUESTION_ANSWER",
-          payload: {
-            POLICE_GUID: policeGuid,
-            SORU_LIST: [{ ...question, DEGER_KOD: value }],
-          },
-        });
-
-        const filteredList = updatedQuestions.SORU_LIST.filter(
-          (item) => item.GIZLI !== "E"
-        );
-        setQuestions(filteredList);
-      }
-    } catch (error) {
-      console.error("Failed to update question answers", error);
+    if (question.SORU_ID === 14) {
+      e.target.value = normalizeTCKN(e.target.value);
+      value = e.target.value;
     }
+    if (question.SORU_ID === 42) {
+      e.target.value = normalizePhoneNumber(e.target.value);
+      value = e.target.value;
+    }
+
+    if (!policeGuid) {
+      router.push("/");
+      return;
+    }
+
+    const updatedQuestions = await submitQuestionAnswer(
+      policeGuid,
+      question,
+      value
+    );
+    setQuestions(updatedQuestions);
   }
 
   async function handleSendForm(event: React.FormEvent) {
     event.preventDefault();
     try {
       if (policeGuid) {
-        const { POLICE_ID } = await post<
-          PolicePayload,
-          PostPolicyQuestionResponse
-        >({
-          path: "/ExternalProduction/POST_POLICY_QUESTION",
-          payload: {
-            POLICE_GUID: policeGuid,
-          },
-        });
-        setSessionStorage("policeId", POLICE_ID);
+        const policeId = await submitForm(policeGuid);
+        setSessionStorage("policeId", policeId);
         router.push("/teklif-listesi");
       }
     } catch (error) {
-      console.error("Failed to update question answers", error);
+      console.error("Failed to submit form", error);
     }
   }
 
@@ -123,20 +99,14 @@ function ProductForm() {
           </span>
         </Link>
         <div className="w-full max-w-md px-3 overflow-y-auto">
-          <form
-            autoComplete="off"
-            // noValidate={true}
-            id="form1"
-            onSubmit={handleSendForm}
-          >
+          <form autoComplete="off" id="form1" onSubmit={handleSendForm}>
             {questions.length > 0 ? (
               <div className="flex flex-col gap-6 mb-6">
                 {questions.map((question) => (
                   <FormElement
                     key={question.SIRA_NO}
-                    questionID={question.SORU_ID + ""}
-                    questionTypeID={question.SORU_TIP_ID + ""}
-                    // mask={question.MASKE_TIP_ID}
+                    questionID={question.SORU_ID}
+                    questionTypeID={question.SORU_TIP_ID}
                     questionName={question.SORU_AD}
                     questionCode={question.SORU_KOD}
                     isRequired={question.ZORUNLU === "E"}
@@ -144,9 +114,7 @@ function ProductForm() {
                       value: option.DEGER_KOD,
                       label: option.DEGER_AD,
                     }))}
-                    onChange={(e) =>
-                      handleAnswerChange(question, e.target.value)
-                    }
+                    onChange={(e) => handleAnswerChange(question, e)}
                   />
                 ))}
               </div>

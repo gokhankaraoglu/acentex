@@ -2,32 +2,34 @@ import { useState } from "react";
 import InformationFormDialog from "./dialogs/InformationFormDialog";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { formatName } from "../utils";
+import { submitPolicyApprovalSecurePayment } from "../utils/api/payment";
 
 interface OfferProps {
-  customer: string;
   startDate: string;
   endDate: string;
   company: string;
-  deviceName: string;
   price: number;
   title: string;
+  entegrationId: number;
 }
 
 function Offer({
   title,
   company,
   price,
-  customer,
   startDate,
   endDate,
-  deviceName,
+  entegrationId,
 }: OfferProps) {
   const [showInformationForm, setShowInformationForm] = useState(false);
   const router = useRouter();
 
   function handleSendForm(event: React.FormEvent) {
     event.preventDefault();
-    router.push("/odeme");
+
+    // submitPolicyApprovalSecurePayment(entegrationId, null, null);
+    // router.push("/odeme");
   }
 
   return (
@@ -37,22 +39,22 @@ function Offer({
           <Image src="/axa-logo.png" alt="Axa logo" width="40" height="40" />
           <div className="ml-2.5 w-full">
             <div className="flex justify-between text-[#0F1827] text-sm font-medium">
-              <p>{title ?? "-"}</p>
-              <p>{price ?? "-"}</p>
+              <p>{formatName(title) ?? "-"}</p>
+              <p>₺{price ?? "-"}</p>
             </div>
             <p className="flex text-xs font-extralight text-[#667085]">
-              {company} güvencesiyle
+              {formatName(company)} güvencesiyle
             </p>
           </div>
         </div>
         <hr className="my-2 border-t-1 border-[#667085]" />
         <div className="text-sm text-[#0F1827]">
-          <div>
+          {/* <div>
             <p className="font-light text-xs text-[#667085]">Sigortalı</p>
             <p className="text-sm font-normal ">{customer ?? "-"}</p>
           </div>
-          <hr className="my-2 border-t-1 border-[#667085]" />
-          <div>
+          <hr className="my-2 border-t-1 border-[#667085]" /> */}
+          {/* <div>
             <p className="font-light text-xs text-[#667085]">Cihaz Bilgileri</p>
             <p className="text-sm font-normal">{deviceName ?? "-"}</p>
           </div>
@@ -61,7 +63,7 @@ function Offer({
             <p className="font-light text-xs text-[#667085]">Cihaz Bedeli</p>
             <p className="text-sm font-normal">{price ?? "-"}</p>
           </div>
-          <hr className="my-2 border-t-1 border-[#667085]" />
+          <hr className="my-2 border-t-1 border-[#667085]" /> */}
           <div>
             <p className="font-light text-xs text-[#667085]">
               Poliçe Başlangıç ve Bitiş Tarihi

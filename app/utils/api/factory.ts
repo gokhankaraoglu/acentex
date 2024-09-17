@@ -1,5 +1,5 @@
 import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
-import { get, post } from ".";
+import { post } from ".";
 export const Paths = {
   token: "/token",
   set_teklif_guid: "/set_teklif_guid",

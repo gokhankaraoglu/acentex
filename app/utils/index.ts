@@ -1,6 +1,26 @@
 export function capitalize(str: string): string {
-  const word = str.toLowerCase();
-  return word.toLowerCase().charAt(0).toUpperCase() + word.slice(1);
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export function formatName(name: string): string {
+  const exceptions = ["IMEI", "T.C."];
+
+  return name
+    ?.split(" ")
+    .map((word) => {
+      if (exceptions.includes(word)) {
+        return word;
+      }
+      return (
+        word.charAt(0).toLocaleUpperCase("tr-TR") +
+        word.slice(1).toLocaleLowerCase("tr-TR")
+      );
+    })
+    .join(" ");
 }
 
 export const setSessionStorage = <T>(key: string, value: T): void => {

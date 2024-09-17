@@ -68,6 +68,7 @@ function InputSections({
           name={questionName}
           isRequired={isRequired}
           onChange={onChange}
+          placeholder="5554443322"
         />
       );
     case 77: // E-MAIL ADRESİ

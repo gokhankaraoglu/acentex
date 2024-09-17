@@ -37,18 +37,22 @@ function SelectedOffer() {
           </div>
           <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6">
             <Offer
-              title={police.title}
-              customer={police.customer}
-              company={police.company}
-              startDate={police.startDate}
-              endDate={police.endDate}
-              price={police.price}
-              deviceName={police.deviceName}
+              title={police?.title}
+              company={police?.company}
+              startDate={police?.startDate}
+              endDate={police?.endDate}
+              price={police?.price}
+              entegrationId={police?.entegrationId}
             />
           </div>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <CustomButton form="form2" type="submit" className="mb-3.5">
+          <CustomButton
+            form="form2"
+            type="submit"
+            className="mb-3.5"
+            disabled={!police?.entegrationId}
+          >
             Devam Et
           </CustomButton>
 
