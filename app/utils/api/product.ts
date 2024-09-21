@@ -31,7 +31,7 @@ export async function fetchProductQuestions(
 export async function submitQuestionAnswer(
   policeGuid: string,
   question: SoruListItem,
-  value: string
+  value: string | number
 ): Promise<SoruListItem[]> {
   const { SORU_LIST } = await post<AnswerQuestionPayload, RootObject>({
     path: "/ExternalProduction/POST_POLICY_QUESTION_ANSWER",

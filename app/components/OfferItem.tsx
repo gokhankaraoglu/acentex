@@ -22,8 +22,8 @@ function OfferItem({
   status,
 }: OfferItemProps) {
   return (
-    <div className="rounded-xl max-w-[405px] max-h-[327px] w-full h-full bg-white p-4 border-solid border-[1px] border-[#0F1827]">
-      <div className="flex items-center mb-3.5">
+    <div className="rounded-xl max-w-[405px] w-full bg-white p-4 border-solid border-[1px] border-[#0F1827]">
+      <div className="flex mb-3.5 w-full">
         <Image src="/axa-logo.png" alt="Axa logo" width="54" height="54" />
         <div className="ml-3.5 flex flex-col justify-between">
           <p className="text-base font-semibold">{formatName(title)}</p>
@@ -33,19 +33,20 @@ function OfferItem({
             ) : EntegrasyonPoliceDurumID.BEKLIYOR === policeStatusId ? (
               <Spinner />
             ) : (
-              <span className="text-sm ">{status}</span>
+              <span>Teklif Alınamadı</span>
             )}
           </p>
         </div>
       </div>
+      {/* {status && <p>{status}</p>} */}
       <p className="flex text-xs font-light text-[#667085] items-center">
         <Icon icon={Icons.INFO_ICON} />
         <span className="ml-1">{formatName(company)} güvencesiyle</span>
       </p>
-      <hr className="mb-3.5 mt-2.5 border-t-1 border-[#0F1827]" />
+      <hr className="mb-2.5 mt-1.5 md:mb-3.5 md:mt-2.5 border-t-1 border-[#0F1827]" />
       <div>
         {contractText.map(({ title, icon }, index) => (
-          <section className="mb-3" key={index}>
+          <section className="mb-2 md:mb-3" key={index}>
             <div className="flex items-end text-[#667085]">
               <Icon icon={icon} className="h-5 w-5" />
               <h2 className="ml-2 text-xs font-light">{title}</h2>

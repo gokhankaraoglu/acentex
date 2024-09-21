@@ -36,6 +36,10 @@
     &:hover {
       cursor: pointer;
     }
+
+    &:disabled {
+      border: 1px solid rgb(42, 197, 44);
+    }
   }
 
   .input-label {
@@ -56,6 +60,21 @@
     top: 5px;
     font-size: 12px;
   }
+
+  /* .input-area:invalid + .input-label {
+    top: 5px;
+    font-size: 12px;
+  } */
+
+  .input-area:disabled + .input-label {
+    top: 5px;
+    font-size: 12px;
+  }
+}
+
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

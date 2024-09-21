@@ -1,7 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import CustomButton from "../elements/CustomButton";
 import { Icon, Icons } from "../elements/Icon";
-import Link from "next/link";
 import { contractText } from "@/app/contracts";
 
 function InsuranceDetailDialog({
@@ -20,7 +19,7 @@ function InsuranceDetailDialog({
           className="w-full h-full z-0 absolute inset-0 opacity-50"
           onClick={close}
         />
-        <div className="container relative flex items-end">
+        <div className="container relative flex items-end mx-1">
           <div className="bg-white rounded-t-3xl shadow w-full">
             <div className="p-4 flex items-center justify-end border-b-2">
               <button className="focus:outline-none" onClick={close}>
@@ -31,9 +30,9 @@ function InsuranceDetailDialog({
               <p className="text-center text-2xl font-bold mb-10">
                 Koruma Kapsamları
               </p>
-              <div className="h-[410px] overflow-y-auto">
+              <div className="flex flex-col gap-y-8 h-[410px] overflow-y-auto">
                 {contractText.map(({ title, icon, description }, index) => (
-                  <section className="mb-8" key={index}>
+                  <section key={index}>
                     <div className="flex items-center text-[#667085] mb-2.5">
                       <Icon icon={icon} />
                       <h2 className="ml-2 text-2xl font-semibold">{title}</h2>
@@ -46,13 +45,11 @@ function InsuranceDetailDialog({
               </div>
             </div>
             <div className="flex flex-col justify-center items-center mb-6">
-              <Link href="/sigorta-teklifi">
-                <CustomButton onClick={() => confirm()} className="mb-3.5">
-                  Devam Et
-                </CustomButton>
-              </Link>
+              <CustomButton onClick={() => confirm()} className="mb-3.5">
+                Devam Et
+              </CustomButton>
               <p className="text-[#667085] font-extralight text-xs text-center">
-                Şu anda Insurelab Sigorta ve Reasürans Brokerlığı
+                Şu anda Insurelab Sigorta ve Reasürans Brokerliği
                 sayfasındasınız.
               </p>
             </div>

@@ -19,18 +19,18 @@ function SelectSections({
   onChange,
 }: SelectSectionsProps) {
   switch (questionID) {
-    case 43:
-    case 49:
-    case 50:
-      return (
-        <CustomSelect
-          id={questionCode}
-          name={questionName}
-          isRequired={isRequired}
-          options={options}
-          onChange={onChange}
-        />
-      );
+    // case 43:
+    // case 49:
+    // case 50:
+    //   return (
+    //     <CustomSelect
+    //       id={questionCode}
+    //       name={questionName}
+    //       isRequired={isRequired}
+    //       options={options}
+    //       onChange={onChange}
+    //     />
+    //   );
     default:
       return null;
   }

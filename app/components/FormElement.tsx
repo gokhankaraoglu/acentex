@@ -11,6 +11,7 @@ interface FormElementProps {
   questionCode: string;
   isRequired: boolean;
   options?: { value: string; label: string }[];
+  value?: string;
   onChange: (event: any) => void;
 }
 
@@ -21,6 +22,7 @@ function FormElement({
   questionCode,
   isRequired,
   options,
+  value,
   onChange,
 }: FormElementProps) {
   switch (questionTypeID) {
@@ -31,6 +33,7 @@ function FormElement({
           questionName={formatName(questionName)}
           questionCode={questionCode}
           isRequired={isRequired}
+          value={value}
           onChange={onChange}
         />
       );

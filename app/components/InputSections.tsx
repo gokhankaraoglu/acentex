@@ -6,6 +6,7 @@ interface InputSectionsProps {
   questionName: string;
   questionCode: string;
   isRequired: boolean;
+  value?: string;
   onChange: (event: any) => void;
 }
 
@@ -14,11 +15,26 @@ function InputSections({
   questionName,
   questionCode,
   isRequired,
+  value,
   onChange,
 }: InputSectionsProps) {
   const today = new Date().toISOString().split("T")[0];
+  const nextYear = new Date();
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+  const oneYearLater = nextYear.toISOString().split("T")[0];
   switch (questionID) {
     case 21: // BAŞLAMA TARİHİ
+      return (
+        <CustomInput
+          id={questionCode}
+          type={InputType.DATE}
+          name={questionName}
+          isRequired={isRequired}
+          value={today}
+          disabled={true}
+          className="!cursor-default"
+        />
+      );
     case 22: // BİTİŞ TARİHİ
       return (
         <CustomInput
@@ -26,8 +42,9 @@ function InputSections({
           type={InputType.DATE}
           name={questionName}
           isRequired={isRequired}
-          onChange={onChange}
-          min={today}
+          value={oneYearLater}
+          disabled={true}
+          className="!cursor-default"
         />
       );
     case 44: // DOĞUM TARİHİ
@@ -38,6 +55,7 @@ function InputSections({
           name={questionName}
           isRequired={isRequired}
           onChange={onChange}
+          value={value}
         />
       );
     case 14: // T.C. KİMLİK NUMARASI
@@ -48,18 +66,19 @@ function InputSections({
           name={questionName}
           isRequired={isRequired}
           onChange={onChange}
+          value={value}
         />
       );
-    case 15: // VERGİ KİMLİK NUMARASI
-      return (
-        <CustomInput
-          id={questionCode}
-          type={InputType.NUMBER}
-          name={questionName}
-          isRequired={isRequired}
-          onChange={onChange}
-        />
-      );
+    // case 15: // VERGİ KİMLİK NUMARASI
+    //   return (
+    //     <CustomInput
+    //       id={questionCode}
+    //       type={InputType.NUMBER}
+    //       name={questionName}
+    //       isRequired={isRequired}
+    //       onChange={onChange}
+    //     />
+    //   );
     case 42: // CEP TELEFONU
       return (
         <CustomInput
@@ -69,16 +88,18 @@ function InputSections({
           isRequired={isRequired}
           onChange={onChange}
           placeholder="5554443322"
+          value={value}
         />
       );
     case 77: // E-MAIL ADRESİ
       return (
         <CustomInput
           id={questionCode}
-          type={InputType.EMAIL}
-          name={questionName}
+          type={InputType.TEXT}
+          name="E-Mail Adresi"
           isRequired={isRequired}
           onChange={onChange}
+          value={value}
         />
       );
     case 207: // IMEI NO

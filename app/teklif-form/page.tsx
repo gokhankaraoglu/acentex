@@ -21,23 +21,80 @@ import { normalizePhoneNumber, normalizeTCKN } from "../utils/mask";
 
 function ProductForm() {
   const router = useRouter();
+  const today = new Date().toISOString().split("T")[0];
+  const nextYear = new Date();
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+  const oneYearLater = nextYear.toISOString().split("T")[0];
   const [questions, setQuestions] = useState<SoruListItem[]>([]);
   const [policeGuid, setPoliceGuid] = useState<string>("");
+  const [credentialsDetail, setCredentialsDetail] = useState<Credentials>({});
 
   useEffect(() => {
     const productDetail = getSessionStorage<ProductDetail>("product");
+    const storedCredentialsDetail =
+      getSessionStorage<Credentials>("credentials");
+    if (storedCredentialsDetail) setCredentialsDetail(storedCredentialsDetail);
+
     const fetchProducts = async () => {
-      const policeId = await setGuid();
+      const newPoliceGuid = await setGuid();
       if (!productDetail) {
         router.push("/");
         return;
       }
-      setPoliceGuid(policeId);
       const fetchedQuestions = await fetchProductQuestions(
-        policeId,
+        newPoliceGuid,
         productDetail
       );
-      setQuestions(fetchedQuestions);
+
+      const submitQuestions = async (
+        fetchedQuestions: SoruListItem[],
+        policeGuid: string
+      ) => {
+        for (const question of fetchedQuestions) {
+          try {
+            if (question.SORU_ID === 21)
+              await submitQuestionAnswerMethod(policeGuid, question, today);
+            if (question.SORU_ID === 22)
+              await submitQuestionAnswerMethod(
+                policeGuid,
+                question,
+                oneYearLater
+              );
+            if (question.SORU_ID === 14)
+              await submitQuestionAnswerMethod(
+                policeGuid,
+                question,
+                credentialsDetail?.TCK
+              );
+            if (question.SORU_ID === 44)
+              await submitQuestionAnswerMethod(
+                policeGuid,
+                question,
+                credentialsDetail?.DGMTAR
+              );
+            if (question.SORU_ID === 42)
+              await submitQuestionAnswerMethod(
+                policeGuid,
+                question,
+                credentialsDetail?.CEPTEL
+              );
+            if (question.SORU_ID === 77)
+              await submitQuestionAnswerMethod(
+                policeGuid,
+                question,
+                credentialsDetail?.EMAIL
+              );
+          } catch (error) {
+            console.error(
+              `Error submitting question ID ${question.SORU_ID}:`,
+              error
+            );
+          }
+        }
+      };
+
+      await submitQuestions(fetchedQuestions, newPoliceGuid);
+      setPoliceGuid(newPoliceGuid);
     };
 
     fetchProducts();
@@ -49,11 +106,6 @@ function ProductForm() {
   ) {
     let value = e.target.value;
 
-    if (question.MASKE_TIP_ID === 3) {
-      const [year, month, day] = value.split("-");
-      value = `${day}/${month}/${year}`;
-    }
-
     if (question.SORU_ID === 14) {
       e.target.value = normalizeTCKN(e.target.value);
       value = e.target.value;
@@ -63,25 +115,69 @@ function ProductForm() {
       value = e.target.value;
     }
 
-    if (!policeGuid) {
-      router.push("/");
-      return;
-    }
+    await submitQuestionAnswerMethod(policeGuid, question, value);
+  }
 
+  async function submitQuestionAnswerMethod(
+    policeGuid: string,
+    question: SoruListItem,
+    value?: string | number
+  ) {
+    if (!value) return;
+    if (question.MASKE_TIP_ID === 3) {
+      const [year, month, day] = (value as string).split("-");
+      value = `${day}/${month}/${year}`;
+    }
     const updatedQuestions = await submitQuestionAnswer(
       policeGuid,
       question,
       value
     );
+
     setQuestions(updatedQuestions);
   }
 
-  async function handleSendForm(event: React.FormEvent) {
+  interface FormElements extends HTMLFormControlsCollection {
+    TCK: HTMLInputElement;
+    DGMTAR: HTMLInputElement;
+    CEPTEL: HTMLInputElement;
+    EMAIL: HTMLInputElement;
+  }
+
+  interface FormElement extends HTMLFormElement {
+    readonly elements: FormElements;
+  }
+
+  interface Credentials {
+    [key: string]: string;
+  }
+
+  // interface Credentials {
+  //   TCK: string;
+  //   DGMTAR: string;
+  //   CEPTEL: string;
+  //   EMAIL: string;
+  // }
+
+  async function handleSendForm(event: React.FormEvent<FormElement>) {
     event.preventDefault();
+    const { TCK, DGMTAR, CEPTEL, EMAIL } = (event.target as FormElement)
+      .elements;
+
+    const credentials: Credentials = {
+      TCK: TCK?.value,
+      DGMTAR: DGMTAR?.value,
+      CEPTEL: CEPTEL?.value,
+      EMAIL: EMAIL?.value,
+    };
+
+    console.log({ credentials });
+
     try {
       if (policeGuid) {
         const policeId = await submitForm(policeGuid);
         setSessionStorage("policeId", policeId);
+        setSessionStorage("credentials", credentials);
         router.push("/teklif-listesi");
       }
     } catch (error) {
@@ -98,7 +194,7 @@ function ProductForm() {
             <span className="ml-3 font-semibold text-xl">Teklifinizi Alın</span>
           </span>
         </Link>
-        <div className="w-full max-w-md px-3 overflow-y-auto">
+        <div className="w-full max-w-md px-3">
           <form autoComplete="off" id="form1" onSubmit={handleSendForm}>
             {questions.length > 0 ? (
               <div className="flex flex-col gap-6 mb-6">
@@ -114,6 +210,7 @@ function ProductForm() {
                       value: option.DEGER_KOD,
                       label: option.DEGER_AD,
                     }))}
+                    value={credentialsDetail[question.SORU_KOD]}
                     onChange={(e) => handleAnswerChange(question, e)}
                   />
                 ))}
@@ -126,7 +223,7 @@ function ProductForm() {
           </form>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center mb-3">
         <CustomButton
           form="form1"
           type="submit"
@@ -136,7 +233,7 @@ function ProductForm() {
           Teklif Oluştur
         </CustomButton>
         <p className="text-[#667085] font-extralight text-xs text-center">
-          Şu anda Insurelab Sigorta ve Reasürans Brokerlığı sayfasındasınız.
+          Şu anda Insurelab Sigorta ve Reasürans Brokerliği sayfasındasınız.
         </p>
       </div>
     </div>

@@ -6,11 +6,17 @@ import CustomButton from "../components/elements/CustomButton";
 import Offer from "../components/Offer";
 import { getSessionStorage } from "../utils";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function SelectedOffer() {
+  const router = useRouter();
   const [police, setPolice] = useState<any>({});
   useEffect(() => {
     const selectedPolice: any = getSessionStorage("selected-police");
+
+    if (!selectedPolice) {
+      router.push("/");
+    }
 
     setPolice(selectedPolice);
   }, []);
@@ -35,7 +41,7 @@ function SelectedOffer() {
               geçebilirsiniz.
             </p>
           </div>
-          <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6">
+          <div className="w-full flex flex-col justify-center items-center">
             <Offer
               title={police?.title}
               company={police?.company}
@@ -57,7 +63,7 @@ function SelectedOffer() {
           </CustomButton>
 
           <p className="text-[#667085] font-extralight text-xs text-center">
-            Şu anda Insurelab Sigorta ve Reasürans Brokerlığı sayfasındasınız.
+            Şu anda Insurelab Sigorta ve Reasürans Brokerliği sayfasındasınız.
           </p>
         </div>
       </div>

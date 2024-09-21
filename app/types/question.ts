@@ -15,7 +15,7 @@ export interface SoruDeger {
 
 export interface SoruListItem {
   DEGISIM_SAYISI: number;
-  DEGER_KOD: string;
+  DEGER_KOD: string | number;
   DEGER_AD: string | null;
   TABLOSU_VAR: number;
   SIRA_NO: number;
@@ -38,6 +38,7 @@ export interface SoruListItem {
   GUNCELLEYEN: any;
   GUNCELLEME_TARIH: any;
   GUNCELLEME_TARIH_NUM: any;
+  VALUE: string;
 }
 
 export interface RootObject {

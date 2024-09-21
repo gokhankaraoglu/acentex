@@ -24,6 +24,8 @@ interface InputProps {
   value?: string;
   className?: string;
   min?: string;
+  disabled?: boolean;
+  autoFocus?: boolean;
 }
 
 function CustomInput({
@@ -39,7 +41,10 @@ function CustomInput({
   information = undefined,
   onChange,
   className = "",
+  value,
   min,
+  disabled = false,
+  autoFocus = false,
 }: InputProps) {
   return (
     <div className="input-wrapper">
@@ -56,11 +61,14 @@ function CustomInput({
         className={`input-area ${className}`}
         onChange={onChange}
         min={min}
+        value={value}
+        disabled={disabled}
+        autoFocus={autoFocus}
       />
       <label htmlFor={id} className="input-label">
         <span>{name}</span>
       </label>
-      <div className="absolute right-4 top-2 cursor-pointer">
+      <div className="absolute right-4 top-4 cursor-pointer">
         {type === InputType.DATE && <Icon icon={Icons.CALENDAR_ICON} />}
         {!!information && (
           <div className="relative group">

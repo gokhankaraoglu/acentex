@@ -214,10 +214,7 @@ export const contractText = [
   {
     title: "Ekran Kırılması",
     icon: Icons.CRASH_ICON,
-    description: `Telefonun bir cisim ile şiddetli teması veya belirli
-    yükseklikten düşmesi sonrasında ekranının çatlaması, iç
-    ekranının kırılması veya dış camının kırılması false);ması
-    durumlarıdır.`,
+    description: `Telefonun bir cisim ile şiddetli teması veya belirli yükseklikten düşmesi sonrasında ekranının çatlaması, iç ekranının kırılması veya dış camının kırılması / çatlaması durumlarıdır.`,
   },
   {
     title: "Hırsızlık",

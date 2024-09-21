@@ -17,7 +17,7 @@ function InformationFormDialog({
           className="w-full h-full z-0 absolute inset-0 opacity-50"
           onClick={close}
         />
-        <div className="container relative flex items-end">
+        <div className="container relative flex items-end mx-1">
           <div className="bg-white rounded-t-3xl shadow w-full">
             <div className="p-4 flex items-center justify-end border-b-2">
               <button className="focus:outline-none" onClick={close}>
@@ -53,7 +53,7 @@ function InformationFormDialog({
                 Okudum, kabul ediyorum.
               </CustomButton>
               <p className="text-[#667085] font-extralight text-xs text-center">
-                Şu anda Insurelab Sigorta ve Reasürans Brokerlığı
+                Şu anda Insurelab Sigorta ve Reasürans Brokerliği
                 sayfasındasınız.
               </p>
             </div>

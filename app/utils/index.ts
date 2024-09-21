@@ -7,7 +7,7 @@ export function capitalize(str: string): string {
 }
 
 export function formatName(name: string): string {
-  const exceptions = ["IMEI", "T.C."];
+  const exceptions = ["IMEI", "T.C.", "A.Ş."];
 
   return name
     ?.split(" ")

@@ -54,6 +54,7 @@ function OfferList() {
       endDate: offer.BITIS_TARIH,
       price: offer.TOPLAM_PRIM,
     });
+    router.push("/sigorta-teklifi");
   };
   return (
     <>
@@ -71,7 +72,7 @@ function OfferList() {
               görüntüleyebilirsiniz.
             </p>
           </div>
-          <div className="w-full max-w-md overflow-y-auto flex flex-col justify-center items-center gap-y-6 mb-6">
+          <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6">
             {!!offer ? (
               <OfferItem
                 title={offer.ENTEGRASYON_URUN_AD}
@@ -94,13 +95,13 @@ function OfferList() {
             Koruma Kapsamları
           </CustomButton>
           <p className="text-[#667085] font-extralight text-xs text-center">
-            Şu anda Insurelab Sigorta ve Reasürans Brokerlığı sayfasındasınız.
+            Şu anda Insurelab Sigorta ve Reasürans Brokerliği sayfasındasınız.
           </p>
         </div>
       </div>
       <InsuranceDetailDialog
         isOpen={showContract}
-        confirm={() => offer && selectOffer(offer)}
+        confirm={() => offer?.TOPLAM_NET_PRIM && selectOffer(offer)}
         close={() => setShowContract(false)}
       />
     </>
