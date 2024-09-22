@@ -49,7 +49,7 @@ function FormElement({
         />
       );
     case 5:
-      return <Title name={formatName(questionName)} />;
+      return <Title questionID={questionID} name={formatName(questionName)} />;
   }
 }
 

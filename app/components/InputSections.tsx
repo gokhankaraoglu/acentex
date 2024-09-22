@@ -18,35 +18,35 @@ function InputSections({
   value,
   onChange,
 }: InputSectionsProps) {
-  const today = new Date().toISOString().split("T")[0];
-  const nextYear = new Date();
-  nextYear.setFullYear(nextYear.getFullYear() + 1);
-  const oneYearLater = nextYear.toISOString().split("T")[0];
+  // const today = new Date().toISOString().split("T")[0];
+  // const nextYear = new Date();
+  // nextYear.setFullYear(nextYear.getFullYear() + 1);
+  // const oneYearLater = nextYear.toISOString().split("T")[0];
   switch (questionID) {
-    case 21: // BAŞLAMA TARİHİ
-      return (
-        <CustomInput
-          id={questionCode}
-          type={InputType.DATE}
-          name={questionName}
-          isRequired={isRequired}
-          value={today}
-          disabled={true}
-          className="!cursor-default"
-        />
-      );
-    case 22: // BİTİŞ TARİHİ
-      return (
-        <CustomInput
-          id={questionCode}
-          type={InputType.DATE}
-          name={questionName}
-          isRequired={isRequired}
-          value={oneYearLater}
-          disabled={true}
-          className="!cursor-default"
-        />
-      );
+    // case 21: // BAŞLAMA TARİHİ
+    //   return (
+    //     <CustomInput
+    //       id={questionCode}
+    //       type={InputType.DATE}
+    //       name={questionName}
+    //       isRequired={isRequired}
+    //       value={today}
+    //       disabled={true}
+    //       className="!cursor-default"
+    //     />
+    //   );
+    // case 22: // BİTİŞ TARİHİ
+    //   return (
+    //     <CustomInput
+    //       id={questionCode}
+    //       type={InputType.DATE}
+    //       name={questionName}
+    //       isRequired={isRequired}
+    //       value={oneYearLater}
+    //       disabled={true}
+    //       className="!cursor-default"
+    //     />
+    //   );
     case 44: // DOĞUM TARİHİ
       return (
         <CustomInput
