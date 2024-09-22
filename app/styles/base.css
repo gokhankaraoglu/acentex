@@ -12,10 +12,6 @@
     .custom-min-height {
       min-height: calc(100vh - 23px);
     }
-
-    /* .contract-min-height {
-      min-height: calc(100% - 400px);
-    } */
   }
   :root {
     --base-color-primary: #fff;
@@ -28,34 +24,6 @@
     --base-font-color: #0f1828;
     --base-font-weight: 400;
     --base-button-background-color: #7d53de;
-
-    /* --line-height-h1: 39px;
-    --line-height-mobile-h1: 32px;
-    --line-height-h2: 34px;
-    --line-height-mobile-h2: 27px;
-    --line-height-h3: 34px;
-    --line-height-mobile-h3: 24px;
-    --line-height-h4: 27px;
-    --line-height-mobile-h4: 19px;
-    --line-height-h5: 26px;
-    --line-height-mobile-h5: 14px;
-    --line-height-h6: 21px;
-    --line-height-mobile-h6: 21px;
-    --line-height-1: 34px;
-    --line-height-2: 27px;
-    --line-height-3: 24px;
-    --line-height-4: 22px;
-    --line-height-5: 20px;
-    --line-height-6: 19px;
-    --line-height-7: 19.4px;
-    --line-height-8: 18.2px;
-    --line-height-9: 17px;
-    --line-height-10: 16.9px;
-    --line-height-11: 14.5px;
-    --line-height-12: 13.3px;
-    --line-height-13: 12px;
-    --line-height-14: 11px;
-    --line-height-15: 10px; */
   }
   @media (min-width: 768px) {
     :root {
@@ -69,5 +37,23 @@
       --base-select-label-top: 21px;
       --base-button-height: 55px;
     }
+  }
+}
+.skeleton {
+  background: linear-gradient(to right, #f0f0f0 0%, #e0e0e0 50%, #f0f0f0 100%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+.title-placeholder {
+  height: 24px;
+  width: 100px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }

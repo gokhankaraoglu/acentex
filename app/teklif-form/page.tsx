@@ -191,8 +191,14 @@ function ProductForm() {
                 ))}
               </div>
             ) : (
-              <div className="flex justify-center items-center h-full">
-                <Spinner />
+              <div className="flex flex-col gap-6 mb-6">
+                <div className="title-placeholder skeleton"></div>
+                <div className="input-placeholder skeleton"></div>
+                <div className="input-placeholder skeleton"></div>
+                <div className="input-placeholder skeleton"></div>
+                <div className="input-placeholder skeleton"></div>
+                <div className="title-placeholder skeleton"></div>
+                <div className="input-placeholder skeleton"></div>
               </div>
             )}
           </form>
