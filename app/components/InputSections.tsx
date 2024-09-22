@@ -106,7 +106,7 @@ function InputSections({
       return (
         <CustomInput
           id={questionCode}
-          type={InputType.NUMBER}
+          type={InputType.TEXT}
           name={questionName}
           information="Telefonunuzun cihaz ayarları bölümünde Genel>Hakkında alanında bulabilir ve kopyalayabilirsiniz."
           isRequired={isRequired}

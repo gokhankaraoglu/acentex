@@ -17,7 +17,12 @@ import {
   submitForm,
   submitQuestionAnswer,
 } from "../utils/api/product";
-import { normalizePhoneNumber, normalizeTCKN } from "../utils/mask";
+import {
+  normalizeIMEINumber,
+  normalizePhoneNumber,
+  normalizeTCKN,
+} from "../utils/mask";
+import { Credentials, IFormElement } from "../types/form";
 
 function ProductForm() {
   const router = useRouter();
@@ -33,57 +38,45 @@ function ProductForm() {
     const productDetail = getSessionStorage<ProductDetail>("product");
     const storedCredentialsDetail =
       getSessionStorage<Credentials>("credentials");
-    if (storedCredentialsDetail) setCredentialsDetail(storedCredentialsDetail);
+
+    if (storedCredentialsDetail) {
+      setCredentialsDetail(storedCredentialsDetail);
+    }
 
     const fetchProducts = async () => {
-      const newPoliceGuid = await setGuid();
       if (!productDetail) {
         router.push("/");
         return;
       }
+
+      const newPoliceGuid = await setGuid();
       const fetchedQuestions = await fetchProductQuestions(
         newPoliceGuid,
         productDetail
       );
 
-      const submitQuestions = async (
-        fetchedQuestions: SoruListItem[],
-        policeGuid: string
-      ) => {
-        for (const question of fetchedQuestions) {
+      await submitQuestions(fetchedQuestions, newPoliceGuid);
+      setPoliceGuid(newPoliceGuid);
+    };
+
+    const submitQuestions = async (
+      questions: SoruListItem[],
+      policeGuid: string
+    ) => {
+      const answerMapping: { [key: number]: any } = {
+        21: today,
+        22: oneYearLater,
+        14: credentialsDetail?.TCK,
+        44: credentialsDetail?.DGMTAR,
+        42: credentialsDetail?.CEPTEL,
+        77: credentialsDetail?.EMAIL,
+      };
+
+      for (const question of questions) {
+        const answer = answerMapping[question.SORU_ID];
+        if (answer !== undefined) {
           try {
-            if (question.SORU_ID === 21)
-              await submitQuestionAnswerMethod(policeGuid, question, today);
-            if (question.SORU_ID === 22)
-              await submitQuestionAnswerMethod(
-                policeGuid,
-                question,
-                oneYearLater
-              );
-            if (question.SORU_ID === 14)
-              await submitQuestionAnswerMethod(
-                policeGuid,
-                question,
-                credentialsDetail?.TCK
-              );
-            if (question.SORU_ID === 44)
-              await submitQuestionAnswerMethod(
-                policeGuid,
-                question,
-                credentialsDetail?.DGMTAR
-              );
-            if (question.SORU_ID === 42)
-              await submitQuestionAnswerMethod(
-                policeGuid,
-                question,
-                credentialsDetail?.CEPTEL
-              );
-            if (question.SORU_ID === 77)
-              await submitQuestionAnswerMethod(
-                policeGuid,
-                question,
-                credentialsDetail?.EMAIL
-              );
+            await submitQuestionAnswerMethod(policeGuid, question, answer);
           } catch (error) {
             console.error(
               `Error submitting question ID ${question.SORU_ID}:`,
@@ -91,10 +84,7 @@ function ProductForm() {
             );
           }
         }
-      };
-
-      await submitQuestions(fetchedQuestions, newPoliceGuid);
-      setPoliceGuid(newPoliceGuid);
+      }
     };
 
     fetchProducts();
@@ -115,6 +105,15 @@ function ProductForm() {
       value = e.target.value;
     }
 
+    if (question.SORU_ID === 207) {
+      e.target.value = normalizeIMEINumber(e.target.value);
+      value = e.target.value;
+    }
+
+    setCredentialsDetail((prev: Credentials) => ({
+      ...prev,
+      [question.SORU_KOD]: value,
+    }));
     await submitQuestionAnswerMethod(policeGuid, question, value);
   }
 
@@ -137,31 +136,9 @@ function ProductForm() {
     setQuestions(updatedQuestions);
   }
 
-  interface FormElements extends HTMLFormControlsCollection {
-    TCK: HTMLInputElement;
-    DGMTAR: HTMLInputElement;
-    CEPTEL: HTMLInputElement;
-    EMAIL: HTMLInputElement;
-  }
-
-  interface FormElement extends HTMLFormElement {
-    readonly elements: FormElements;
-  }
-
-  interface Credentials {
-    [key: string]: string;
-  }
-
-  // interface Credentials {
-  //   TCK: string;
-  //   DGMTAR: string;
-  //   CEPTEL: string;
-  //   EMAIL: string;
-  // }
-
-  async function handleSendForm(event: React.FormEvent<FormElement>) {
+  async function handleSendForm(event: React.FormEvent<IFormElement>) {
     event.preventDefault();
-    const { TCK, DGMTAR, CEPTEL, EMAIL } = (event.target as FormElement)
+    const { TCK, DGMTAR, CEPTEL, EMAIL } = (event.target as IFormElement)
       .elements;
 
     const credentials: Credentials = {
@@ -170,8 +147,6 @@ function ProductForm() {
       CEPTEL: CEPTEL?.value,
       EMAIL: EMAIL?.value,
     };
-
-    console.log({ credentials });
 
     try {
       if (policeGuid) {

@@ -47,3 +47,7 @@ export const getSessionStorage = <T>(key: string): T | null => {
     return null;
   }
 };
+
+export const delay = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};

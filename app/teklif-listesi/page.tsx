@@ -6,7 +6,7 @@ import CustomButton from "../components/elements/CustomButton";
 import OfferItem from "../components/OfferItem";
 import InsuranceDetailDialog from "../components/dialogs/InsuranceDetailDialog";
 import { useEffect, useState, useCallback } from "react";
-import { getSessionStorage, setSessionStorage } from "../utils";
+import { delay, getSessionStorage, setSessionStorage } from "../utils";
 import { EntegrasyonPoliceDurumID, PoliceItem } from "../types/product";
 import Spinner from "../components/elements/Spinner";
 import { fetchOfferData } from "../utils/api/offer";
@@ -16,7 +16,6 @@ function OfferList() {
   const router = useRouter();
   const [showContract, setShowContract] = useState(false);
   const [offer, setOffer] = useState<PoliceItem>();
-  let intervalId: NodeJS.Timeout | null = null;
 
   useEffect(() => {
     const policeId = getSessionStorage<number>("policeId");
@@ -27,18 +26,18 @@ function OfferList() {
     }
 
     fetchOffer(policeId);
-
-    if (
-      !offer ||
-      offer?.ENTEGRASYON_POLICE_DURUM_ID === EntegrasyonPoliceDurumID.BEKLIYOR
-    ) {
-      intervalId = setInterval(() => fetchOffer(policeId), 5000);
-    }
   }, []);
 
   const fetchOffer = useCallback(async (policeId: number) => {
     try {
       const offerData = await fetchOfferData(policeId);
+      if (
+        offerData?.ENTEGRASYON_POLICE_DURUM_ID ===
+        EntegrasyonPoliceDurumID.BEKLIYOR
+      ) {
+        await delay(3000);
+        fetchOffer(policeId);
+      }
       setOffer(offerData);
     } catch (error) {
       console.error("Failed to fetch police data", error);

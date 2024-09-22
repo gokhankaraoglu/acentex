@@ -1,4 +1,4 @@
-export const normalizeCardNumber = (value: any) => {
+export const normalizeCardNumber = (value: string) => {
   return value
     .replace(/\s+/g, "")
     .replace(/[^0-9]/gi, "")
@@ -6,7 +6,7 @@ export const normalizeCardNumber = (value: any) => {
     .replace(/-$/, "");
 };
 
-export const normalizeCardDate = (value: any) => {
+export const normalizeCardDate = (value: string) => {
   return value
     .replace(/\s+/g, "")
     .replace(/[^0-9]/gi, "")
@@ -14,13 +14,17 @@ export const normalizeCardDate = (value: any) => {
     .substring(0, 5);
 };
 
-export const normalizeTCKN = (value: any) => {
+export const normalizeTCKN = (value: string) => {
   return value.replace(/[^0-9]/gi, "").substring(0, 11);
 };
 
-export const normalizePhoneNumber = (value: any) => {
+export const normalizePhoneNumber = (value: string) => {
   return value
     .replace(/\D/g, "")
     .replace(/(\d{3})(\d{3})(\d{4})/, "$1$2$3")
     .substring(0, 10);
+};
+
+export const normalizeIMEINumber = (value: string) => {
+  return value.replace(/\D/g, "").substring(0, 15);
 };

@@ -95,7 +95,7 @@ function Offer({
                   setShowInformationForm(true);
                 }}
               >
-                Dökümanları
+                Belgeleri
               </span>{" "}
               okudum kabul ediyorum.
             </label>
