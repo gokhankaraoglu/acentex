@@ -7,15 +7,20 @@ import Offer from "../components/Offer";
 import { getSessionStorage } from "../utils";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { StoredPoliceItem } from "../types/product";
+import Spinner from "../components/elements/Spinner";
+import Footer from "../components/Footer";
 
 function SelectedOffer() {
   const router = useRouter();
-  const [police, setPolice] = useState<any>({});
+  const [police, setPolice] = useState<StoredPoliceItem | null>(null);
   useEffect(() => {
-    const selectedPolice: any = getSessionStorage("selected-police");
+    const selectedPolice: StoredPoliceItem | null =
+      getSessionStorage("selected-police");
 
     if (!selectedPolice) {
       router.push("/");
+      return;
     }
 
     setPolice(selectedPolice);
@@ -42,14 +47,20 @@ function SelectedOffer() {
             </p>
           </div>
           <div className="w-full flex flex-col justify-center items-center">
-            <Offer
-              title={police?.title}
-              company={police?.company}
-              startDate={police?.startDate}
-              endDate={police?.endDate}
-              price={police?.price}
-              entegrationId={police?.entegrationId}
-            />
+            {police ? (
+              <Offer
+                title={police?.title}
+                company={police?.company}
+                startDate={police?.startDate}
+                endDate={police?.endDate}
+                price={police?.price}
+                brand={police?.brand}
+                model={police?.model}
+                entegrationId={police?.entegrationId}
+              />
+            ) : (
+              <Spinner />
+            )}
           </div>
         </div>
         <div className="flex flex-col justify-center items-center">
@@ -61,10 +72,7 @@ function SelectedOffer() {
           >
             Devam Et
           </CustomButton>
-
-          <p className="text-[#667085] font-extralight text-xs text-center">
-            Şu anda Insurelab Sigorta ve Reasürans Brokerliği sayfasındasınız.
-          </p>
+          <Footer />
         </div>
       </div>
     </>

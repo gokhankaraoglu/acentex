@@ -50,8 +50,8 @@ export const informationForm = [
     Tel: 0212 334 24 24 Faks: 0212 252 15 15
     
     Teminata aracılık eden sigorta acentesinin;
-    Ticari Unvanı: PAPARA SİGORTA ARACILIK HİZMETLERİ A.Ş.
-    Adres: Burhaniye Mah. Tunuslu Mahmutpaşa Cad. No:12/2 İç Kapı No:1 ÜSKÜDAR/İSTANBUL Tel: 0850 340 03 30`,
+    Ticari Unvanı: Insurelab Sigorta ve Reasürans Brokerliği A.Ş
+    Adres: Yüzbaşı Kaya Aldoğan Sokak Pardus Plaza No:4 İç KapıNo:4 Şişli İstanbul`,
   },
   {
     title: "B.UYARILAR",

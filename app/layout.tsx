@@ -29,9 +29,7 @@ export default function RootLayout({
           <ReactQueryProvider>
             <HookProvider>
               <div className="min-h-screen bg-transparent container mx-auto px-6 sm:px-10 lg:px-12">
-                {/* <Header /> */}
                 <main className="flex-1 ">{children}</main>
-                {/* <Footer /> */}
               </div>
             </HookProvider>
           </ReactQueryProvider>

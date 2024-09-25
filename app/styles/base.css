@@ -10,7 +10,7 @@
     );
 
     .custom-min-height {
-      min-height: calc(100vh - 23px);
+      min-height: calc(100dvh - 23px);
     }
   }
   :root {

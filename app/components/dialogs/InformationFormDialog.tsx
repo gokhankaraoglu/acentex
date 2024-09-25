@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import CustomButton from "../elements/CustomButton";
 import { Icon, Icons } from "../elements/Icon";
 import { informationForm } from "../../contracts";
+import Footer from "../Footer";
 
 function InformationFormDialog({
   isOpen,
@@ -52,10 +53,7 @@ function InformationFormDialog({
               >
                 Okudum, kabul ediyorum.
               </CustomButton>
-              <p className="text-[#667085] font-extralight text-xs text-center">
-                Şu anda Insurelab Sigorta ve Reasürans Brokerliği
-                sayfasındasınız.
-              </p>
+              <Footer />
             </div>
           </div>
         </div>

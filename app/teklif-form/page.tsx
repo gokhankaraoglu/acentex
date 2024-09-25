@@ -23,6 +23,7 @@ import {
   normalizeTCKN,
 } from "../utils/mask";
 import { Credentials, IFormElement } from "../types/form";
+import Footer from "../components/Footer";
 
 function ProductForm() {
   const router = useRouter();
@@ -213,9 +214,7 @@ function ProductForm() {
         >
           Teklif Oluştur
         </CustomButton>
-        <p className="text-[#667085] font-extralight text-xs text-center">
-          Şu anda Insurelab Sigorta ve Reasürans Brokerliği sayfasındasınız.
-        </p>
+        <Footer />
       </div>
     </div>
   );

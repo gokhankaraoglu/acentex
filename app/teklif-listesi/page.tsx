@@ -11,6 +11,7 @@ import { EntegrasyonPoliceDurumID, PoliceItem } from "../types/product";
 import Spinner from "../components/elements/Spinner";
 import { fetchOfferData } from "../utils/api/offer";
 import { useRouter } from "next/navigation";
+import Footer from "../components/Footer";
 
 function OfferList() {
   const router = useRouter();
@@ -52,6 +53,8 @@ function OfferList() {
       startDate: offer.BASLAMA_TARIH,
       endDate: offer.BITIS_TARIH,
       price: offer.TOPLAM_PRIM,
+      model: offer.MARKA_TIP_AD,
+      brand: offer.MARKA_AD,
     });
     router.push("/sigorta-teklifi");
   };
@@ -93,9 +96,7 @@ function OfferList() {
           >
             Koruma Kapsamları
           </CustomButton>
-          <p className="text-[#667085] font-extralight text-xs text-center">
-            Şu anda Insurelab Sigorta ve Reasürans Brokerliği sayfasındasınız.
-          </p>
+          <Footer />
         </div>
       </div>
       <InsuranceDetailDialog

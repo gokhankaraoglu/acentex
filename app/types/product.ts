@@ -89,6 +89,8 @@ export interface PoliceItem {
   DOVIZ_KUR: any | null;
   DOVIZ_KOD: any | null;
   DOVIZ_AD: any | null;
+  MARKA_AD: string;
+  MARKA_TIP_AD: string;
   DURUM_ACIKLAMA: string;
   POLICE_PARTAJ_GUID: string;
   TAKSIT: any | null;
@@ -121,6 +123,17 @@ export interface PoliceItem {
   ErrorList: any[];
   WarningList: any[];
   MessageList: any[];
+}
+
+export interface StoredPoliceItem {
+  startDate: string;
+  endDate: string;
+  company: string;
+  price: number;
+  title: string;
+  brand: string;
+  model: string;
+  entegrationId: number;
 }
 
 export enum EntegrasyonPoliceDurumID {

@@ -4,15 +4,9 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { formatName } from "../utils";
 import { submitPolicyApprovalSecurePayment } from "../utils/api/payment";
+import { StoredPoliceItem } from "../types/product";
 
-interface OfferProps {
-  startDate: string;
-  endDate: string;
-  company: string;
-  price: number;
-  title: string;
-  entegrationId: number;
-}
+interface OfferProps extends StoredPoliceItem {}
 
 function Offer({
   title,
@@ -20,6 +14,8 @@ function Offer({
   price,
   startDate,
   endDate,
+  brand,
+  model,
   entegrationId,
 }: OfferProps) {
   const [showInformationForm, setShowInformationForm] = useState(false);
@@ -51,19 +47,21 @@ function Offer({
         <div className="text-sm text-[#0F1827]">
           {/* <div>
             <p className="font-light text-xs text-[#667085]">Sigortalı</p>
-            <p className="text-sm font-normal ">{customer ?? "-"}</p>
+            <p className="text-sm font-normal ">{brand ?? "-"}</p>
           </div>
           <hr className="my-2 border-t-1 border-[#667085]" /> */}
-          {/* <div>
+          <div>
             <p className="font-light text-xs text-[#667085]">Cihaz Bilgileri</p>
-            <p className="text-sm font-normal">{deviceName ?? "-"}</p>
+            <p className="text-sm font-normal">{`${formatName(
+              brand
+            )} ${formatName(model)}`}</p>
           </div>
-          <hr className="my-2 border-t-1 border-[#667085]" />
+          {/* <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
             <p className="font-light text-xs text-[#667085]">Cihaz Bedeli</p>
             <p className="text-sm font-normal">{price ?? "-"}</p>
-          </div>
-          <hr className="my-2 border-t-1 border-[#667085]" /> */}
+          </div> */}
+          <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
             <p className="font-light text-xs text-[#667085]">
               Poliçe Başlangıç ve Bitiş Tarihi

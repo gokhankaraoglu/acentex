@@ -2,6 +2,7 @@ import { Dialog } from "@headlessui/react";
 import CustomButton from "../elements/CustomButton";
 import { Icon, Icons } from "../elements/Icon";
 import { contractText } from "@/app/contracts";
+import Footer from "../Footer";
 
 function InsuranceDetailDialog({
   isOpen,
@@ -48,10 +49,7 @@ function InsuranceDetailDialog({
               <CustomButton onClick={() => confirm()} className="mb-3.5">
                 Devam Et
               </CustomButton>
-              <p className="text-[#667085] font-extralight text-xs text-center">
-                Şu anda Insurelab Sigorta ve Reasürans Brokerliği
-                sayfasındasınız.
-              </p>
+              <Footer />
             </div>
           </div>
         </div>
