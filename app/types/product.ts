@@ -90,6 +90,7 @@ export interface PoliceItem {
   DOVIZ_KOD: any | null;
   DOVIZ_AD: any | null;
   MARKA_AD: string;
+  CIHAZ_BEDEL: number;
   MARKA_TIP_AD: string;
   DURUM_ACIKLAMA: string;
   POLICE_PARTAJ_GUID: string;
@@ -134,6 +135,7 @@ export interface StoredPoliceItem {
   brand: string;
   model: string;
   entegrationId: number;
+  deviceValue: number;
 }
 
 export enum EntegrasyonPoliceDurumID {

@@ -1,5 +1,11 @@
 import React from "react";
 import CustomInput, { InputType } from "./elements/CustomInput";
+import {
+  isValidEmail,
+  isValidIMEINumber,
+  isValidPhoneNumber,
+  isValidTCKN,
+} from "../utils/mask";
 
 interface InputSectionsProps {
   questionID: number;
@@ -64,7 +70,10 @@ function InputSections({
           id={questionCode}
           type={InputType.NUMBER}
           name={questionName}
-          isRequired={isRequired}
+          isValid={isValidTCKN(value + "")}
+          minlength={11}
+          maxlength={11}
+          isRequired={true}
           onChange={onChange}
           value={value}
         />
@@ -86,6 +95,7 @@ function InputSections({
           type={InputType.TEL}
           name={questionName}
           isRequired={isRequired}
+          isValid={isValidPhoneNumber(value || "")}
           onChange={onChange}
           placeholder="5554443322"
           value={value}
@@ -95,10 +105,11 @@ function InputSections({
       return (
         <CustomInput
           id={questionCode}
-          type={InputType.TEXT}
+          type={InputType.EMAIL}
           name="E-Mail Adresi"
           isRequired={isRequired}
           onChange={onChange}
+          isValid={isValidEmail(value || "")}
           value={value}
         />
       );
@@ -110,6 +121,7 @@ function InputSections({
           name={questionName}
           information="Telefonunuzun cihaz ayarları bölümünde Genel>Hakkında alanında bulabilir ve kopyalayabilirsiniz."
           isRequired={isRequired}
+          isValid={isValidIMEINumber(value || "")}
           onChange={onChange}
         />
       );

@@ -27,18 +27,22 @@ function OfferItem({
         <Image src="/axa-logo.png" alt="Axa logo" width="54" height="54" />
         <div className="ml-3.5 flex flex-col justify-between">
           <p className="text-base font-semibold">{formatName(title)}</p>
-          <p className="text-[#667085] text-lg font-extralight">
+          <div className="text-[#667085] text-lg font-extralight">
             {EntegrasyonPoliceDurumID.TEKLIF === policeStatusId ? (
               <span>₺{price}</span>
             ) : EntegrasyonPoliceDurumID.BEKLIYOR === policeStatusId ? (
               <Spinner />
             ) : (
-              <span>Teklif Alınamadı</span>
+              <p className="flex">
+                <span className="flex items-center text-4xl mr-2">
+                  &#128532;
+                </span>
+                <span>Bir hata oldu. Bilgileri kontrol ederek tekrar dene</span>
+              </p>
             )}
-          </p>
+          </div>
         </div>
       </div>
-      {/* {status && <p>{status}</p>} */}
       <p className="flex text-xs font-light text-[#667085] items-center">
         <Icon icon={Icons.INFO_ICON} />
         <span className="ml-1">{formatName(company)} güvencesiyle</span>

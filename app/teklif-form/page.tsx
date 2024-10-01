@@ -9,7 +9,6 @@ import { getSessionStorage, setSessionStorage } from "../utils";
 import { setGuid } from "../hooks/useSetGuid";
 import { SoruListItem } from "../types/question";
 import { useRouter } from "next/navigation";
-import Spinner from "../components/elements/Spinner";
 
 import { ProductDetail } from "../types/product";
 import {
@@ -18,6 +17,9 @@ import {
   submitQuestionAnswer,
 } from "../utils/api/product";
 import {
+  isValidEmail,
+  isValidPhoneNumber,
+  isValidTCKN,
   normalizeIMEINumber,
   normalizePhoneNumber,
   normalizeTCKN,
@@ -148,6 +150,14 @@ function ProductForm() {
       CEPTEL: CEPTEL?.value,
       EMAIL: EMAIL?.value,
     };
+    if (
+      !isValidTCKN(credentials.TCK) ||
+      !credentials.DGMTAR ||
+      !isValidPhoneNumber(credentials.CEPTEL) ||
+      !isValidEmail(credentials.EMAIL)
+    ) {
+      return;
+    }
 
     try {
       if (policeGuid) {

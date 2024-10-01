@@ -56,6 +56,7 @@ function SelectedOffer() {
                 price={police?.price}
                 brand={police?.brand}
                 model={police?.model}
+                deviceValue={police?.deviceValue}
                 entegrationId={police?.entegrationId}
               />
             ) : (

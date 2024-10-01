@@ -27,20 +27,22 @@
 
     &:focus {
       border: 1px solid var(--base-input-border-focus-color);
+      background-color: #fff;
     }
-    &:valid {
-      border: 1px solid rgb(42, 197, 44);
-    }
-    /* &:invalid {
-      border: 1px solid rgb(243, 62, 119);
-    } */
+
     &:hover {
       cursor: pointer;
     }
+  }
 
-    &:disabled {
-      border: 1px solid rgb(42, 197, 44);
-    }
+  .error-message {
+    color: rgb(243, 62, 119);
+    font-size: 12px;
+    margin-top: 1px;
+  }
+
+  .input-area.invalid {
+    border: 1px solid rgb(243, 62, 119);
   }
 
   .input-label {
@@ -57,17 +59,20 @@
     font-size: 12px;
   }
 
-  .input-area:valid + .input-label {
-    top: 5px;
+  .value-filled {
+    top: 5px !important;
     font-size: 12px;
   }
 
-  /* .input-area:invalid + .input-label {
-    top: 5px;
-    font-size: 12px;
-  } */
+  .invalid {
+    border: 1px solid rgb(243, 62, 119);
+  }
+  .valid {
+    border: 1px solid rgb(42, 197, 44);
+    background-color: #fff;
+  }
 
-  .input-area:disabled + .input-label {
+  .input-area:valid + .input-label {
     top: 5px;
     font-size: 12px;
   }

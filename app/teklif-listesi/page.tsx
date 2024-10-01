@@ -55,6 +55,7 @@ function OfferList() {
       price: offer.TOPLAM_PRIM,
       model: offer.MARKA_TIP_AD,
       brand: offer.MARKA_AD,
+      deviceValue: offer.CIHAZ_BEDEL,
     });
     router.push("/sigorta-teklifi");
   };
@@ -67,26 +68,39 @@ function OfferList() {
               <Icon icon={Icons.ARROW_LEFT} />
             </span>
           </Link>
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold">Cep Telefonu Sigortası</h2>
-            <p className="text-[#667085] font-extralight text-lg">
-              Cep telefonunuza ait sigorta tekliflerini burada
-              görüntüleyebilirsiniz.
-            </p>
-          </div>
-          <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6">
-            {!!offer ? (
-              <OfferItem
-                title={offer.ENTEGRASYON_URUN_AD}
-                company={offer.SGR_SIRKET_MUSTERI_ROL_AD}
-                price={offer.TOPLAM_PRIM_TL}
-                policeStatusId={offer.ENTEGRASYON_POLICE_DURUM_ID}
-                status={offer.DURUM_ACIKLAMA || ""}
-              />
-            ) : (
-              <Spinner />
-            )}
-          </div>
+          {!!offer ? (
+            <>
+              <div className="mb-10 text-center">
+                {offer?.MARKA_TIP_AD ? (
+                  <>
+                    <h2 className="text-2xl font-bold">
+                      {offer?.MARKA_TIP_AD}
+                    </h2>
+                    <p className="text-[#667085] font-extralight text-lg">
+                      {offer?.MARKA_TIP_AD} cihaziniza ait sigorta tekliflerini
+                      burada görüntüleyebilirsiniz.
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-[#667085] font-extralight text-lg">
+                    Cihaziniza ait sigorta tekliflerini burada
+                    görüntüleyebilirsiniz.
+                  </p>
+                )}
+              </div>
+              <div className="w-full flex flex-col justify-center items-center gap-y-6 mb-6">
+                <OfferItem
+                  title={offer.ENTEGRASYON_URUN_AD}
+                  company={offer.SGR_SIRKET_MUSTERI_ROL_AD}
+                  price={offer.TOPLAM_PRIM_TL}
+                  policeStatusId={offer.ENTEGRASYON_POLICE_DURUM_ID}
+                  status={offer.DURUM_ACIKLAMA || ""}
+                />
+              </div>
+            </>
+          ) : (
+            <Spinner />
+          )}
         </div>
         <div className="flex flex-col justify-center items-center mb-3">
           <CustomButton

@@ -16,6 +16,7 @@ function Offer({
   endDate,
   brand,
   model,
+  deviceValue,
   entegrationId,
 }: OfferProps) {
   const [showInformationForm, setShowInformationForm] = useState(false);
@@ -56,11 +57,11 @@ function Offer({
               brand
             )} ${formatName(model)}`}</p>
           </div>
-          {/* <hr className="my-2 border-t-1 border-[#667085]" />
+          <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
             <p className="font-light text-xs text-[#667085]">Cihaz Bedeli</p>
-            <p className="text-sm font-normal">{price ?? "-"}</p>
-          </div> */}
+            <p className="text-sm font-normal">₺{deviceValue ?? "-"}</p>
+          </div>
           <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
             <p className="font-light text-xs text-[#667085]">
