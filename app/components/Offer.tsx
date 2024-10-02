@@ -1,10 +1,12 @@
+import Cookies from "js-cookie";
 import { useState } from "react";
 import InformationFormDialog from "./dialogs/InformationFormDialog";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { formatName } from "../utils";
 import { submitPolicyApprovalSecurePayment } from "../utils/api/payment";
 import { StoredPoliceItem } from "../types/product";
+import { GUID } from "../hooks/useSetGuid";
+import { useRouter } from "next/navigation";
 
 interface OfferProps extends StoredPoliceItem {}
 
@@ -19,14 +21,33 @@ function Offer({
   deviceValue,
   entegrationId,
 }: OfferProps) {
-  const [showInformationForm, setShowInformationForm] = useState(false);
   const router = useRouter();
+  const [showInformationForm, setShowInformationForm] = useState(false);
 
-  function handleSendForm(event: React.FormEvent) {
+  async function handleSendForm(event: React.FormEvent) {
     event.preventDefault();
 
-    // submitPolicyApprovalSecurePayment(entegrationId, null, null);
-    // router.push("/odeme");
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
+
+    const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
+      await submitPolicyApprovalSecurePayment(
+        entegrationId,
+        null,
+        `https://acentex.vercel.app/odeme`
+      );
+    const policeGuid: string | undefined = Cookies.get(GUID);
+    if (!policeGuid) {
+      router.push("/teklif-form");
+      return;
+    }
+
+    if (REDIRECT_URL) {
+      const payloadValue = [entegrationId, transactionId, REDIRECT_URL];
+      const payloadValueJSON = JSON.stringify(payloadValue);
+      Cookies.set(policeGuid, payloadValueJSON, { expires: expirationDate });
+      window.location.href = REDIRECT_URL;
+    }
   }
 
   return (

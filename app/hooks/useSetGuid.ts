@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { post } from "../utils/api";
-import { setSessionStorage } from "../utils";
+import Cookies from "js-cookie";
 
-const GUID = "guid";
+export const GUID: string = "guid";
 
 export const setGuid = async () => {
   try {
@@ -10,18 +9,12 @@ export const setGuid = async () => {
       path: "/ExternalProduction/SET_TEKLIF_GUID",
       payload: {},
     });
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
 
-    setSessionStorage(GUID, POLICE_GUID);
+    Cookies.set(GUID, POLICE_GUID, { expires: expirationDate });
     return POLICE_GUID;
   } catch (error) {
     console.error("Failed to fetch initial token", error);
   }
 };
-
-// const useGuid = () => {
-//   useEffect(() => {
-//     setGuid();
-//   }, []);
-// };
-
-// export default useGuid;

@@ -1,25 +1,14 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import CustomButton from "../components/elements/CustomButton";
-import { getSessionStorage } from "@/app/utils";
 
-function PaymentFailed() {
-  const router = useRouter();
-  const [policeId, setPoliceId] = useState<string | null>(null);
-  useEffect(() => {
-    const police = getSessionStorage<string>("policeId");
-    setPoliceId(police);
-    // if (!police) {
-    //   router.push("/");
-    // }
-  }, []);
+interface PaymentFailedProps {
+  redirectUrl: string;
+}
 
+function PaymentFailed({ redirectUrl }: PaymentFailedProps) {
   const handleRetry = () => {
-    // Retry logic or navigate to the payment step
-    router.push("/payment");
+    window.location.href = redirectUrl;
   };
 
   return (

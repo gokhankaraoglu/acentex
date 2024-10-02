@@ -1,24 +1,15 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { getSessionStorage } from "../utils";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import Link from "next/link";
 import CustomButton from "../components/elements/CustomButton";
 
-function Success() {
-  const router = useRouter();
-  const [policeId, setPoliceId] = useState<string | null>(null);
-  useEffect(() => {
-    const police = getSessionStorage<string>("policeId");
-    // setPoliceId(police);
-    // if (!police) {
-    //   router.push("/");
-    // }
-  }, []);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("Button clicked!");
+interface PaymentSuccessPayload {
+  policeId: string;
+}
+
+function PaymentSuccess({ policeId }: PaymentSuccessPayload) {
+  const handleClick = () => {
+    alert(`Police servisi hazir degil, ${policeId}`);
   };
   return (
     <div className="flex flex-col justify-between items-center custom-min-height">
@@ -37,7 +28,7 @@ function Success() {
         </p>
       </div>
       <div className="mb-6 flex flex-col">
-        <CustomButton saturated className="mb-6">
+        <CustomButton saturated className="mb-6" onClick={handleClick}>
           Poliçenizi görüntülemek veya indirmek için tıklayın
         </CustomButton>
         <Link href="/">
@@ -48,4 +39,4 @@ function Success() {
   );
 }
 
-export default Success;
+export default PaymentSuccess;

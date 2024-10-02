@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import FormElement from "../components/FormElement";
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
@@ -158,11 +159,13 @@ function ProductForm() {
     ) {
       return;
     }
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
 
     try {
       if (policeGuid) {
         const policeId = await submitForm(policeGuid);
-        setSessionStorage("policeId", policeId);
+        Cookies.set("policeId", policeId, { expires: expirationDate });
         setSessionStorage("credentials", credentials);
         router.push("/teklif-listesi");
       }

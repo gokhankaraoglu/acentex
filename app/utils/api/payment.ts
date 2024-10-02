@@ -1,6 +1,8 @@
+import { ApiResponse } from "@/app/types";
 import { post } from ".";
+import { PaymentData, TransactionData } from "@/app/types/payment";
 
-export interface PolicyApprovalPayload {
+export interface PolicyApprovalBeforePayload {
   ENTEGRASYON_POLICE_HAREKET_ID: number;
   TAKSIT_KOD: string | null;
   CALLBACK_URL: string | null;
@@ -17,8 +19,11 @@ export async function submitPolicyApprovalSecurePayment(
   hareketId: number,
   taksitKod: string | null = null,
   callbackUrl: string | null = null
-): Promise<void> {
-  await post<PolicyApprovalPayload, void>({
+): Promise<TransactionData> {
+  const response = await post<
+    PolicyApprovalBeforePayload,
+    ApiResponse<TransactionData>
+  >({
     path: "/ExternalProduction/POLICY_APPROVAL_SECURE_PAYMENT_BEFORE",
     payload: {
       ENTEGRASYON_POLICE_HAREKET_ID: hareketId,
@@ -26,6 +31,7 @@ export async function submitPolicyApprovalSecurePayment(
       CALLBACK_URL: callbackUrl,
     },
   });
+  return response?.Data;
 }
 
 export async function submitPolicyApprovalSecurePaymentAfter(
@@ -33,8 +39,11 @@ export async function submitPolicyApprovalSecurePaymentAfter(
   transactionId: string,
   description: string | null = null,
   transactionLog: string | null = null
-): Promise<void> {
-  await post<PolicyApprovalAfterPayload, void>({
+): Promise<PaymentData> {
+  const response = await post<
+    PolicyApprovalAfterPayload,
+    ApiResponse<PaymentData>
+  >({
     path: "/ExternalProduction/POLICY_APPROVAL_SECURE_PAYMENT_AFTER",
     payload: {
       ENTEGRASYON_POLICE_HAREKET_ID: hareketId,
@@ -43,4 +52,5 @@ export async function submitPolicyApprovalSecurePaymentAfter(
       TRANSACTION_LOG: transactionLog,
     },
   });
+  return response?.Data;
 }

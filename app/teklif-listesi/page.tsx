@@ -1,12 +1,12 @@
 "use client";
-
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import OfferItem from "../components/OfferItem";
 import InsuranceDetailDialog from "../components/dialogs/InsuranceDetailDialog";
 import { useEffect, useState, useCallback } from "react";
-import { delay, getSessionStorage, setSessionStorage } from "../utils";
+import { delay, setSessionStorage } from "../utils";
 import { EntegrasyonPoliceDurumID, PoliceItem } from "../types/product";
 import Spinner from "../components/elements/Spinner";
 import { fetchOfferData } from "../utils/api/offer";
@@ -19,14 +19,14 @@ function OfferList() {
   const [offer, setOffer] = useState<PoliceItem>();
 
   useEffect(() => {
-    const policeId = getSessionStorage<number>("policeId");
+    const policeId: string | undefined = Cookies.get("policeId");
 
     if (!policeId) {
       router.push("/");
       return;
     }
 
-    fetchOffer(policeId);
+    fetchOffer(+policeId);
   }, []);
 
   const fetchOffer = useCallback(async (policeId: number) => {

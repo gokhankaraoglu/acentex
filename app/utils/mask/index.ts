@@ -61,7 +61,9 @@ export const isValidTCKN = (value: string) => {
 export const isValidPhoneNumber = (value: string) => {
   const normalizedPhoneNumber = normalizePhoneNumber(value);
 
-  return normalizedPhoneNumber.length === 10;
+  return (
+    normalizedPhoneNumber.length === 10 && normalizedPhoneNumber.startsWith("5")
+  );
 };
 
 export const isValidEmail = (value: string) => {

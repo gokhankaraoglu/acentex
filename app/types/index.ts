@@ -15,8 +15,8 @@ export interface Data {
   MessageList: any[];
 }
 
-export interface ProductApiResponse {
-  Data: Data;
+export interface ApiResponse<T> {
+  Data: T;
   Message: string | null;
   Status: number;
 }
