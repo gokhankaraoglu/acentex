@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import InformationFormDialog from "./dialogs/InformationFormDialog";
 import Image from "next/image";
-import { formatName } from "../utils";
+import { createExpirationDate, formatName } from "../utils";
 import { submitPolicyApprovalSecurePayment } from "../utils/api/payment";
 import { StoredPoliceItem } from "../types/product";
 import { GUID } from "../hooks/useSetGuid";
@@ -27,14 +27,13 @@ function Offer({
   async function handleSendForm(event: React.FormEvent) {
     event.preventDefault();
 
-    const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
+    const expirationDate = createExpirationDate(3);
 
     const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
       await submitPolicyApprovalSecurePayment(
         entegrationId,
         null,
-        `https://acentex.vercel.app/odeme`
+        `https://acentex.vercel.app/odeme/geri-donus`
       );
     const policeGuid: string | undefined = Cookies.get(GUID);
     if (!policeGuid) {

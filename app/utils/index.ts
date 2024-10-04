@@ -51,3 +51,10 @@ export const getSessionStorage = <T>(key: string): T | null => {
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
+
+export const createExpirationDate = (hours: number): Date => {
+  const expirationDate = new Date();
+  const milliseconds = hours * 60 * 60 * 1000;
+  expirationDate.setTime(expirationDate.getTime() + milliseconds);
+  return expirationDate;
+};

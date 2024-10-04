@@ -1,3 +1,4 @@
+import { createExpirationDate } from "../utils";
 import { post } from "../utils/api";
 import Cookies from "js-cookie";
 
@@ -9,8 +10,7 @@ export const setGuid = async () => {
       path: "/ExternalProduction/SET_TEKLIF_GUID",
       payload: {},
     });
-    const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
+    const expirationDate = createExpirationDate(3);
 
     Cookies.set(GUID, POLICE_GUID, { expires: expirationDate });
     return POLICE_GUID;

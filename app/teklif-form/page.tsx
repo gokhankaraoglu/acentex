@@ -159,8 +159,7 @@ function ProductForm() {
     ) {
       return;
     }
-    const expirationDate = new Date();
-    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
+    const expirationDate = createExpirationDate(3);
 
     try {
       if (policeGuid) {
