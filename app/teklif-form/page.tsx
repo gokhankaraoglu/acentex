@@ -6,7 +6,11 @@ import Link from "next/link";
 import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import { useEffect, useState } from "react";
-import { getSessionStorage, setSessionStorage } from "../utils";
+import {
+  createExpirationDate,
+  getSessionStorage,
+  setSessionStorage,
+} from "../utils";
 import { setGuid } from "../hooks/useSetGuid";
 import { SoruListItem } from "../types/question";
 import { useRouter } from "next/navigation";
