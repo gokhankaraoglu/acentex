@@ -64,7 +64,7 @@ export interface PoliceItem {
   ENTEGRASYON_POLICE_HAREKET_KEY: any | null;
   ENTEGRASYON_POLICE_LOG_ID: any | null;
   REVIZE_NO: number;
-  ENTEGRASYON_POLICE_NO: any | null;
+  ENTEGRASYON_POLICE_NO: string | null;
   ENTEGRASYON_ZEYL_NO: any | null;
   ENTEGRASYON_YENILEME_NO: any | null;
   ENTEGRASYON_POLICE_DURUM_ID: number;
@@ -135,6 +135,7 @@ export interface StoredPoliceItem {
   brand: string;
   model: string;
   entegrationId: number;
+  entegrationPoliceNo: string;
   deviceValue: number;
 }
 

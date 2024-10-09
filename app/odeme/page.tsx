@@ -8,20 +8,25 @@ import { GUID } from "../hooks/useSetGuid";
 import { submitPolicyApprovalSecurePaymentAfter } from "../utils/api/payment";
 import PaymentFailed from "../components/PaymentFailed";
 import PaymentSuccess from "../components/PaymentSuccess";
+import { getSessionStorage } from "../utils";
+import { StoredPoliceItem } from "../types/product";
 
 function Payment() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [paymentStatus, setPaymentStatus] = useState<boolean | null>(null);
   const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
-  const [policeId, setPoliceId] = useState<string | null>(null);
+  const [selectedPolice, setSelectedPolice] = useState<StoredPoliceItem | null>(
+    null
+  );
 
   useEffect(() => {
     const handlePayment = async () => {
       const policeGuid = Cookies.get(GUID);
-      const policeId = Cookies.get("policeId");
+      const selectedPolice: StoredPoliceItem | null =
+        getSessionStorage("selected-police");
 
-      if (!policeId) {
+      if (!selectedPolice?.entegrationPoliceNo) {
         router.push("/");
         return;
       }
@@ -47,7 +52,7 @@ function Payment() {
 
       setPaymentStatus(Success);
       setRedirectUrl(redirectUrl);
-      setPoliceId(policeId);
+      setSelectedPolice(selectedPolice);
       setLoading(false);
     };
 
@@ -59,7 +64,12 @@ function Payment() {
   }
 
   return paymentStatus
-    ? policeId && <PaymentSuccess policeId={policeId} />
+    ? selectedPolice && (
+        <PaymentSuccess
+          policeNo={selectedPolice?.entegrationPoliceNo}
+          entegrasyonPoliceHareketId={selectedPolice.entegrationId}
+        />
+      )
     : redirectUrl && <PaymentFailed redirectUrl={redirectUrl} />;
 }
 

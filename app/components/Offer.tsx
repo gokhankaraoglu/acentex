@@ -8,7 +8,7 @@ import { StoredPoliceItem } from "../types/product";
 import { GUID } from "../hooks/useSetGuid";
 import { useRouter } from "next/navigation";
 
-interface OfferProps extends StoredPoliceItem {}
+interface OfferProps extends Omit<StoredPoliceItem, "entegrationPoliceNo"> {}
 
 function Offer({
   title,

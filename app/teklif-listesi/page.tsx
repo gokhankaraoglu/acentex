@@ -50,6 +50,7 @@ function OfferList() {
       title: offer.URUN_AD,
       company: offer.SGR_SIRKET_MUSTERI_ROL_AD,
       entegrationId: offer.ENTEGRASYON_POLICE_HAREKET_ID,
+      entegrationPoliceNo: offer.ENTEGRASYON_POLICE_NO,
       startDate: offer.BASLAMA_TARIH,
       endDate: offer.BITIS_TARIH,
       price: offer.TOPLAM_PRIM,

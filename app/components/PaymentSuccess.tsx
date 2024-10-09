@@ -4,12 +4,16 @@ import Link from "next/link";
 import CustomButton from "../components/elements/CustomButton";
 
 interface PaymentSuccessPayload {
-  policeId: string;
+  policeNo: string;
+  entegrasyonPoliceHareketId: number;
 }
 
-function PaymentSuccess({ policeId }: PaymentSuccessPayload) {
+function PaymentSuccess({
+  policeNo,
+  entegrasyonPoliceHareketId,
+}: PaymentSuccessPayload) {
   const handleClick = () => {
-    alert(`Police servisi hazir degil, ${policeId}`);
+    alert(`Police servisi hazir degil, ${policeNo}`);
   };
   return (
     <div className="flex flex-col justify-between items-center custom-min-height">
@@ -23,7 +27,7 @@ function PaymentSuccess({ policeId }: PaymentSuccessPayload) {
           className="mb-10"
         />
         <p className="text-xl font-semibold mb-10">
-          Tebrikler AXA Sigorta’dan #{policeId} nolu cep telefonu poliçeniz
+          Tebrikler AXA Sigorta’dan #{policeNo} nolu cep telefonu poliçeniz
           oluştu.
         </p>
       </div>
