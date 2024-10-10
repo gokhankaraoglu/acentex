@@ -78,36 +78,37 @@ function ProductForm() {
       setPoliceGuid(newPoliceGuid);
     };
 
-    const submitQuestions = async (
-      questions: SoruListItem[],
-      policeGuid: string
-    ) => {
-      const answerMapping: { [key: number]: any } = {
-        21: today,
-        22: oneYearLater,
-        14: credentialsDetail?.TCK,
-        44: credentialsDetail?.DGMTAR,
-        42: credentialsDetail?.CEPTEL,
-        77: credentialsDetail?.EMAIL,
-      };
-
-      for (const question of questions) {
-        const answer = answerMapping[question.SORU_ID];
-        if (answer !== undefined) {
-          try {
-            await submitQuestionAnswerMethod(policeGuid, question, answer);
-          } catch (error) {
-            console.error(
-              `Error submitting question ID ${question.SORU_ID}:`,
-              error
-            );
-          }
-        }
-      }
-    };
-
     checkToken();
   }, []);
+
+  const submitQuestions = async (
+    questions: SoruListItem[],
+    policeGuid: string
+  ) => {
+    const answerMapping: { [key: number]: any } = {
+      21: today,
+      22: oneYearLater,
+      14: credentialsDetail?.TCK,
+      44: credentialsDetail?.DGMTAR,
+      42: credentialsDetail?.CEPTEL,
+      77: credentialsDetail?.EMAIL,
+    };
+
+    for (const question of questions) {
+      // console.log({ answer });
+      const answer = answerMapping[question.SORU_ID];
+      if (answer) {
+        try {
+          await submitQuestionAnswerMethod(policeGuid, question, answer);
+        } catch (error) {
+          console.error(
+            `Error submitting question ID ${question.SORU_ID}:`,
+            error
+          );
+        }
+      }
+    }
+  };
 
   async function handleAnswerChange(
     question: SoruListItem,
