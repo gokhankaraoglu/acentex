@@ -24,10 +24,10 @@ function InputSections({
   value,
   onChange,
 }: InputSectionsProps) {
-  // const today = new Date().toISOString().split("T")[0];
+  // const today = new Date().toLocaleDateString("en-CA");
   // const nextYear = new Date();
   // nextYear.setFullYear(nextYear.getFullYear() + 1);
-  // const oneYearLater = nextYear.toISOString().split("T")[0];
+  // const oneYearLater = nextYear.toLocaleDateString("en-CA");
   switch (questionID) {
     // case 21: // BAŞLAMA TARİHİ
     //   return (
