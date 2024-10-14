@@ -1,9 +1,9 @@
-interface Item {
+export interface Item {
   FILE_NAME: string;
-  BINARY_DATA: string | null;
-  FILE_URL: string | null;
+  BINARY_DATA: string;
+  FILE_URL: string;
   CONTENT_TYPE: string;
-  EVRAK_HAVUZ_ID: number | null;
+  EVRAK_HAVUZ_ID: number;
   Success: boolean;
   ErrorList: string[];
   WarningList: string[];
