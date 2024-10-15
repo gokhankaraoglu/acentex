@@ -75,13 +75,20 @@ function PdfViewer({
     loadPdf();
   }, [isOpen, policeData]);
 
-  const downloadPdf = () => {
-    if (policeData) {
-      const link = document.createElement("a");
-      link.href = `data:application/pdf;base64,${policeData?.BINARY_DATA}`;
-      link.download = policeData?.FILE_NAME;
-      link.click();
-    }
+  const downloadPdf = (policeData: Item) => {
+    const uint8Array = base64ToUint8Array(policeData.BINARY_DATA);
+    const blob = new Blob([uint8Array], { type: policeData.CONTENT_TYPE });
+
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.download = policeData.FILE_NAME || "download.pdf";
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -109,9 +116,10 @@ function PdfViewer({
             </div>
             <div className="flex flex-col justify-center items-center mb-6">
               <CustomButton
-                onClick={() => downloadPdf()}
+                onClick={() =>
+                  policeData?.BINARY_DATA && downloadPdf(policeData)
+                }
                 className="mb-3.5"
-                disabled={!policeData?.BINARY_DATA}
               >
                 Poliçe İndir
               </CustomButton>
