@@ -31,7 +31,7 @@ function InsuranceDetailDialog({
               <p className="text-center text-2xl font-bold mb-10">
                 Koruma Kapsamları
               </p>
-              <div className="flex flex-col gap-y-8 h-[410px] overflow-y-auto">
+              <div className="flex flex-col gap-y-8 h-[calc(80vh-15rem)] overflow-y-auto">
                 {contractText.map(({ title, icon, description }, index) => (
                   <section key={index}>
                     <div className="flex items-center text-[#667085] mb-2.5">

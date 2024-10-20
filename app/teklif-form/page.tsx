@@ -191,12 +191,12 @@ function ProductForm() {
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
-        <Link href="/" className="mb-11 inline-block self-start">
+        {/* <Link href="/" className="mb-11 inline-block self-start">
           <span className="flex items-center">
             <Icon icon={Icons.ARROW_LEFT} />
             <span className="ml-3 font-semibold text-xl">Teklifinizi Alın</span>
           </span>
-        </Link>
+        </Link> */}
         <div className="w-full max-w-md px-3">
           <form autoComplete="off" id="form1" onSubmit={handleSendForm}>
             {questions.length > 0 ? (

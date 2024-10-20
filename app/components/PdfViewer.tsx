@@ -106,7 +106,7 @@ function PdfViewer({
               </button>
             </div>
             <div className="flex flex-col gap-4 px-4 py-6 sm:px-6 md:px-8">
-              <div className="flex flex-col gap-y-8 h-[65vh] overflow-y-auto">
+              <div className="flex flex-col gap-y-8 h-[calc(80vh-15rem)] overflow-y-auto">
                 {policeData ? (
                   <canvas ref={canvasRef}></canvas>
                 ) : (

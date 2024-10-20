@@ -29,7 +29,7 @@ function InformationFormDialog({
               <p className="text-center text-2xl font-bold mb-10">
                 Tam Kapsamlı Cep Telefonu Sigortası Bilgilendirme Formu
               </p>
-              <div className="h-[400px] overflow-y-auto">
+              <div className="h-[calc(80vh-15rem)] overflow-y-auto">
                 {informationForm.map(({ title, description }, index) => (
                   <section className="mb-8" key={index}>
                     {title && (
