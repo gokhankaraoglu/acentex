@@ -43,16 +43,14 @@ function ProductForm() {
   const [questions, setQuestions] = useState<SoruListItem[]>([]);
   const [policeGuid, setPoliceGuid] = useState<string>("");
   const [credentialsDetail, setCredentialsDetail] = useState<Credentials>({});
+  const productDetail = getSessionStorage<ProductDetail>("product");
+  const storedCredentialsDetail = getSessionStorage<Credentials>("credentials");
+  const policeId = Cookies.get("policeId");
 
   useEffect(() => {
-    const productDetail = getSessionStorage<ProductDetail>("product");
-    const storedCredentialsDetail =
-      getSessionStorage<Credentials>("credentials");
-
     if (storedCredentialsDetail) {
       setCredentialsDetail(storedCredentialsDetail);
     }
-
     const checkToken = async () => {
       const accessToken = Cookies.get(ACCESS_TOKEN);
       if (!accessToken) {
@@ -74,40 +72,45 @@ function ProductForm() {
         productDetail
       );
 
-      await submitQuestions(fetchedQuestions, newPoliceGuid);
+      await submitQuestions(
+        fetchedQuestions,
+        newPoliceGuid,
+        storedCredentialsDetail
+      );
       setPoliceGuid(newPoliceGuid);
-    };
-
-    const submitQuestions = async (
-      questions: SoruListItem[],
-      policeGuid: string
-    ) => {
-      const answerMapping: { [key: number]: any } = {
-        21: today,
-        22: oneYearLater,
-        14: credentialsDetail?.TCK,
-        44: credentialsDetail?.DGMTAR,
-        42: credentialsDetail?.CEPTEL,
-        77: credentialsDetail?.EMAIL,
-      };
-
-      for (const question of questions) {
-        const answer = answerMapping[question.SORU_ID];
-        if (answer !== undefined) {
-          try {
-            await submitQuestionAnswerMethod(policeGuid, question, answer);
-          } catch (error) {
-            console.error(
-              `Error submitting question ID ${question.SORU_ID}:`,
-              error
-            );
-          }
-        }
-      }
     };
 
     checkToken();
   }, []);
+
+  const submitQuestions = async (
+    questions: SoruListItem[],
+    policeGuid: string,
+    credentials?: Credentials
+  ) => {
+    const answerMapping: { [key: number]: string | undefined } = {
+      21: today,
+      22: oneYearLater,
+      14: credentials?.TCK,
+      44: credentials?.DGMTAR,
+      42: credentials?.CEPTEL,
+      77: credentials?.EMAIL,
+    };
+
+    for (const question of questions) {
+      const answer = answerMapping[question.SORU_ID];
+      if (answer !== undefined) {
+        try {
+          await submitQuestionAnswerMethod(policeGuid, question, answer);
+        } catch (error) {
+          console.error(
+            `Error submitting question ID ${question.SORU_ID}:`,
+            error
+          );
+        }
+      }
+    }
+  };
 
   async function handleAnswerChange(
     question: SoruListItem,
@@ -129,10 +132,10 @@ function ProductForm() {
       value = e.target.value;
     }
 
-    setCredentialsDetail((prev: Credentials) => ({
-      ...prev,
-      [question.SORU_KOD]: value,
-    }));
+    // setCredentialsDetail((prev: Credentials) => ({
+    //   ...prev,
+    //   [question.SORU_KOD]: value,
+    // }));
     await submitQuestionAnswerMethod(policeGuid, question, value);
   }
 
@@ -191,12 +194,18 @@ function ProductForm() {
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
-        {/* <Link href="/" className="mb-11 inline-block self-start">
-          <span className="flex items-center">
-            <Icon icon={Icons.ARROW_LEFT} />
-            <span className="ml-3 font-semibold text-xl">Teklifinizi Alın</span>
-          </span>
-        </Link> */}
+        {policeId && (
+          <Link
+            href="/teklif-listesi"
+            className="mb-11 inline-block self-end px-3"
+          >
+            <span className="flex items-center">
+              <span className="mr-3 font-semibold text-xl">Teklife Git</span>
+              <Icon icon={Icons.ARROW_RIGHT} />
+            </span>
+          </Link>
+        )}
+
         <div className="w-full max-w-md px-3">
           <form autoComplete="off" id="form1" onSubmit={handleSendForm}>
             {questions.length > 0 ? (

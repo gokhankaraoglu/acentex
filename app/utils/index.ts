@@ -32,11 +32,11 @@ export const setSessionStorage = <T>(key: string, value: T): void => {
   }
 };
 
-export const getSessionStorage = <T>(key: string): T | null => {
+export const getSessionStorage = <T>(key: string): T | undefined => {
   try {
     const jsonValue = sessionStorage.getItem(key);
     if (jsonValue === null) {
-      return null;
+      return undefined;
     }
     return JSON.parse(jsonValue) as T;
   } catch (error) {
@@ -44,7 +44,7 @@ export const getSessionStorage = <T>(key: string): T | null => {
       `Error reading from sessionStorage with key "${key}":`,
       error
     );
-    return null;
+    return undefined;
   }
 };
 

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 export enum Icons {
   ARROW_LEFT = "arrowLeft",
+  ARROW_RIGHT = "arrowRight",
   CLOSE_ICON = "closeIcon",
   CALENDAR_ICON = "calendarIcon",
   INFO_ICON = "infoIcon",
@@ -21,6 +22,9 @@ const iconList: Record<Icons, string> = {
   arrowLeft: `<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M7.66667 15L1 8M1 8L7.66667 1M1 8L17 8" stroke="#0F1828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   `,
+  arrowRight: `<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10.3333 1L17 8M17 8L10.3333 15M17 8L1 8" stroke="#0F1828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`,
   closeIcon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M18 6L6 18M18 18L6 6" stroke="#0F1828" stroke-width="1.5" stroke-linecap="round"/>
   </svg>`,

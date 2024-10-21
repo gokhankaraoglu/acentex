@@ -15,7 +15,7 @@ function SelectedOffer() {
   const router = useRouter();
   const [police, setPolice] = useState<StoredPoliceItem | null>(null);
   useEffect(() => {
-    const selectedPolice: StoredPoliceItem | null =
+    const selectedPolice: StoredPoliceItem | undefined =
       getSessionStorage("selected-police");
 
     if (!selectedPolice) {

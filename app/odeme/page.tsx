@@ -23,7 +23,7 @@ function Payment() {
   useEffect(() => {
     const handlePayment = async () => {
       const policeGuid = Cookies.get(GUID);
-      const selectedPolice: StoredPoliceItem | null =
+      const selectedPolice: StoredPoliceItem | undefined =
         getSessionStorage("selected-police");
 
       if (!selectedPolice?.entegrationPoliceNo) {
