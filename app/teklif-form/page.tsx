@@ -132,10 +132,10 @@ function ProductForm() {
       value = e.target.value;
     }
 
-    // setCredentialsDetail((prev: Credentials) => ({
-    //   ...prev,
-    //   [question.SORU_KOD]: value,
-    // }));
+    setCredentialsDetail((prev: Credentials) => ({
+      ...prev,
+      [question.SORU_KOD]: value,
+    }));
     await submitQuestionAnswerMethod(policeGuid, question, value);
   }
 
