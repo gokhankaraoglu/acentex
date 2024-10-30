@@ -200,7 +200,7 @@ function ProductForm() {
             className="mb-11 inline-block self-end px-3"
           >
             <span className="flex items-center">
-              <span className="mr-3 font-semibold text-xl">Teklife Git</span>
+              {/* <span className="mr-3 font-semibold text-xl">Teklife Git</span> */}
               <Icon icon={Icons.ARROW_RIGHT} />
             </span>
           </Link>

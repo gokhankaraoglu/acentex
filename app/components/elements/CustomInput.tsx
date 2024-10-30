@@ -73,9 +73,7 @@ function CustomInput({
           autoComplete={autoComplete}
           maxLength={maxlength}
           minLength={minlength}
-          className={`input-area ${className} ${validClass} ${
-            value?.length !== 0 && "value-filled"
-          }`}
+          className={`input-area ${className} ${validClass}`}
           onChange={onChange}
           onBlur={handleBlur}
           min={min}
