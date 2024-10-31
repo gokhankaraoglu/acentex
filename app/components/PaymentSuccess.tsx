@@ -9,6 +9,13 @@ interface PaymentSuccessPayload {
   policeNo: string;
   entegrasyonPoliceHareketId: number;
 }
+declare global {
+  interface Window {
+    OnLoadEvent?: {
+      postMessage: (message: string) => void;
+    };
+  }
+}
 
 function PaymentSuccess({
   policeNo,
@@ -19,6 +26,19 @@ function PaymentSuccess({
   const handleClick = () => {
     setIsOpen(true);
   };
+
+  const notifyAppLoadSuccess = (): void => {
+    const onLoadEvent = window?.OnLoadEvent;
+
+    if (onLoadEvent) {
+      onLoadEvent.postMessage("success");
+    } else {
+      console.warn(
+        "OnLoadEvent.postMessage method is unavailable or not a function."
+      );
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col justify-between items-center custom-min-height">
@@ -43,7 +63,7 @@ function PaymentSuccess({
             Poliçenizi görüntülemek veya indirmek için tıklayın
           </CustomButton>
           <Link href="/">
-            <CustomButton>Tamam</CustomButton>
+            <CustomButton onClick={notifyAppLoadSuccess}>Tamam</CustomButton>
           </Link>
         </div>
       </div>
