@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import CustomButton from "../components/elements/CustomButton";
 import { useState } from "react";
 import PdfViewer from "./PdfViewer";
@@ -62,9 +61,7 @@ function PaymentSuccess({
           <CustomButton saturated className="mb-6" onClick={handleClick}>
             Poliçenizi görüntülemek veya indirmek için tıklayın
           </CustomButton>
-          <Link href="/">
-            <CustomButton onClick={notifyAppLoadSuccess}>Tamam</CustomButton>
-          </Link>
+          <CustomButton onClick={notifyAppLoadSuccess}>Tamam</CustomButton>
         </div>
       </div>
       <PdfViewer
