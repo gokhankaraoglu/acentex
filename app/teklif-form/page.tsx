@@ -191,21 +191,13 @@ function ProductForm() {
     }
   }
 
+  function goBackOffer() {
+    router.push("/teklif-listesi");
+  }
+
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
-        {policeId && (
-          <Link
-            href="/teklif-listesi"
-            className="mb-11 inline-block self-end px-3"
-          >
-            <span className="flex items-center">
-              {/* <span className="mr-3 font-semibold text-xl">Teklife Git</span> */}
-              <Icon icon={Icons.ARROW_RIGHT} />
-            </span>
-          </Link>
-        )}
-
         <div className="w-full max-w-md px-3">
           <form autoComplete="off" id="form1" onSubmit={handleSendForm}>
             {questions.length > 0 ? (
@@ -242,12 +234,18 @@ function ProductForm() {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center mb-3">
-        <CustomButton
-          form="form1"
-          type="submit"
-          saturated={true}
-          className="mb-2.5"
-        >
+        {policeId && (
+          <CustomButton
+            form="form1"
+            type="submit"
+            saturated={true}
+            className="mb-2.5"
+            onClick={goBackOffer}
+          >
+            Teklife Dön
+          </CustomButton>
+        )}
+        <CustomButton form="form1" type="submit" className="mb-2.5">
           Teklif Oluştur
         </CustomButton>
         <Footer />
