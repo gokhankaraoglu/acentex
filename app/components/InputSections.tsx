@@ -62,6 +62,7 @@ function InputSections({
           isRequired={isRequired}
           onChange={onChange}
           value={value}
+          max={new Date().toISOString().split("T")[0]}
         />
       );
     case 14: // T.C. KİMLİK NUMARASI
@@ -105,7 +106,7 @@ function InputSections({
       return (
         <CustomInput
           id={questionCode}
-          type={InputType.EMAIL}
+          type={InputType.TEXT}
           name="E-Mail Adresi"
           isRequired={isRequired}
           onChange={onChange}

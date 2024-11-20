@@ -7,9 +7,11 @@ import Footer from "../Footer";
 function InformationFormDialog({
   isOpen,
   close,
+  confirm,
 }: {
   isOpen: boolean;
   close: () => void;
+  confirm: () => void;
 }) {
   return (
     <Dialog open={isOpen} onClose={() => close()}>
@@ -49,7 +51,7 @@ function InformationFormDialog({
                 form="form1"
                 type="button"
                 className="mb-3.5"
-                onClick={close}
+                onClick={confirm}
               >
                 Okudum, kabul ediyorum.
               </CustomButton>

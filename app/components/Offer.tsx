@@ -8,7 +8,9 @@ import { StoredPoliceItem } from "../types/product";
 import { GUID } from "../hooks/useSetGuid";
 import { useRouter } from "next/navigation";
 
-interface OfferProps extends Omit<StoredPoliceItem, "entegrationPoliceNo"> {}
+interface OfferProps extends Omit<StoredPoliceItem, "entegrationPoliceNo"> {
+  setIsProcessing?: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 function Offer({
   title,
@@ -20,14 +22,17 @@ function Offer({
   model,
   deviceValue,
   entegrationId,
+  setIsProcessing,
 }: OfferProps) {
   const router = useRouter();
   const [showInformationForm, setShowInformationForm] = useState(false);
+  const [isAcceptedForm, setIsAcceptedForm] = useState(false);
 
   async function handleSendForm(event: React.FormEvent) {
     event.preventDefault();
 
     const expirationDate = createExpirationDate(3);
+    setIsProcessing && setIsProcessing(true);
 
     const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
       await submitPolicyApprovalSecurePayment(
@@ -97,33 +102,47 @@ function Offer({
             <input type="checkbox" id="declaration" required />
             <label
               htmlFor="declaration"
-              className="ml-2 text-xs font-extralight text-[#667085]"
+              className="ml-2 text-xs font-extralight text-[#667085] cursor-pointer"
             >
-              Cihazımın hasarsız olduğunu beyan ediyorum.
+              Ödeme adımına geçmek için hasarsızlık beyanını kabul ediniz.
             </label>
           </div>
           <div className="flex items-center">
-            <input type="checkbox" id="accept" required />
-            <label
-              htmlFor="accept"
-              className="ml-2 text-xs font-extralight text-[#667085]"
-            >
+            <input type="checkbox" required checked={isAcceptedForm} />
+            <label className="ml-2 text-xs font-extralight text-[#667085]">
+              <span
+                className="cursor-pointer"
+                onClick={() => setIsAcceptedForm((prev) => !prev)}
+              >
+                Ödeme adımına geçmek için{" "}
+              </span>
               <span
                 className="text-[#6941C6] underline cursor-pointer"
                 onClick={() => {
                   setShowInformationForm(true);
                 }}
               >
-                Belgeleri
+                Sigorta Bilgilendirme Formunu
               </span>{" "}
-              okudum kabul ediyorum.
+              <span
+                className="cursor-pointer"
+                onClick={() => setIsAcceptedForm((prev) => !prev)}
+              >
+                kabul ediniz.
+              </span>
             </label>
           </div>
         </form>
       </div>
       <InformationFormDialog
         isOpen={showInformationForm}
-        close={() => setShowInformationForm(false)}
+        close={() => {
+          setShowInformationForm(false);
+        }}
+        confirm={() => {
+          setIsAcceptedForm(true);
+          setShowInformationForm(false);
+        }}
       />
     </>
   );

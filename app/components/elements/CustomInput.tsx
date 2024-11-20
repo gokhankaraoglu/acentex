@@ -24,6 +24,7 @@ interface InputProps {
   value?: string;
   className?: string;
   min?: string;
+  max?: string;
   disabled?: boolean;
   autoFocus?: boolean;
   isValid?: boolean;
@@ -44,6 +45,7 @@ function CustomInput({
   className = "",
   value,
   min,
+  max,
   disabled = false,
   autoFocus = false,
   isValid = true,
@@ -77,6 +79,7 @@ function CustomInput({
           onChange={onChange}
           onBlur={handleBlur}
           min={min}
+          max={max}
           value={value}
           disabled={disabled}
           autoFocus={autoFocus}

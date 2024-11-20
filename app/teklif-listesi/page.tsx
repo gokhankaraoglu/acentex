@@ -78,13 +78,13 @@ function OfferList() {
                       {offer?.MARKA_TIP_AD}
                     </h2>
                     <p className="text-[#667085] font-extralight text-lg">
-                      {offer?.MARKA_TIP_AD} cihaziniza ait sigorta tekliflerini
+                      {offer?.MARKA_TIP_AD} cihazınıza ait sigorta tekliflerini
                       burada görüntüleyebilirsiniz.
                     </p>
                   </>
                 ) : (
                   <p className="text-[#667085] font-extralight text-lg">
-                    Cihaziniza ait sigorta tekliflerini burada
+                    Cihazınıza ait sigorta tekliflerini burada
                     görüntüleyebilirsiniz.
                   </p>
                 )}

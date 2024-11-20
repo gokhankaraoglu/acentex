@@ -14,6 +14,8 @@ import Footer from "../components/Footer";
 function SelectedOffer() {
   const router = useRouter();
   const [police, setPolice] = useState<StoredPoliceItem | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   useEffect(() => {
     const selectedPolice: StoredPoliceItem | undefined =
       getSessionStorage("selected-police");
@@ -58,6 +60,7 @@ function SelectedOffer() {
                 model={police?.model}
                 deviceValue={police?.deviceValue}
                 entegrationId={police?.entegrationId}
+                setIsProcessing={setIsProcessing}
               />
             ) : (
               <Spinner />
@@ -69,9 +72,11 @@ function SelectedOffer() {
             form="form2"
             type="submit"
             className="mb-3.5"
-            disabled={!police?.entegrationId}
+            disabled={!police?.entegrationId || isProcessing}
           >
-            Devam Et
+            {isProcessing
+              ? "Ödeme sayfasına yönlendiriliyorsunuz..."
+              : "Devam Et"}
           </CustomButton>
           <Footer />
         </div>
