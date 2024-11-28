@@ -8,6 +8,7 @@ type CustomButtonProps = {
   saturated?: boolean;
   className?: string;
   disabled?: boolean;
+  visible?: boolean;
 };
 
 function CustomButton({
@@ -18,9 +19,12 @@ function CustomButton({
   saturated = false,
   className = "",
   disabled = false,
+  visible = false,
 }: CustomButtonProps) {
   const baseClass = "btn";
   const saturatedClass = saturated ? "saturated" : "";
+
+  if (visible) return null;
 
   return (
     <button

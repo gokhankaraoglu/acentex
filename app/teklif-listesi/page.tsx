@@ -107,6 +107,10 @@ function OfferList() {
           <CustomButton
             className="mb-3.5"
             saturated
+            visible={
+              EntegrasyonPoliceDurumID.TEKLIF !==
+              offer?.ENTEGRASYON_POLICE_DURUM_ID
+            }
             onClick={() => setShowContract(true)}
           >
             Koruma Kapsamları

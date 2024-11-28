@@ -78,14 +78,14 @@ function Offer({
           <hr className="my-2 border-t-1 border-[#667085]" /> */}
           <div>
             <p className="font-light text-xs text-[#667085]">Cihaz Bilgileri</p>
-            <p className="text-sm font-normal">{`${formatName(
-              brand
-            )} ${formatName(model)}`}</p>
+            <p className="text-sm font-normal">{`${formatName(brand ?? "-")} ${
+              formatName(model) ?? "-"
+            }`}</p>
           </div>
           <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
             <p className="font-light text-xs text-[#667085]">Cihaz Bedeli</p>
-            <p className="text-sm font-normal">₺{deviceValue ?? "-"}</p>
+            <p className="text-sm font-normal">₺{deviceValue ?? " -"}</p>
           </div>
           <hr className="my-2 border-t-1 border-[#667085]" />
           <div>
