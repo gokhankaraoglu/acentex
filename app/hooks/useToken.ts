@@ -8,7 +8,7 @@ export const getToken = async () => {
 
   if (!accessToken) {
     try {
-      const { accessToken, expirationTimeStamp } = await post<any, any>({
+      const { accessToken } = await post<any, any>({
         path: "/Auth/GetToken",
         payload: {
           userName: process.env.NEXT_PUBLIC_USERNAME,
@@ -16,7 +16,12 @@ export const getToken = async () => {
         },
       });
 
-      const expirationDate = new Date(expirationTimeStamp * 1000);
+      const now = new Date();
+
+      const TWELVE_HOURS = 12 * 60 * 60 * 1000;
+      const twelveHoursLater = new Date(now.getTime() + TWELVE_HOURS);
+
+      const expirationDate = twelveHoursLater;
       Cookies.set(ACCESS_TOKEN, accessToken, { expires: expirationDate });
     } catch (error) {
       console.error("Failed to fetch initial token", error);
