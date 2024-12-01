@@ -177,7 +177,7 @@ function ProductForm() {
     ) {
       return;
     }
-    const expirationDate = createExpirationDate(3);
+    const expirationDate = createExpirationDate(6);
 
     try {
       if (policeGuid) {

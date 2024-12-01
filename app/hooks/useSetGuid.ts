@@ -10,7 +10,7 @@ export const setGuid = async () => {
       path: "/ExternalProduction/SET_TEKLIF_GUID",
       payload: {},
     });
-    const expirationDate = createExpirationDate(3);
+    const expirationDate = createExpirationDate(6);
 
     Cookies.set(GUID, POLICE_GUID, { expires: expirationDate });
     return POLICE_GUID;

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { post } from "../utils/api";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN } from "../utils/api/axiosClient";
+import { createExpirationDate } from "../utils";
 
 export const getToken = async () => {
   const accessToken = Cookies.get(ACCESS_TOKEN);
@@ -16,12 +17,7 @@ export const getToken = async () => {
         },
       });
 
-      const now = new Date();
-
-      const TWELVE_HOURS = 12 * 60 * 60 * 1000;
-      const twelveHoursLater = new Date(now.getTime() + TWELVE_HOURS);
-
-      const expirationDate = twelveHoursLater;
+      const expirationDate = createExpirationDate(12);
       Cookies.set(ACCESS_TOKEN, accessToken, { expires: expirationDate });
     } catch (error) {
       console.error("Failed to fetch initial token", error);

@@ -31,7 +31,7 @@ function Offer({
   async function handleSendForm(event: React.FormEvent) {
     event.preventDefault();
 
-    const expirationDate = createExpirationDate(3);
+    const expirationDate = createExpirationDate(6);
     setIsProcessing && setIsProcessing(true);
 
     const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
