@@ -1,5 +1,3 @@
-import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
-import { post } from ".";
 export const Paths = {
   token: "/token",
   set_teklif_guid: "/set_teklif_guid",
@@ -19,43 +17,3 @@ export const Paths = {
   get_entegrasyon_police_soru: "/get_entegrasyon_police_soru",
   get_entegrasyon_police_teminat: "/get_entegrasyon_police_teminat",
 };
-
-interface Props {
-  baseQuery: string;
-  queryKey?: QueryKey;
-}
-
-export function useMutationApi<P, T>({ baseQuery }: Props) {
-  function createRequest(payload: P): Promise<T> {
-    return post<P, T>({
-      path: baseQuery,
-      payload,
-    });
-  }
-
-  function useCreateItemMutation() {
-    return useMutation({
-      mutationFn: createRequest,
-      onError: (error: any) => {
-        const errorMessage =
-          error?.response?.data?.message || "An unexpected error occurred";
-        console.log(errorMessage);
-        // setTimeout(() => toast.error(t(errorMessage)), 200);
-      },
-    });
-  }
-
-  const {
-    mutate: createRequestMutation,
-    isPending,
-    isError,
-    isSuccess,
-  } = useCreateItemMutation();
-
-  return {
-    createRequestMutation,
-    isError,
-    isPending,
-    isSuccess,
-  };
-}

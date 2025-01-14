@@ -13,14 +13,19 @@
     font-weight: 300;
     max-width: 345px;
     width: 100%;
-
-    &:hover {
-      opacity: 0.9;
-    }
   }
-  .btn.saturated {
+
+  .btn:hover {
+    background-color: #b394fb;
+  }
+  .saturated {
     background-color: var(--base-color-primary);
     border: 1px solid var(--base-button-background-color);
     color: var(--base-button-background-color);
+  }
+
+  .saturated:hover {
+    background-color: #e5d8fe;
+    border-color: #7d53de;
   }
 }

@@ -33,12 +33,14 @@ function Offer({
 
     const expirationDate = createExpirationDate(6);
     setIsProcessing && setIsProcessing(true);
+    const locationUrl = window.location.href;
+    const baseURL = new URL(locationUrl).origin;
 
     const { REDIRECT_URL, TRANSACTION_ID: transactionId } =
       await submitPolicyApprovalSecurePayment(
         entegrationId,
         null,
-        `https://acentex.vercel.app/odeme/geri-donus`
+        `${baseURL}/odeme/geri-donus`
       );
     const policeGuid: string | undefined = Cookies.get(GUID);
     if (!policeGuid) {
@@ -99,7 +101,12 @@ function Offer({
         </div>
         <form id="form2" onSubmit={handleSendForm} className="mt-2.5">
           <div className="flex items-center mb-1.5">
-            <input type="checkbox" id="declaration" required />
+            <input
+              className="cursor-pointer"
+              type="checkbox"
+              id="declaration"
+              required
+            />
             <label
               htmlFor="declaration"
               className="ml-2 text-xs font-extralight text-[#667085] cursor-pointer"
@@ -108,7 +115,13 @@ function Offer({
             </label>
           </div>
           <div className="flex items-center">
-            <input type="checkbox" required checked={isAcceptedForm} />
+            <input
+              type="checkbox"
+              className="cursor-pointer"
+              required
+              checked={isAcceptedForm}
+              onChange={() => setIsAcceptedForm((prev) => !prev)}
+            />
             <label className="ml-2 text-xs font-extralight text-[#667085]">
               <span
                 className="cursor-pointer"

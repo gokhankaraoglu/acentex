@@ -48,7 +48,7 @@ function SelectedOffer() {
               geçebilirsiniz.
             </p>
           </div>
-          <div className="w-full flex flex-col justify-center items-center">
+          <div className="w-full flex flex-col justify-center items-center mb-2.5">
             {police ? (
               <Offer
                 title={police?.title}

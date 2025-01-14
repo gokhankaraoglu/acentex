@@ -57,3 +57,16 @@
     background-position: -200% 0;
   }
 }
+
+.animation-slideDown {
+  animation-name: slideDown;
+  animation-duration: 0.3s;
+}
+@keyframes slideDown {
+  from {
+    bottom: -400px;
+  }
+  to {
+    bottom: 0;
+  }
+}
