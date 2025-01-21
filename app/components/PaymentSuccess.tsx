@@ -3,22 +3,28 @@ import Image from "next/image";
 import CustomButton from "../components/elements/CustomButton";
 import { useState } from "react";
 import PdfViewer from "./PdfViewer";
+import { PoliceItem } from "../types/product";
 
 interface PaymentSuccessPayload {
   policeNo: string;
-  entegrasyonPoliceHareketId: number;
+  entegrasyonPoliceHareketKey: string;
 }
+
+interface IWalletData {
+  status: string;
+  data: {};
+}
+
 declare global {
   interface Window {
     OnLoadEvent?: {
-      postMessage: (message: string) => void;
+      postMessage: (iwalletData: IWalletData) => void;
     };
   }
 }
-
 function PaymentSuccess({
   policeNo,
-  entegrasyonPoliceHareketId,
+  entegrasyonPoliceHareketKey,
 }: PaymentSuccessPayload) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,11 +32,15 @@ function PaymentSuccess({
     setIsOpen(true);
   };
 
-  const notifyAppLoadSuccess = (): void => {
+  const notifyAppLoadSuccess = (policeInfo: PoliceItem): void => {
     const onLoadEvent = window?.OnLoadEvent;
-
+    const iwalletData = {
+      status: "completed",
+      data: {},
+    };
+    console.log({ iwalletData });
     if (onLoadEvent) {
-      onLoadEvent.postMessage("success");
+      // onLoadEvent.postMessage(iwalletData);
     } else {
       console.warn(
         "OnLoadEvent.postMessage method is unavailable or not a function."
@@ -58,14 +68,13 @@ function PaymentSuccess({
           </p>
         </div>
         <div className="mb-6 flex flex-col">
-          <CustomButton saturated className="mb-6" onClick={handleClick}>
-            Poliçenizi görüntülemek veya indirmek için tıklayın
+          <CustomButton className="mb-6" onClick={handleClick}>
+            Poliçenizi görüntülemek ve kaydetmek için tıklayın
           </CustomButton>
-          <CustomButton onClick={notifyAppLoadSuccess}>Tamam</CustomButton>
         </div>
       </div>
       <PdfViewer
-        entegrasyonPoliceHareketId={entegrasyonPoliceHareketId}
+        entegrasyonPoliceHareketKey={entegrasyonPoliceHareketKey}
         isOpen={isOpen}
         close={() => setIsOpen(false)}
       />

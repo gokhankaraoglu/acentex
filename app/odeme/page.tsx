@@ -67,7 +67,7 @@ function Payment() {
     ? selectedPolice && (
         <PaymentSuccess
           policeNo={selectedPolice?.entegrationPoliceNo}
-          entegrasyonPoliceHareketId={selectedPolice.entegrationId}
+          entegrasyonPoliceHareketKey={selectedPolice.entegrationKey}
         />
       )
     : redirectUrl && <PaymentFailed redirectUrl={redirectUrl} />;

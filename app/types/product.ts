@@ -61,7 +61,7 @@ export interface PoliceItem {
   TP_MUSTERI_ROL_ID: any | null;
   TP_MUSTERI_ROL_AD: any | null;
   ENTEGRASYON_POLICE_HAREKET_ID: number;
-  ENTEGRASYON_POLICE_HAREKET_KEY: any | null;
+  ENTEGRASYON_POLICE_HAREKET_KEY: string | null;
   ENTEGRASYON_POLICE_LOG_ID: any | null;
   REVIZE_NO: number;
   ENTEGRASYON_POLICE_NO: string | null;
@@ -135,6 +135,7 @@ export interface StoredPoliceItem {
   brand: string;
   model: string;
   entegrationId: number;
+  entegrationKey: string;
   entegrationPoliceNo: string;
   deviceValue: number;
 }

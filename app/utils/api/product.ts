@@ -44,11 +44,11 @@ export async function submitQuestionAnswer(
 }
 
 export async function submitForm(policeGuid: string): Promise<string> {
-  const { POLICE_ID } = await post<PolicePayload, { POLICE_ID: string }>({
+  const { POLICE_GUID } = await post<PolicePayload, { POLICE_GUID: string }>({
     path: "/ExternalProduction/POST_POLICY_QUESTION",
     payload: {
       POLICE_GUID: policeGuid,
     },
   });
-  return POLICE_ID;
+  return POLICE_GUID;
 }

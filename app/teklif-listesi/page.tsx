@@ -26,10 +26,10 @@ function OfferList() {
       return;
     }
 
-    fetchOffer(+policeId);
+    fetchOffer(policeId);
   }, []);
 
-  const fetchOffer = useCallback(async (policeId: number) => {
+  const fetchOffer = useCallback(async (policeId: string) => {
     try {
       const offerData = await fetchOfferData(policeId);
       if (
@@ -50,6 +50,7 @@ function OfferList() {
       title: offer.URUN_AD,
       company: offer.SGR_SIRKET_MUSTERI_ROL_AD,
       entegrationId: offer.ENTEGRASYON_POLICE_HAREKET_ID,
+      entegrationKey: offer.ENTEGRASYON_POLICE_HAREKET_KEY,
       entegrationPoliceNo: offer.ENTEGRASYON_POLICE_NO,
       startDate: offer.BASLAMA_TARIH,
       endDate: offer.BITIS_TARIH,

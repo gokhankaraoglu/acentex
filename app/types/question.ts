@@ -114,5 +114,5 @@ export interface PostPolicyQuestionResponse {
 }
 
 export interface GetEntegrasyonPolicePayload {
-  POLICE_ID: number;
+  POLICE_GUID: string;
 }
