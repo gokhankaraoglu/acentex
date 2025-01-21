@@ -1,6 +1,7 @@
 import { PoliceApiResponse, PoliceItem } from "@/app/types/product";
 import { GetEntegrasyonPolicePayload } from "@/app/types/question";
 import { post } from ".";
+import { Paths } from "@/app/types/constants";
 
 export async function fetchOfferData(
   policeId: string
@@ -8,7 +9,7 @@ export async function fetchOfferData(
   const {
     Data: { Items },
   } = await post<GetEntegrasyonPolicePayload, PoliceApiResponse>({
-    path: "/ExternalProduction/GET_ENTEGRASYON_POLICE_WITH_GUID",
+    path: Paths.GetEntegrasyonPoliceWithGuid,
     payload: { POLICE_GUID: policeId },
   });
   return Items[0] as PoliceItem;

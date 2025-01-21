@@ -1,3 +1,4 @@
+import { Paths } from "../types/constants";
 import { createExpirationDate } from "../utils";
 import { post } from "../utils/api";
 import Cookies from "js-cookie";
@@ -7,7 +8,7 @@ export const GUID: string = "guid";
 export const setGuid = async () => {
   try {
     const { POLICE_GUID } = await post<any, any>({
-      path: "/ExternalProduction/SET_TEKLIF_GUID",
+      path: Paths.SetTeklifGuid,
       payload: {},
     });
     const expirationDate = createExpirationDate(6);

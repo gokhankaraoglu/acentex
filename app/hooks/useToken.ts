@@ -3,6 +3,7 @@ import { post } from "../utils/api";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN } from "../utils/api/axiosClient";
 import { createExpirationDate } from "../utils";
+import { Paths } from "../types/constants";
 
 export const getToken = async () => {
   const accessToken = Cookies.get(ACCESS_TOKEN);
@@ -10,7 +11,7 @@ export const getToken = async () => {
   if (!accessToken) {
     try {
       const { accessToken } = await post<any, any>({
-        path: "/Auth/GetToken",
+        path: Paths.GetToken,
         payload: {
           userName: process.env.NEXT_PUBLIC_USERNAME,
           password: process.env.NEXT_PUBLIC_PASSWORD,

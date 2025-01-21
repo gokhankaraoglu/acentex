@@ -6,13 +6,14 @@ import {
   SoruListItem,
 } from "@/app/types/question";
 import { post } from ".";
+import { Paths } from "@/app/types/constants";
 
 export async function fetchProductQuestions(
   policeGuid: string,
   productDetail: ProductDetail
 ): Promise<SoruListItem[]> {
   const { SORU_LIST } = await post<ProductQuestionPayload, RootObject>({
-    path: "/ExternalProduction/SET_TEKLIF_URUN",
+    path: Paths.SetTeklifUrun,
     payload: {
       POLICE_GUID: policeGuid,
       URUN_LIST: [
@@ -34,7 +35,7 @@ export async function submitQuestionAnswer(
   value: string | number
 ): Promise<SoruListItem[]> {
   const { SORU_LIST } = await post<AnswerQuestionPayload, RootObject>({
-    path: "/ExternalProduction/POST_POLICY_QUESTION_ANSWER",
+    path: Paths.PostPolicyQuestionAnswer,
     payload: {
       POLICE_GUID: policeGuid,
       SORU_LIST: [{ ...question, DEGER_KOD: value }],
@@ -45,7 +46,7 @@ export async function submitQuestionAnswer(
 
 export async function submitForm(policeGuid: string): Promise<string> {
   const { POLICE_GUID } = await post<PolicePayload, { POLICE_GUID: string }>({
-    path: "/ExternalProduction/POST_POLICY_QUESTION",
+    path: Paths.PostPolicyQuestion,
     payload: {
       POLICE_GUID: policeGuid,
     },
