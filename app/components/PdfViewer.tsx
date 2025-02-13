@@ -6,17 +6,19 @@ import { Icon, Icons } from "./elements/Icon";
 import CustomButton from "./elements/CustomButton";
 import Footer from "./Footer";
 import { getPolicyDocument } from "../utils/api/document";
-import { base64ToUint8Array } from "../utils";
+import { base64ToUint8Array, notifyAppLoadSuccess } from "../utils";
 import Spinner from "./elements/Spinner";
 import { Item } from "../types/document";
 
 interface PdfViewerProps {
+  policeId: string;
   entegrasyonPoliceHareketKey: string;
   isOpen: boolean;
   close: () => void;
 }
 
 function PdfViewer({
+  policeId,
   entegrasyonPoliceHareketKey,
   isOpen,
   close,
@@ -91,6 +93,14 @@ function PdfViewer({
     URL.revokeObjectURL(url);
   };
 
+  const savePoliceIWallet = ({ policeId }: { policeId: string }) => {
+    const status = "completed";
+    notifyAppLoadSuccess({
+      status,
+      policeGuid: policeId,
+    });
+  };
+
   return (
     <Dialog open={isOpen} onClose={() => close()}>
       <div className="z-1 fixed inset-0 flex justify-center items-end">
@@ -112,7 +122,7 @@ function PdfViewer({
           </div>
           <div className="flex flex-col items-center pb-6 px-6">
             <div className="mb-3.5 flex flex-col items-center">
-              <CustomButton onClick={() => console.log("test")}>
+              <CustomButton onClick={() => savePoliceIWallet({ policeId })}>
                 Poliçeni IWallet&#39;a Kaydet
               </CustomButton>
               <p className="text-[#667085] font-normal text-xs text-center mt-1">

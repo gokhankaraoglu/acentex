@@ -20,3 +20,18 @@ export interface ApiResponse<T> {
   Message: string | null;
   Status: number;
 }
+
+export interface IWalletData {
+  status: string;
+  data: {
+    police_guid: string;
+  };
+}
+
+declare global {
+  interface Window {
+    OnLoadEvent?: {
+      postMessage: (iwalletData: IWalletData) => void;
+    };
+  }
+}

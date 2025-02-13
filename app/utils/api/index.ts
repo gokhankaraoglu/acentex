@@ -1,5 +1,4 @@
 import { QueryKey } from "@tanstack/react-query";
-import { AxiosHeaders } from "axios";
 import { axiosClient } from "./axiosClient";
 
 interface BaseRequest {

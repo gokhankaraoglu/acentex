@@ -1,3 +1,5 @@
+import { IWalletData } from "../types";
+
 export function capitalize(str: string): string {
   return str
     .toLowerCase()
@@ -66,4 +68,27 @@ export const base64ToUint8Array = (base64: string) => {
     uint8Array[i] = raw.charCodeAt(i);
   }
   return uint8Array;
+};
+
+export const notifyAppLoadSuccess = ({
+  status,
+  policeGuid,
+}: {
+  status: string;
+  policeGuid: string;
+}): void => {
+  const onLoadEvent = window?.OnLoadEvent;
+  const iwalletData: IWalletData = {
+    status,
+    data: {
+      police_guid: policeGuid,
+    },
+  };
+  if (onLoadEvent) {
+    onLoadEvent.postMessage(iwalletData);
+  } else {
+    console.warn(
+      "OnLoadEvent.postMessage method is unavailable or not a function."
+    );
+  }
 };

@@ -1,51 +1,40 @@
 "use client";
 import Image from "next/image";
+import Cookies from "js-cookie";
 import CustomButton from "../components/elements/CustomButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PdfViewer from "./PdfViewer";
-import { PoliceItem } from "../types/product";
+import { notifyAppLoadSuccess } from "../utils";
 
 interface PaymentSuccessPayload {
   policeNo: string;
   entegrasyonPoliceHareketKey: string;
 }
 
-interface IWalletData {
-  status: string;
-  data: {};
-}
-
-declare global {
-  interface Window {
-    OnLoadEvent?: {
-      postMessage: (iwalletData: IWalletData) => void;
-    };
-  }
-}
 function PaymentSuccess({
   policeNo,
   entegrasyonPoliceHareketKey,
 }: PaymentSuccessPayload) {
+  const policeId = Cookies.get("policeId");
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!policeId) return;
+    sendPoliceIWallet({ policeId });
+  }, []);
+
+  if (!policeId) return;
 
   const handleClick = () => {
     setIsOpen(true);
   };
 
-  const notifyAppLoadSuccess = (policeInfo: PoliceItem): void => {
-    const onLoadEvent = window?.OnLoadEvent;
-    const iwalletData = {
-      status: "completed",
-      data: {},
-    };
-    console.log({ iwalletData });
-    if (onLoadEvent) {
-      // onLoadEvent.postMessage(iwalletData);
-    } else {
-      console.warn(
-        "OnLoadEvent.postMessage method is unavailable or not a function."
-      );
-    }
+  const sendPoliceIWallet = ({ policeId }: { policeId: string }) => {
+    const status = "incompleted";
+    notifyAppLoadSuccess({
+      status,
+      policeGuid: policeId,
+    });
   };
 
   return (
@@ -74,6 +63,7 @@ function PaymentSuccess({
         </div>
       </div>
       <PdfViewer
+        policeId={policeId}
         entegrasyonPoliceHareketKey={entegrasyonPoliceHareketKey}
         isOpen={isOpen}
         close={() => setIsOpen(false)}

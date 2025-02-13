@@ -8,7 +8,8 @@ import { StoredPoliceItem } from "../types/product";
 import { GUID } from "../hooks/useSetGuid";
 import { useRouter } from "next/navigation";
 
-interface OfferProps extends Omit<StoredPoliceItem, "entegrationPoliceNo"> {
+interface OfferProps
+  extends Omit<StoredPoliceItem, "entegrationPoliceNo" | "entegrationKey"> {
   setIsProcessing?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

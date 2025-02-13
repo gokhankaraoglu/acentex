@@ -2,8 +2,6 @@
 
 import Cookies from "js-cookie";
 import FormElement from "../components/FormElement";
-import Link from "next/link";
-import { Icon, Icons } from "../components/elements/Icon";
 import CustomButton from "../components/elements/CustomButton";
 import { useEffect, useState } from "react";
 import {

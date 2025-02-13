@@ -8,7 +8,7 @@ export enum Routes {
 
 export enum Paths {
   GetToken = "/Auth/GetToken",
-  GetPolicyDocumentWithKey = "/ExternalProduction/GET_POLICY_DOCUMENT_WITH_KEY",
+  GetPolicyDocumentWithKey = "/ExternalProduction/GET_POLICY_DOCUMENT",
   GetEntegrasyonPoliceWithGuid = "/ExternalProduction/GET_ENTEGRASYON_POLICE_WITH_GUID",
   SetTeklifGuid = "/ExternalProduction/SET_TEKLIF_GUID",
   SetTeklifUrun = "/ExternalProduction/SET_TEKLIF_URUN",
