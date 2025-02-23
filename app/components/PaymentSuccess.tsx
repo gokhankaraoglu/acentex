@@ -30,7 +30,7 @@ function PaymentSuccess({
   };
 
   const sendPoliceIWallet = ({ policeId }: { policeId: string }) => {
-    const status = "incompleted";
+    const status = "PaymentConfirmed";
     notifyAppLoadSuccess({
       status,
       policeGuid: policeId,

@@ -94,7 +94,7 @@ function PdfViewer({
   };
 
   const savePoliceIWallet = ({ policeId }: { policeId: string }) => {
-    const status = "completed";
+    const status = "UserApproval";
     notifyAppLoadSuccess({
       status,
       policeGuid: policeId,
