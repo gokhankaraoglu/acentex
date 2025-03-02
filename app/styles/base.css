@@ -16,6 +16,7 @@
   :root {
     --base-color-primary: #fff;
     --base-input-height: 64px;
+    --base-input-border-radius: 12px;
     --base-input-border-color: #b1b1b1;
     --base-input-border-focus-color: #7d53de;
     --base-placeholder-color: rgb(75 85 99);
@@ -23,7 +24,14 @@
     --base-placeholder-font-weight: 300;
     --base-font-color: #0f1828;
     --base-font-weight: 400;
+    --base-button-border-radius: 28px;
     --base-button-background-color: #7d53de;
+    --base-button-background-color-hover: #b394fb;
+    --saturated-background-color-hover: #e5d8fe;
+    --saturated-border-color-hover: #7d53de;
+    --saturated-border-color: var(--base-button-background-color);
+    --saturated-background-color: var(--base-color-primary);
+    --saturated-color: var(--base-button-background-color);
   }
   @media (min-width: 768px) {
     :root {
