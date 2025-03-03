@@ -15,6 +15,7 @@
   }
   :root {
     --base-color-primary: #fff;
+    --base-input-background-color: #fff;
     --base-input-height: 64px;
     --base-input-border-radius: 12px;
     --base-input-border-color: #b1b1b1;
