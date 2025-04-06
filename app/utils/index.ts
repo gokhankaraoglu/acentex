@@ -85,7 +85,6 @@ export const notifyAppLoadSuccess = ({
     },
   };
   if (onLoadEvent) {
-    onLoadEvent.postMessage("Test amacli gonderilmistir.");
     onLoadEvent.postMessage(JSON.stringify(iwalletData));
   } else {
     console.warn(
