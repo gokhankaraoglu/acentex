@@ -85,7 +85,8 @@ export const notifyAppLoadSuccess = ({
     },
   };
   if (onLoadEvent) {
-    onLoadEvent.postMessage(iwalletData);
+    onLoadEvent.postMessage("Test amacli gonderilmistir.");
+    onLoadEvent.postMessage(JSON.stringify(iwalletData));
   } else {
     console.warn(
       "OnLoadEvent.postMessage method is unavailable or not a function."

@@ -31,7 +31,7 @@ export interface IWalletData {
 declare global {
   interface Window {
     OnLoadEvent?: {
-      postMessage: (iwalletData: IWalletData) => void;
+      postMessage: (iwalletData: string) => void;
     };
   }
 }

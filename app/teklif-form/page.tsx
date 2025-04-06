@@ -41,11 +41,12 @@ function ProductForm() {
   const [questions, setQuestions] = useState<SoruListItem[]>([]);
   const [policeGuid, setPoliceGuid] = useState<string>("");
   const [credentialsDetail, setCredentialsDetail] = useState<Credentials>({});
-  const productDetail = getSessionStorage<ProductDetail>("product");
-  const storedCredentialsDetail = getSessionStorage<Credentials>("credentials");
   const policeId = Cookies.get("policeId");
 
   useEffect(() => {
+    const productDetail = getSessionStorage<ProductDetail>("product");
+    const storedCredentialsDetail =
+      getSessionStorage<Credentials>("credentials");
     if (storedCredentialsDetail) {
       setCredentialsDetail(storedCredentialsDetail);
     }

@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
 import Providers from "./components/Providers";
-import ReactQueryProvider from "./components/ReactQueryProvider";
 import HookProvider from "./components/HookProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,13 +25,11 @@ export default function RootLayout({
     <html lang="tr">
       <body className={inter.className}>
         <Providers>
-          <ReactQueryProvider>
-            <HookProvider>
-              <div className="min-h-screen bg-transparent container mx-auto px-6 sm:px-10 lg:px-12">
-                <main className="flex-1 ">{children}</main>
-              </div>
-            </HookProvider>
-          </ReactQueryProvider>
+          <HookProvider>
+            <div className="min-h-screen bg-transparent container mx-auto px-6 sm:px-10 lg:px-12">
+              <main className="flex-1 ">{children}</main>
+            </div>
+          </HookProvider>
         </Providers>
       </body>
     </html>
