@@ -8,7 +8,6 @@ import {
   createExpirationDate,
   delay,
   getSessionStorage,
-  notifyAppLoadSuccess,
   setSessionStorage,
 } from "../utils";
 import { setGuid } from "../hooks/useSetGuid";
@@ -160,7 +159,6 @@ function ProductForm() {
 
   async function handleSendForm(event: React.FormEvent<IFormElement>) {
     event.preventDefault();
-    sendTestMessage();
     const { TCK, DGMTAR, CEPTEL, EMAIL } = (event.target as IFormElement)
       .elements;
 
@@ -195,14 +193,6 @@ function ProductForm() {
   function goBackOffer() {
     router.push("/teklif-listesi");
   }
-
-  console.log("test");
-  const sendTestMessage = () => {
-    notifyAppLoadSuccess({
-      status: "test",
-      policeGuid: "test amacli gonderilmistir.",
-    });
-  };
 
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
