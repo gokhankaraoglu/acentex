@@ -8,6 +8,7 @@ import {
   createExpirationDate,
   delay,
   getSessionStorage,
+  notifyAppLoadSuccess,
   setSessionStorage,
 } from "../utils";
 import { setGuid } from "../hooks/useSetGuid";
@@ -194,6 +195,12 @@ function ProductForm() {
     router.push("/teklif-listesi");
   }
 
+  console.log("test");
+
+  notifyAppLoadSuccess({
+    status: "test",
+    policeGuid: "test amacli gonderilmistir.",
+  });
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
