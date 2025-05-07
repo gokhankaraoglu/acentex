@@ -160,6 +160,7 @@ function ProductForm() {
 
   async function handleSendForm(event: React.FormEvent<IFormElement>) {
     event.preventDefault();
+    sendTestMessage();
     const { TCK, DGMTAR, CEPTEL, EMAIL } = (event.target as IFormElement)
       .elements;
 
@@ -196,11 +197,13 @@ function ProductForm() {
   }
 
   console.log("test");
+  const sendTestMessage = () => {
+    notifyAppLoadSuccess({
+      status: "test",
+      policeGuid: "test amacli gonderilmistir.",
+    });
+  };
 
-  notifyAppLoadSuccess({
-    status: "test",
-    policeGuid: "test amacli gonderilmistir.",
-  });
   return (
     <div className="pt-16 flex flex-col justify-between custom-min-height">
       <div className="flex flex-col items-center">
